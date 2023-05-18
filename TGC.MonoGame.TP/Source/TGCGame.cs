@@ -154,7 +154,7 @@ namespace TGC.MonoGame.TP
             Casa.Draw();
 
 
-            //Gizmos.Draw();
+            Gizmos.Draw();
         }
         
         protected override void UnloadContent()

@@ -14,6 +14,7 @@ namespace TGC.MonoGame.TP{
         private const float Velocidad = 500f;
         private Vector3 Traslacion = new Vector3(0f,0f, 0f);
         private Vector3 Direccion = new Vector3(0f,0f,0f); // Si está en cero, están inmóviles
+        bool triggered = false;
 
         public EnemyCar(float posX, float posY, float posZ, Vector3 rotacion) 
         : base(TGCGame.GameContent.M_AutoEnemigo, new Vector3(posX,posY,posZ), Vector3.Zero, ESCALA)
@@ -23,7 +24,7 @@ namespace TGC.MonoGame.TP{
 
             var boxSize = (Utils.ModelSize(Model))*SIMU_BOX_SCALE;
             var boxShape = new Box(boxSize.X,boxSize.Y,boxSize.Z); // a chequear
-            var boxInertia = boxShape.ComputeInertia(15);
+            var boxInertia = boxShape.ComputeInertia(0.0001f);
             var boxIndex = TGCGame.Simulation.Shapes.Add(boxShape);
 
             Handle = TGCGame.Simulation.Bodies.Add(BodyDescription.CreateDynamic(
@@ -39,6 +40,7 @@ namespace TGC.MonoGame.TP{
             var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);
             var position = simuWorld.Pose.Position;
             var quaternion = simuWorld.Pose.Orientation;
+            if(simuWorld.MotionState.Velocity.Linear.Length() > 2f) triggered = true;
             World =
                 Matrix.CreateScale(Escala) *
                 Matrix.CreateFromQuaternion(new Quaternion(quaternion.X, quaternion.Y, quaternion.Z, quaternion.W)) * 
@@ -50,14 +52,16 @@ namespace TGC.MonoGame.TP{
             // var aabb = simuWorld.BoundingBox;
             // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.HotPink);
 
-            TGCGame.GameContent.E_TextureShader
-                .Parameters["Texture"].SetValue(TGCGame.GameContent.T_CombatVehicle);
+            if(!triggered){
+                TGCGame.GameContent.E_TextureShader
+                    .Parameters["Texture"].SetValue(TGCGame.GameContent.T_CombatVehicle);
 
-            foreach(var mesh in Model.Meshes){
-                foreach(var meshPart in mesh.MeshParts){
-                    meshPart.Effect.Parameters["World"]?.SetValue(World);
+                foreach(var mesh in Model.Meshes){
+                    foreach(var meshPart in mesh.MeshParts){
+                        meshPart.Effect.Parameters["World"]?.SetValue(World);
+                    }
+                mesh.Draw();
                 }
-            mesh.Draw();
             }
         }
     }

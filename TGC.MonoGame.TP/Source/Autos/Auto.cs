@@ -51,10 +51,12 @@ namespace TGC.MonoGame.TP
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)
         {   
-            var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);
-            float dTime = Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
+            // Seteo inicial
             var linearImpulse = Vector3.Zero;
             var angularImpulse = Vector3.Zero;
+            var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);
+            float dTime = Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
+            
             Vel_Turbo = 1f;
             var pressedKeys = keyboardState.GetPressedKeys();
             if(pressedKeys.Length>0) simuWorld.Awake = true;
@@ -95,28 +97,22 @@ namespace TGC.MonoGame.TP
             }
             
             var velocidadActual = simuWorld.Velocity.Linear.ToVector3();
-
             var coeficienteVelocidad = (Math.Abs(velocidadActual.X) + Math.Abs(velocidadActual.Y) + Math.Abs(velocidadActual.Z)) / 2000;
-
             Console.WriteLine("Velocidad alcanzada :    . . . . . . {0:F}%", (coeficienteVelocidad * 100f));
 
-
+            // Giro
             angularImpulse = new Vector3(0,ANGULAR_SPEED,0)*WheelTurning*Math.Min(coeficienteVelocidad*4, 1);
 
+            // Rotación de ruedas
             WheelTurning = WheelTurning > 0 ? WheelTurning - WHEEL_TURNING_LIMIT*dTime : WheelTurning + WHEEL_TURNING_LIMIT*dTime;
-
-            // if(simuWorld.Pose.Position.Y > 0){
-            //     simuWorld.ApplyLinearImpulse((Vector3.UnitY*-10f).ToBepu());
-            // }
-
-
-            simuWorld.ApplyAngularImpulse(angularImpulse.ToBepu());
-            // simuWorld.ApplyLinearImpulse(linearImpulse.ToBepu());
-            simuWorld.ApplyImpulse(linearImpulse.ToBepu() * Vel_Turbo, Utils.FowardFromQuaternion((simuWorld.Pose.Orientation.ToQuaternion())*2).ToBepu());
-
             WheelRotation += simuWorld.Velocity.Angular.Y * WHEEL_ROTATION_FACTOR;
 
-            //WORLD MATRIX
+            // Aplicar impulsos
+            simuWorld.ApplyImpulse(linearImpulse.ToBepu() * Vel_Turbo, Utils.FowardFromQuaternion((simuWorld.Pose.Orientation.ToQuaternion())*2).ToBepu());
+            simuWorld.ApplyAngularImpulse(angularImpulse.ToBepu());
+
+
+            // Drawable World
             Position = simuWorld.Pose.Position;
             var quaternion = simuWorld.Pose.Orientation;
             
@@ -129,9 +125,9 @@ namespace TGC.MonoGame.TP
         public override void Draw(){
             var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);
             
-            //var aabb = simuWorld.BoundingBox;
+            var aabb = simuWorld.BoundingBox;
             
-            // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
+            TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
             
             var quaternion = simuWorld.Pose.Orientation;
             var worldAux = Matrix.Identity;
@@ -150,7 +146,8 @@ namespace TGC.MonoGame.TP
                     case "WheelA": // Adelante derecha
                     case "WheelB": // Adelante izquierda
                         worldAux = 
-                                    Matrix.CreateRotationY(WheelTurning)                        // giro del volante
+                                    Matrix.CreateScale(1.5f)
+                                    * Matrix.CreateRotationY(WheelTurning)                        // giro del volante
                                     * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
                                     * Matrix.CreateRotationY(WheelRotation)                     // giro con el auto
                                     * World
@@ -166,7 +163,8 @@ namespace TGC.MonoGame.TP
                     case "WheelC": // Atras izquierda
                     case "WheelD": // Atras derecha
                         worldAux = 
-                                    Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
+                                    Matrix.CreateScale(2f)
+                                    * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
                                     * Matrix.CreateRotationY(WheelRotation)                   // giro con el auto
                                     * World 
                                     ;
