@@ -8,8 +8,8 @@ namespace TGC.MonoGame.TP.Colliders
     internal interface MCollidable {
         internal float Scale { get; set; } 
         internal BodyHandle BodyHandle { get; set; }
-        internal IShape Shape { get; set; }         
-        internal Matrix World();
+        internal IShape Shape { get; set; }
+        //internal void Update();
     }
 
     internal static class MCollidableExtension {
