@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
+/*using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.TP.Design;
-using TGC.MonoGame.TP.Collisions;
 using BepuVector3    = System.Numerics.Vector3;
-using BepuQuaternion = System.Numerics.Quaternion;
-using TGC.MonoGame.Samples.Viewer.Gizmos;
 using BepuPhysics;
 using BepuPhysics.Collidables;
 
@@ -107,5 +103,5 @@ namespace TGC.MonoGame.TP
         }
     }
 
-}
+}*/
     

@@ -1,10 +1,9 @@
-using System;
 using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Collisions;
 using TGC.MonoGame.TP.Design;
+using TGC.MonoGame.TP.Utils;
 
 namespace TGC.MonoGame.TP{
     class EnemyCar : IElementoDinamico {
@@ -22,7 +21,7 @@ namespace TGC.MonoGame.TP{
             Traslacion = new Vector3(posX, posY, posZ);
             this.SetEffect(TGCGame.GameContent.E_TextureShader);
 
-            var boxSize = (Utils.ModelSize(Model))*SIMU_BOX_SCALE;
+            var boxSize = Model.Size() * SIMU_BOX_SCALE;
             var boxShape = new Box(boxSize.X,boxSize.Y,boxSize.Z); // a chequear
             var boxInertia = boxShape.ComputeInertia(0.0001f);
             var boxIndex = TGCGame.Simulation.Shapes.Add(boxShape);

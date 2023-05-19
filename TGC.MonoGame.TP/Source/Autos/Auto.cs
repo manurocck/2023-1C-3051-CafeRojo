@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.TP.Design;
 using TGC.MonoGame.TP.Collisions;
 using BepuVector3    = System.Numerics.Vector3;
-using BepuQuaternion = System.Numerics.Quaternion;
-using TGC.MonoGame.Samples.Viewer.Gizmos;
 using BepuPhysics;
 using BepuPhysics.Collidables;
+using TGC.MonoGame.TP.Utils;
 
 namespace TGC.MonoGame.TP
 {
@@ -37,7 +35,7 @@ namespace TGC.MonoGame.TP
             Escala = escala;
             this.SetEffect(TGCGame.GameContent.E_SpiralShader);
                 
-            var boxSize = (Utils.ModelSize(Model))*SIMU_BOX_SCALE;
+            var boxSize = Model.Size()*SIMU_BOX_SCALE;
             var boxShape = new Box(boxSize.X,boxSize.Y,boxSize.Z); // a chequear
             var boxInertia = boxShape.ComputeInertia(3);
             var boxIndex = TGCGame.Simulation.Shapes.Add(boxShape);
@@ -76,14 +74,14 @@ namespace TGC.MonoGame.TP
                                                                  : (-1)*WHEEL_TURNING_LIMIT;
                     break;
                     case Keys.S:
-                        linearImpulse = Utils.FowardFromQuaternion(simuWorld.Pose.Orientation)*(-LINEAR_SPEED);
+                        linearImpulse = simuWorld.Pose.Orientation.Forward() * (-LINEAR_SPEED);
                     break;
                     case Keys.W:
-                        linearImpulse = Utils.FowardFromQuaternion(simuWorld.Pose.Orientation)*(LINEAR_SPEED);
+                        linearImpulse = simuWorld.Pose.Orientation.Forward() * (LINEAR_SPEED);
                     break;
                     case Keys.Space:
                          if(puedeSaltar){
-                             linearImpulse = Utils.UpFromQuaternion(simuWorld.Pose.Orientation.ToQuaternion())*JUMP_POWER;
+                             linearImpulse = simuWorld.Pose.Orientation.Up() * JUMP_POWER;
                              puedeSaltar = false;
                          }
                     break;
@@ -108,7 +106,7 @@ namespace TGC.MonoGame.TP
             WheelRotation += simuWorld.Velocity.Angular.Y * WHEEL_ROTATION_FACTOR;
 
             // Aplicar impulsos
-            simuWorld.ApplyImpulse(linearImpulse.ToBepu() * Vel_Turbo, Utils.FowardFromQuaternion((simuWorld.Pose.Orientation.ToQuaternion())*2).ToBepu());
+            simuWorld.ApplyImpulse(linearImpulse.ToBepu() * Vel_Turbo, (simuWorld.Pose.Orientation.Forward() * 2).ToBepu());
             simuWorld.ApplyAngularImpulse(angularImpulse.ToBepu());
 
 

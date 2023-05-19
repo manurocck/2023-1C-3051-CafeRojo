@@ -8,9 +8,9 @@ namespace TGC.MonoGame.TP
     {
         private float AxisDistanceToTarget = 4f * TGCGame.S_METRO;
 
-        private float AngleFollowSpeed = 0.015f;
+        //private float AngleFollowSpeed = 0.015f;
 
-        private float AngleThreshold = 0.85f;
+        //private float AngleThreshold = 0.85f;
 
         public Matrix Projection { get; private set; }
 

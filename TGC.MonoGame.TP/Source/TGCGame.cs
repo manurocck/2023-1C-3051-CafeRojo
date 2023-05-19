@@ -27,11 +27,10 @@ namespace TGC.MonoGame.TP
         public SimpleThreadDispatcher ThreadDispatcher { get; private set; }
         public BufferPool BufferPool { get; private set; }
         private Auto Auto;
-        private Auto2 Auto2;
+        //private Auto2 Auto2;
         private Camera Camera; 
         private Casa Casa;
-        private Song Soundtrack;
-
+        //private Song Soundtrack;
 
         public TGCGame()
         {
