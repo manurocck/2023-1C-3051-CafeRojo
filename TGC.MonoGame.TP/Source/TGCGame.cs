@@ -1,16 +1,17 @@
 ﻿using System;
 using BepuPhysics;
 using BepuPhysics.Constraints;
-using BepuUtilities;
 using BepuUtilities.Memory;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using TGC.MonoGame.Samples.Physics.Bepu;
 using TGC.MonoGame.Samples.Viewer.Gizmos;
 using NumericVector3 = System.Numerics.Vector3;
+
+using TGC.MonoGame.TP.Elementos; //To ask for World Matrix
+using TGC.MonoGame.TP.Drawers; //To draw Elements
 
 namespace TGC.MonoGame.TP
 {
@@ -91,9 +92,8 @@ namespace TGC.MonoGame.TP
             // MediaPlayer.IsRepeating = true;
             // MediaPlayer.Volume = 0.5f;
 
-            foreach (var e in GameContent.Efectos){
+            foreach (var e in GameContent.Efectos)
                 e.Parameters["Projection"].SetValue(Camera.Projection);
-            }
 
             Vector3 origen = Vector3.Zero;
             Vector3 fin = new Vector3(1f,1f,1f);
@@ -118,7 +118,7 @@ namespace TGC.MonoGame.TP
                 Exit();
             float dTime = Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds); 
 
-            Auto.Update(gameTime, keyboardState);
+            Auto.Update(dTime, keyboardState);
             //Auto2.Update(gameTime, keyboardState);
                                     
             // Control de la música
@@ -134,7 +134,7 @@ namespace TGC.MonoGame.TP
             Casa.Update(gameTime, keyboardState);
             
             Camera.Mover(keyboardState);
-            Camera.Update(Auto.World);
+            Camera.Update(Auto.World());
 
             base.Update(gameTime);
         }
@@ -151,8 +151,6 @@ namespace TGC.MonoGame.TP
             Auto.Draw();          
             //Auto2.Draw();          
             Casa.Draw();
-
-
             Gizmos.Draw();
         }
         

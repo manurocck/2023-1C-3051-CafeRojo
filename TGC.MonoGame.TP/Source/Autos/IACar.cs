@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TGC.MonoGame.TP
 {
-    public class IACar : Auto
+    /*public class IACar : Auto
     {
         public IACar(Vector3 posicionInicial, Vector3 rotacion) : base(posicionInicial){}
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)
         {
         }
-    }
+    }*/
 }
