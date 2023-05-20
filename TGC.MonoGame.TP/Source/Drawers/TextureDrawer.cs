@@ -21,9 +21,10 @@ namespace TGC.MonoGame.TP.Drawers
 
             Effect.Parameters["Texture"].SetValue(Texture);
             foreach(var mesh in Model.Meshes) {
+                Matrix meshBoneTranslation = Matrix.CreateTranslation(mesh.ParentBone.ModelTransform.Translation);
                 foreach(var meshPart in mesh.MeshParts) {
                     meshPart.Effect = Effect;
-                    meshPart.Effect.Parameters["World"]?.SetValue(World);
+                    meshPart.Effect.Parameters["World"]?.SetValue(meshBoneTranslation*World);
                 }   
                 mesh.Draw();
             }
