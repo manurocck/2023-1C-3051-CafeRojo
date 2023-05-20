@@ -6,6 +6,7 @@ namespace TGC.MonoGame.TP
     public class HabitacionCocina : IHabitacion{
         public const int ANCHO = 6;
         public const int LARGO = 6;
+        private const float SeparacionDePared = 0; 
         public HabitacionCocina(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
             Piso.ConTextura(TGCGame.GameContent.T_PisoCeramica, 10);
 
@@ -13,161 +14,168 @@ namespace TGC.MonoGame.TP
             
             Amueblar();
         }
-        public override void DrawElementos(){
-            var mShader = TGCGame.GameContent.E_TextureMirror;
-            var bShader = TGCGame.GameContent.E_BasicShader;
-            var tShader = TGCGame.GameContent.E_TextureShader;
-            foreach(var mueble in Elementos){
-                switch(mueble.GetTag()){
-                    case "Olla":
-                        bShader.Parameters["DiffuseColor"].SetValue(Color.DarkSlateBlue.ToVector3());
-                    break;
-                    break;
-                    case "ParedCocina":
-                        tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Ladrillos);
-                    break;
-                    default:
-                        mShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Marmol);
-                    break;
-                }
-                mueble.Draw();
-            }
-        }
+       //public override void DrawElementos(){
+         //   var mShader = TGCGame.GameContent.E_TextureMirror;
+           // var bShader = TGCGame.GameContent.E_BasicShader;
+            //var tShader = TGCGame.GameContent.E_TextureShader;
+            //foreach(var mueble in Elementos){
+              //  switch(mueble.GetTag()){
+                //    case "Olla":
+                  //      bShader.Parameters["DiffuseColor"].SetValue(Color.DarkSlateBlue.ToVector3());
+                    //break;
+                    //break;
+                   // case "ParedCocina":
+                     //   tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Ladrillos);
+                    //break;
+                    //default:
+                      //  mShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Marmol);
+                   // break;
+               // }
+             //   mueble.Draw();
+            //}
+        //}
         private void Amueblar(){
             var carpintero = new ElementoBuilder(this.PuntoInicio());
             
-            var alturaMesada = 600f;
+            var alturaMesada = 0.6f;
 
             carpintero.Modelo(TGCGame.GameContent.M_Mesada)
-                .ConPosicion(100f,150f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConTextura(TGCGame.GameContent.T_Marmol)
-                .ConEscala(20f);
+                .ConAltura(alturaMesada)
+                .ConPosicion(SeparacionDePared+0.25f,2.25f)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConTextura(TGCGame.GameContent.T_MarmolNegro)
+                .ConEscala(2.25f);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_MesadaLateral2)
-                .ConPosicion(100f,1000f)
+                .ConPosicion(SeparacionDePared+0.05f,0.85f)
                 .ConTextura(TGCGame.GameContent.T_Marmol)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConEscala(20f);
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_PlatosApilados)
-                .ConPosicion(300f,500f)
+                .ConPosicion(SeparacionDePared+0.25f,2.5f)
+                .ConColor(Color.LightBlue)
                 .ConAltura(alturaMesada)
-                .ConEscala(20f);
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_MesadaCentral)
-                .ConPosicion(100f,1500f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConShader(mShader)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.05f,1.45f)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_Olla)
-                .ConPosicion(400f,1500f)
-                .ConAltura(alturaMesada+100f)
-                .ConEscala(20f);
+                .ConPosicion(2.2f,SeparacionDePared+0.45f)
+                .ConColor(Color.DarkSlateBlue)
+                .ConAltura(alturaMesada)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
                 
                 carpintero
-                .ConPosicion(2350f,400f)
-                .ConAltura(alturaMesada);
+                .ConPosicion(SeparacionDePared+0.3f,1.25f)
+                .ConAltura(alturaMesada+0.08f);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_Plato)
-                .ConPosicion(500f,1200f)
-                .ConAltura(alturaMesada*2)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.5f,1.5f)
+                .ConAltura(alturaMesada+1)
+                .ConColor(Color.Aquamarine)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
                 
                 carpintero
-                .ConPosicion(500f,1600f)
-                .ConAltura(alturaMesada*2)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.5f,1.30f)
+                .ConAltura(alturaMesada+1)
+                .ConRotacion(0,MathHelper.PiOver2,0);
                 AddElemento(carpintero.BuildMueble());
             
                 carpintero
-                .ConPosicion(500f,1800f)
-                .ConAltura(alturaMesada*2)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.5f,1.7f)
+                .ConAltura(alturaMesada+1)
+                .ConRotacion(0,MathHelper.PiOver2,0);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_MesadaLateral)
-                .ConPosicion(100f,2100f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConShader(mShader)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.05f,2.05f)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_PlatoGrande)
-                .ConPosicion(300f,2300f)
-                .ConAltura(alturaMesada+100f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConEscala(20f);
+                .ConPosicion(1,SeparacionDePared+0.1f)
+                .ConColor(Color.WhiteSmoke)
+                .ConAltura(alturaMesada + 1)
+                .ConRotacion(0,MathHelper.PiOver4 / 2,0)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_Botella)
-                .ConPosicion(1200f,200f)
-                .ConAltura(alturaMesada+100f)
+                .ConPosicion(1,SeparacionDePared + 0.2f)
+                .ConAltura(alturaMesada+0.05f)
                 .ConColor(Color.Azure)
-                .ConEscala(20f);
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_Maceta2)
-                .ConPosicion(300f,2400f)
-                .ConAltura(alturaMesada+100f)
-                .ConEscala(20f);
+                .ConPosicion(SeparacionDePared+0.2f,3)
+                .ConColor(Color.IndianRed)
+                .ConAltura(alturaMesada)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_Maceta3)
-                .ConPosicion(300f,2900f)
-                .ConAltura(alturaMesada+100f)
-                .ConEscala(20f);
+               .ConPosicion(SeparacionDePared+0.2f,3)
+                .ConColor(Color.IndianRed)
+                .ConAltura(alturaMesada+1.05f)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_ParedCocina)
-                .ConPosicion(100f,150f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConShader(tShader)
-                .ConEscala(20f);
+                .ConPosicion(0,0)
+                .ConRotacion(0,MathHelper.PiOver2,0)
+                .ConTextura(TGCGame.GameContent.T_MarmolNegro)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_Cocine)
-                .ConPosicion(2500f,500f)
-                .ConAltura(500f)
-                .ConEscala(2f);
+                .ConPosicion(2.25f,0.4f)
+                .ConAltura(0.45f)
+                .ConColor(Color.Silver)
+                .ConEscala(0.45f);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_Alacena)
-                .ConPosicion(3000f,0f)
-                .ConAltura(alturaMesada*2)
-                .ConShader(mShader)
-                .ConEscala(20f);
+                .ConPosicion(2.6f,0)
+                .ConAltura(alturaMesada * 2.5f)
+                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-                carpintero
-                .ConPosicion(200f,3900f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f);
-                AddElemento(carpintero.BuildMueble());
-                            
             carpintero.Modelo(TGCGame.GameContent.M_Maceta)
-                .ConPosicion(5400f,5400f)
-                .ConEscala(60f);
+                .ConPosicion(SeparacionDePared+0.2f,2.5f)
+                .ConColor(Color.IndianRed)
+                .ConAltura(alturaMesada+1.05f)
+                .ConEscala(6);
                 AddElemento(carpintero.BuildMueble());
             
             carpintero.Modelo(TGCGame.GameContent.M_Maceta4)
-                .ConPosicion(400f,5400f)
-                .ConEscala(60f);
+                .ConPosicion(SeparacionDePared+0.25f,0.55f)
+                .ConColor(Color.IndianRed)
+                .ConAltura(alturaMesada+1.05f)
+                .ConEscala(6);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_Maceta4)
-                .ConPosicion(400f,5400f)
-                .ConAltura(700f);
+            carpintero
+                .ConPosicion(2.25f,SeparacionDePared+0.25f)
+                .ConColor(Color.IndianRed)
+                .ConAltura(alturaMesada+1.5f);
                 AddElemento(carpintero.BuildMueble());
         }
     }    
