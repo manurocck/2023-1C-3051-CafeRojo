@@ -26,6 +26,7 @@ namespace TGC.MonoGame.TP.Elementos
 
         internal void ApplyAngularImpulse(Vector3 impulse) => Body().ApplyAngularImpulse(impulse.ToBepu());
         internal void ApplyLinearImpulse(Vector3 impulse) => Body().ApplyLinearImpulse(impulse.ToBepu());
+        internal void Despertar(bool estaDespierto) { if(!Body().Awake) TGCGame.Simulation.Awakener.AwakenBody(Body()); }
         internal Vector3 AngularVelocity() => Body().Velocity.Angular;
         internal Vector3 LinearVelocity() => Body().Velocity.Linear;
 

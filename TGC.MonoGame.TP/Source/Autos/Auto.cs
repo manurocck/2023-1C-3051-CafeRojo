@@ -29,6 +29,8 @@ namespace TGC.MonoGame.TP
         internal override void Update(float dTime, KeyboardState keyboard) {   
             CarDrawer pivot = (CarDrawer) Drawer();
             pivot.CarPosition = this.Position();
+            this.Despertar(keyboard.GetPressedKeyCount()>0);
+
             // GIRO
             var velocidadActual = this.LinearVelocity();
             var coeficienteVelocidad = (Math.Abs(velocidadActual.X) + Math.Abs(velocidadActual.Y) + Math.Abs(velocidadActual.Z)) / 2000;  // Posiblemente podamos usar Length(velocidadActual) / Length(this.LinearVelocity())
@@ -43,7 +45,7 @@ namespace TGC.MonoGame.TP
             // IMPULSOS
             Vector3 horizontalImpulse = this.Rotation().Forward() * keyboard.AccelerationSense() * LINEAR_SPEED;
             Vector3 verticalImpulse = PuedeSaltar() && keyboard.Jumped() ? this.Rotation().Up() * JUMP_POWER : Vector3.Zero ;
-            Vector3 angularImpulse = new Vector3(0,ANGULAR_SPEED,0) * pivot.WheelTurning * Math.Min(coeficienteVelocidad * 4, 1);
+            Vector3 angularImpulse = new Vector3(0,ANGULAR_SPEED,0) * pivot.WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
 
             this.ApplyLinearImpulse(horizontalImpulse + verticalImpulse);
             this.ApplyAngularImpulse(angularImpulse);

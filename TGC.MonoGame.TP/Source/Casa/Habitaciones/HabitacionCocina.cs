@@ -4,8 +4,9 @@ using TGC.MonoGame.TP.Elementos;
 namespace TGC.MonoGame.TP
 {
     public class HabitacionCocina : IHabitacion{
-        public const int Size = 6;
-        public HabitacionCocina(float posicionX, float posicionZ):base(Size,Size,new Vector3(posicionX,0f,posicionZ)){
+        public const int ANCHO = 6;
+        public const int LARGO = 6;
+        public HabitacionCocina(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
             Piso.ConTextura(TGCGame.GameContent.T_PisoCeramica, 10);
 
             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
@@ -21,8 +22,6 @@ namespace TGC.MonoGame.TP
                     case "Olla":
                         bShader.Parameters["DiffuseColor"].SetValue(Color.DarkSlateBlue.ToVector3());
                     break;
-                    case "Botella":
-                        bShader.Parameters["DiffuseColor"].SetValue(Color.LightBlue.ToVector3());
                     break;
                     case "ParedCocina":
                         tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Ladrillos);
@@ -35,21 +34,20 @@ namespace TGC.MonoGame.TP
             }
         }
         private void Amueblar(){
-            var carpintero = new ElementoBuilder();
+            var carpintero = new ElementoBuilder(this.PuntoInicio());
+            
             var alturaMesada = 600f;
-            var mShader = TGCGame.GameContent.E_TextureMirror;
-            var tShader = TGCGame.GameContent.E_TextureShader;
 
             carpintero.Modelo(TGCGame.GameContent.M_Mesada)
                 .ConPosicion(100f,150f)
                 .ConRotacion(0f,MathHelper.PiOver2,0f)
-                .ConShader(mShader)
+                .ConTextura(TGCGame.GameContent.T_Marmol)
                 .ConEscala(20f);
                 AddElemento(carpintero.BuildMueble());
 
             carpintero.Modelo(TGCGame.GameContent.M_MesadaLateral2)
                 .ConPosicion(100f,1000f)
-                .ConShader(mShader)
+                .ConTextura(TGCGame.GameContent.T_Marmol)
                 .ConRotacion(0f,MathHelper.PiOver2,0f)
                 .ConEscala(20f);
                 AddElemento(carpintero.BuildMueble());
@@ -116,6 +114,7 @@ namespace TGC.MonoGame.TP
             carpintero.Modelo(TGCGame.GameContent.M_Botella)
                 .ConPosicion(1200f,200f)
                 .ConAltura(alturaMesada+100f)
+                .ConColor(Color.Azure)
                 .ConEscala(20f);
                 AddElemento(carpintero.BuildMueble());
 

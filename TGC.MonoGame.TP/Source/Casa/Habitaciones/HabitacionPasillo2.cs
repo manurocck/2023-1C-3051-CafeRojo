@@ -4,8 +4,9 @@ using TGC.MonoGame.TP.Elementos;
 namespace TGC.MonoGame.TP
 {
     public class HabitacionPasillo2 : IHabitacion{
-        public const int Size = 4;
-        public HabitacionPasillo2(float posicionX, float posicionZ):base(Size,Size,new Vector3(posicionX,0f,posicionZ)){
+        public const int ANCHO = 4;
+        public const int LARGO = 4;
+        public HabitacionPasillo2(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
             Piso.ConTextura(TGCGame.GameContent.T_PisoAlfombrado);
 
             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
@@ -13,7 +14,7 @@ namespace TGC.MonoGame.TP
             Amueblar();
         }
         private void Amueblar(){
-            var carpintero = new ElementoBuilder();
+            var carpintero = new ElementoBuilder(this.PuntoInicio());
 
             // Bugueado
             /* carpintero.Modelo(TGCGame.GameContent.M_Aparador)

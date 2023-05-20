@@ -29,11 +29,11 @@ namespace TGC.MonoGame.TP
             MetrosAncho = metrosAncho * S_METRO;
             MetrosLargo = metrosLargo * S_METRO;
             
-            Matrix Scale = Matrix.CreateScale(MetrosAncho, 0f, MetrosLargo);
+            Matrix Scale = Matrix.CreateScale(MetrosLargo, 0f, MetrosAncho);
             World = Scale 
                     * Matrix.CreateTranslation(PosicionInicial);
 
-            var boxito = new Box(MetrosAncho*2,1f, MetrosLargo*2);
+            var boxito = new Box(MetrosLargo*2,1f, MetrosAncho*2);
             
             Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
                                                 PosicionInicial.ToBepu()-Vector3.UnitY.ToBepu(),
