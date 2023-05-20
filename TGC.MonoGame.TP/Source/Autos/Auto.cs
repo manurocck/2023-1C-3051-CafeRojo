@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using BepuPhysics;
 using BepuPhysics.Collidables;
 using TGC.MonoGame.TP.Utils;
 using TGC.MonoGame.TP.Elementos;
@@ -9,36 +8,26 @@ using TGC.MonoGame.TP.Drawers;
 
 namespace TGC.MonoGame.TP
 {
-    internal class Auto : MDynamic, MDrawable
-    { 
+    internal class Auto : ElementoDinamico { 
         private const float WHEEL_TURNING_LIMIT = 0.5f;
-        private const float ANGULAR_SPEED = 900f;
+        private const float ANGULAR_SPEED = 9000f;
         private const float LINEAR_SPEED = 80f;
         private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación
         private const float JUMP_POWER = 1000f; // Factor de ajuste para la rotación
         private bool PuedeSaltar() => true;
+        internal override float Mass() => 3f;
+        internal override float Scale() => 0.08f * TGCGame.S_METRO;
+        internal override IDrawer Drawer() => new CarDrawer();
 
-        //MDynamic Properties
-        public BodyHandle BodyHandle { set; get; }
-        public IConvexShape Shape { set; get; } 
-        public float Mass() => 3f;
-        public float Scale() => 0.08f * TGCGame.S_METRO;
-
-        //MDrawer Properties
-        public IDrawer Drawer { set; get; } = new CarDrawer();
-        Matrix MDrawable.World() => this.World();
-
-        public Auto(Vector3 posicionInicial)
-        {
+        internal Auto(Vector3 posicionInicial) {
             var boxSize = TGCGame.GameContent.M_Auto.Size() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
             Shape = new Box(boxSize.X,boxSize.Y,boxSize.Z);
 
-            this.AddToSimulation<Box>(posicionInicial + new Vector3(0,TGCGame.S_METRO,0));
+            this.AddToSimulation<Box>(posicionInicial + new Vector3(0,TGCGame.S_METRO,0), Quaternion.Identity);
         }
 
-        public void Update(float dTime, KeyboardState keyboard)
-        {   
-            CarDrawer pivot = (CarDrawer) Drawer;
+        internal override void Update(float dTime, KeyboardState keyboard) {   
+            CarDrawer pivot = (CarDrawer) Drawer();
             pivot.CarPosition = this.Position();
             // GIRO
             var velocidadActual = this.LinearVelocity();
@@ -61,4 +50,4 @@ namespace TGC.MonoGame.TP
         }
     }
 }
-    
+  

@@ -1,8 +1,9 @@
-using System;
+
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.TP.Design;
+using TGC.MonoGame.TP.Elementos;
 
 namespace TGC.MonoGame.TP
 {
@@ -13,8 +14,8 @@ namespace TGC.MonoGame.TP
         public readonly int Largo;
         private Vector3 PosicionInicial;
         internal Piso Piso;
-        private List<IElementoDinamico> ElementosDinamicos;
-        internal List<Elemento> Elementos;
+        private List<ElementoDinamico> ElementosDinamicos;
+        internal List<ElementoViejo> Elementos;
 
         //Ancho y Alto en Cantidad de Baldosas
         public IHabitacion(int metrosAncho, int metrosLargo, Vector3 posicionInicial)
@@ -23,17 +24,17 @@ namespace TGC.MonoGame.TP
             Largo = metrosLargo;
             PosicionInicial = posicionInicial;
 
-            ElementosDinamicos = new List<IElementoDinamico>();
-            Elementos = new List<Elemento>();
+            ElementosDinamicos = new List<ElementoDinamico>();
+            Elementos = new List<ElementoViejo>();
 
             Piso = new Piso(metrosAncho, metrosLargo, posicionInicial);
         }
 
-        public void AddDinamico( IElementoDinamico e ){
-            e.SetPosicionInicial(e.GetPosicionInicial()+PosicionInicial);
+        /*public void AddDinamico( ElementoDinamico e ){
             ElementosDinamicos.Add(e);
-        }
-        public void AddElemento( Elemento e ){
+        }*/
+
+        public void AddElemento( ElementoViejo e ){
             e.SetPosicionInicial(e.GetPosicionInicial()+PosicionInicial);
             Elementos.Add(e);
         }
@@ -59,9 +60,9 @@ namespace TGC.MonoGame.TP
             // Para debuggear
             return this.Elementos.Count + this.ElementosDinamicos.Count;
         }
-        public void Update(GameTime gameTime, KeyboardState keyboardState){
+        public void Update(float dTime, KeyboardState keyboardState){
             foreach(var e in ElementosDinamicos){
-                e.Update(gameTime, keyboardState);
+                e.Update(dTime, keyboardState);
             }
             return;
         }

@@ -1,7 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TGC.MonoGame.TP.Design;
 
-namespace TGC.MonoGame.TP.Design
+namespace TGC.MonoGame.TP.Elementos
 {
     public class ElementoBuilder{
         private Model Model;
@@ -45,8 +46,8 @@ namespace TGC.MonoGame.TP.Design
             Efecto = shader;
             return this;
         }
-        public Elemento BuildMueble(){
-            var elementoCreado = new Elemento(Model,Posicion,Rotacion,Escala);
+        public ElementoViejo BuildMueble(){
+            var elementoCreado = new ElementoViejo(Model,Posicion,Rotacion,Escala);
             elementoCreado.SetEffect(Efecto);
             return elementoCreado;
         }

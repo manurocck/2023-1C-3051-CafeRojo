@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace TGC.MonoGame.TP.Design
 {
     /// Crea un elemento estático en la posición del vector PosicionInicial
-    public class Elemento  {
+    public class ElementoViejo  {
         internal const float S_RELATIVE = TGCGame.S_METRO * 0.001f;
         public Matrix World = Matrix.Identity ;
         protected Model Model {get; set;}
@@ -13,10 +13,10 @@ namespace TGC.MonoGame.TP.Design
         private Vector3 PosicionInicial {get; set;}
         internal float Escala {get; set;}
 
-        public Elemento(Model modelo, Vector3 posicionInicial, Vector3 rotacion, float escala = 1f){
+        public ElementoViejo(Model modelo, Vector3 posicionInicial, Vector3 rotacion, float escala = 1f){
             Initialize(modelo, posicionInicial, rotacion, TGCGame.GameContent.E_BasicShader, escala);
         }
-        public Elemento(Model modelo, Vector3 posicionInicial, Vector3 rotacion, Effect shader, float escala = 1f){
+        public ElementoViejo(Model modelo, Vector3 posicionInicial, Vector3 rotacion, Effect shader, float escala = 1f){
             Initialize(modelo, posicionInicial, rotacion, shader, escala);
         }
         public void Initialize(Model modelo, Vector3 posicionInicial, Vector3 rotacion, Effect shader, float escala = 1f){

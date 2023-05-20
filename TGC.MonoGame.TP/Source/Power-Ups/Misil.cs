@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.TP.Design;
 
 namespace TGC.MonoGame.TP{
-    public class Misil : IElementoDinamico
+    /*public class Misil : IElementoDinamico
     {
         private Vector3 PosicionActual;
         private Vector3 RotacionActual;
@@ -32,6 +32,6 @@ namespace TGC.MonoGame.TP{
 
             base.Draw();
         }
-    }
+    }*/
 
 }

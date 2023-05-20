@@ -18,9 +18,9 @@ namespace TGC.MonoGame.TP{
             disponerHabitaciones();
             construirParedes();
         }
-        public void Update(GameTime gameTime, KeyboardState keyboardState){
+        public void Update(float dTime, KeyboardState keyboardState){
             foreach(var h in Habitaciones)
-                h.Update(gameTime, keyboardState);
+                h.Update(dTime, keyboardState);
         }
         public void Draw(){
             foreach(var h in Habitaciones) h.Draw();

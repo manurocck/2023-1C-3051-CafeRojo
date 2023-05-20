@@ -130,8 +130,7 @@ namespace TGC.MonoGame.TP
             //     MediaPlayer.Resume();
             // else if (keyboardState.IsKeyDown(Keys.P) && MediaPlayer.State == MediaState.Playing)
             //     MediaPlayer.Stop();
-
-            Casa.Update(gameTime, keyboardState);
+            Casa.Update(dTime, keyboardState);
             
             Camera.Mover(keyboardState);
             Camera.Update(Auto.World());

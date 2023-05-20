@@ -1,11 +1,14 @@
-using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TGC.MonoGame.TP.Design;
+using TGC.MonoGame.TP.Elementos;
 
 namespace TGC.MonoGame.TP
 {
     public class HabitacionPrincipal : IHabitacion{
         public const int Size = 10;
+
+        internal List<ElementoDinamico> Dibujables = new List<ElementoDinamico>(); 
         public HabitacionPrincipal(float posicionX, float posicionZ):base(Size,Size,new Vector3(posicionX,0f,posicionZ)){
             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
             Piso.ConTextura(TGCGame.GameContent.T_PisoMadera, 10);
@@ -39,6 +42,8 @@ namespace TGC.MonoGame.TP
                 }
                 e.Draw();
             }
+            foreach(var d in Dibujables)
+                d.Draw();
         }
         private void Amueblar(){
             var carpintero = new ElementoBuilder();
@@ -158,8 +163,8 @@ namespace TGC.MonoGame.TP
 
                 var posicionesAutosIA = new Vector3(1000f,0f,6000f);           
                 for(int i=1; i<6; i++){
-                    AddDinamico(new EnemyCar(i*1000f,0f,6000f, Vector3.Zero));
-                    AddDinamico(new EnemyCar(1001f,0f,i*1000f, Vector3.Zero));
+                    Dibujables.Add(new EnemyCar(i*200f,200f,1200f, Vector3.Zero));
+                    Dibujables.Add(new EnemyCar(220f,200f,i*200f, Vector3.Zero));
                 }
             
             #endregion            

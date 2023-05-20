@@ -18,11 +18,13 @@ namespace TGC.MonoGame.TP.Drawers
         void IDrawer.Draw(Matrix World)
         {
             ModelMeshCollection meshes = Model.Meshes;
-
+            Effect.Parameters["Texture"].SetValue(Texture);
             foreach (ModelMesh mesh in meshes)
             {
+                foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                    meshPart.Effect = Effect;
+
                 Effect.Parameters["World"].SetValue(mesh.ParentBone.Transform * World);
-                Effect.Parameters["Texture"].SetValue(Texture);
                 mesh.Draw();
             }
         }

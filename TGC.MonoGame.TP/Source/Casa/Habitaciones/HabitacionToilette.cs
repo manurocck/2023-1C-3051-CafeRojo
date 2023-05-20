@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using TGC.MonoGame.TP.Design;
+using TGC.MonoGame.TP.Elementos;
 
 namespace TGC.MonoGame.TP
 {

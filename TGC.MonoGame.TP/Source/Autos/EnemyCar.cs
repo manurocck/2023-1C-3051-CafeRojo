@@ -1,68 +1,38 @@
 
-using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Design;
 using TGC.MonoGame.TP.Utils;
 
+using TGC.MonoGame.TP.Drawers;
+using TGC.MonoGame.TP.Elementos;
+
 namespace TGC.MonoGame.TP{
-    class EnemyCar : IElementoDinamico {
-        const float ESCALA = 7f;
-        const float SIMU_BOX_SCALE = 0.01f;
-        private BodyHandle Handle;
-        private const float Velocidad = 500f;
-        private Vector3 Traslacion = new Vector3(0f,0f, 0f);
-        private Vector3 Direccion = new Vector3(0f,0f,0f); // Si está en cero, están inmóviles
+    internal class EnemyCar : ElementoDinamico {
+        internal override float Mass() => 0.0001f;
+        internal override float Scale() => 1.4f;
+        internal override IDrawer Drawer() => new TextureDrawer(TGCGame.GameContent.M_AutoEnemigo, TGCGame.GameContent.T_CombatVehicle);
         bool triggered = false;
 
-        public EnemyCar(float posX, float posY, float posZ, Vector3 rotacion) 
-        : base(TGCGame.GameContent.M_AutoEnemigo, new Vector3(posX,posY,posZ), Vector3.Zero, ESCALA)
+        internal EnemyCar(float posX, float posY, float posZ, Vector3 rotacion) 
         {
-            Traslacion = new Vector3(posX, posY, posZ);
-            this.SetEffect(TGCGame.GameContent.E_TextureShader);
+            var PosicionInicial = new Vector3(posX, posY, posZ);
 
-            var boxSize = Model.Size() * SIMU_BOX_SCALE;
-            var boxShape = new Box(boxSize.X,boxSize.Y,boxSize.Z); // a chequear
-            var boxInertia = boxShape.ComputeInertia(0.0001f);
-            var boxIndex = TGCGame.Simulation.Shapes.Add(boxShape);
+            var boxSize = TGCGame.GameContent.M_AutoEnemigo.Size() * 0.01f; //SIMU_BOX_SCALE Que va a ir a Content
+            Shape = new Box(boxSize.X,boxSize.Y,boxSize.Z);
 
-            Handle = TGCGame.Simulation.Bodies.Add(BodyDescription.CreateDynamic(
-                            (this.GetPosicionInicial()).ToBepu(),
-                            boxInertia,
-                            new CollidableDescription(boxIndex, 0.1f),
-                            new BodyActivityDescription(0.01f)));
-
+            this.AddToSimulation<Box>(PosicionInicial, Quaternion.Identity);
         }
 
-        public override void Update(GameTime gameTime, KeyboardState keyboard)
+        internal override void Update(float dTime, KeyboardState keyboard)
         {
-            var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);
-            var position = simuWorld.Pose.Position;
-            var quaternion = simuWorld.Pose.Orientation;
-            if(simuWorld.MotionState.Velocity.Linear.Length() > 2f) triggered = true;
-            World =
-                Matrix.CreateScale(Escala) *
-                Matrix.CreateFromQuaternion(new Quaternion(quaternion.X, quaternion.Y, quaternion.Z, quaternion.W)) * 
-                Matrix.CreateTranslation(new Vector3(position.X, position.Y, position.Z));
+            if(this.LinearVelocity().Length() > 2f) triggered = true;
+            //triggered = this.LinearVelocity().Length() > 2f;
         }
-        public override void Draw()
-        {
-            // var simuWorld = TGCGame.Simulation.Bodies.GetBodyReference(Handle);            
-            // var aabb = simuWorld.BoundingBox;
-            // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.HotPink);
 
-            if(!triggered){
-                TGCGame.GameContent.E_TextureShader
-                    .Parameters["Texture"].SetValue(TGCGame.GameContent.T_CombatVehicle);
-
-                foreach(var mesh in Model.Meshes){
-                    foreach(var meshPart in mesh.MeshParts){
-                        meshPart.Effect.Parameters["World"]?.SetValue(World);
-                    }
-                mesh.Draw();
-                }
-            }
-        }
+        internal override void Draw() {
+            if(!triggered) 
+                base.Draw();
+        } 
     }
 }
