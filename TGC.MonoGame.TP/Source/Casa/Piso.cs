@@ -14,7 +14,7 @@ namespace TGC.MonoGame.TP
         
         private Vector3 ColorDefault = new Color(19, 38, 47).ToVector3();
         private Texture2D TexturaBaldosa = TGCGame.GameContent.T_PisoMadera;
-        private float CantidadBaldosas = 1f;
+        private float CantidadBaldosas = 1f; // para hacerlo en "Tiles"
         private Matrix World;
         private StaticHandle Handle;
         internal Vector3 PosicionInicial;
@@ -25,7 +25,8 @@ namespace TGC.MonoGame.TP
 
         public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial)
         {
-            PosicionInicial = posicionInicial; 
+            PosicionInicial = posicionInicial;
+            PosicionInicial.Y += -15; // Hard-codeada para que el auto esté exáctamente sobre el piso, debería depender de S_METRO
             MetrosAncho = metrosAncho * S_METRO;
             MetrosLargo = metrosLargo * S_METRO;
             
