@@ -8,7 +8,7 @@ namespace TGC.MonoGame.TP
         public const int LARGO = 6;
         private const float SeparacionDePared = 0; 
         public HabitacionCocina(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
-            Piso.ConTextura(TGCGame.GameContent.T_PisoCeramica, 10);
+            Piso.ConTextura(TGCGame.GameContent.T_PisoCeramica, 10, 10);
 
             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
             

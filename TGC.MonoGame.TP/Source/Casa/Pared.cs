@@ -18,7 +18,7 @@ namespace TGC.MonoGame.TP
         protected Vector3 PuntoFinal;
         public readonly bool EsHorizontal;
         private float Largo;
-        private Effect Efecto = TGCGame.GameContent.E_TextureShader;
+        private Effect Efecto = TGCGame.GameContent.E_TextureTiles;
         private StaticHandle Handle;
         
 
@@ -113,11 +113,17 @@ namespace TGC.MonoGame.TP
             // var aabb = body.BoundingBox;
 
             // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
+            var metrosLargo = Largo/TGCGame.S_METRO;
 
             Efecto.Parameters["Texture"]?.SetValue(textura);
+            Efecto.Parameters["Filter"]?.SetValue(TGCGame.GameContent.T_MeshFilter);
 
             foreach( var w in Worlds){
                 Efecto.Parameters["World"].SetValue(w); 
+                Efecto.Parameters["TilesWide"]?.SetValue(metrosLargo*0.5f);
+                Efecto.Parameters["TilesBroad"]?.SetValue(1);
+                // Efecto.Parameters["MetrosLargo"]?.SetValue(ALTURA/TGCGame.S_METRO);
+                // Efecto.Parameters["MetrosAncho"]?.SetValue(metrosLargo);
                 TGCGame.GameContent.G_Cubo.Draw(Efecto);
             }
 

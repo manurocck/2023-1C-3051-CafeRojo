@@ -28,7 +28,7 @@ namespace TGC.MonoGame.TP
 
         internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                             E_TextureMirror, E_TextureTiles, E_Traslucid;
-        internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, 
+        internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                             T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
                             T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto;
         internal readonly List<Effect> Efectos = new List<Effect>();
@@ -68,6 +68,7 @@ namespace TGC.MonoGame.TP
             T_PisoMaderaClaro   = LoadTexture("PisoMaderaClaro");
             T_PisoCeramica      = LoadTexture("PisoCeramica");
             T_PisoAlfombrado    = LoadTexture("PisoAlfombra");
+            T_AlfombraHabitacion= LoadTexture("AlfombraHabitacion");
             T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
             T_Dragon            = LoadTexture("Muebles/Dragon");
             T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");

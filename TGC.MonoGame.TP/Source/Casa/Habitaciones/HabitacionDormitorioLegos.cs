@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TGC.MonoGame.TP.Elementos;
 
@@ -9,6 +10,7 @@ namespace TGC.MonoGame.TP
         public const int LARGO = 7;
 
         public HabitacionDormitorioLegos(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
+            Piso = Piso.ConTextura(TGCGame.GameContent.T_AlfombraHabitacion, ANCHO, ANCHO);
             Amueblar();
         }
         
@@ -70,9 +72,15 @@ namespace TGC.MonoGame.TP
             #region LEGOS CHIQUITOS
             carpintero.Modelo(TGCGame.GameContent.M_Lego);
             Vector2 desplazamientoRandom = new Vector2(LARGO*0.5f, ANCHO*0.5f); // donde arranca el bardo
-            Vector3 randomColor;
             Vector3 randomRotation;
             float random1, random2, random3; // Entropía
+            Color randomColor;
+            List<Color> legoPallette = new List<Color>();
+            legoPallette.Add(Color.DarkRed);
+            legoPallette.Add(Color.DarkBlue);
+            legoPallette.Add(Color.Gold);
+            legoPallette.Add(Color.DarkGreen);
+            legoPallette.Add(Color.AntiqueWhite);
 
             const float ESPARCIMIENTO = 1f;
 
@@ -82,7 +90,7 @@ namespace TGC.MonoGame.TP
                 random3 = (Random.Shared.NextSingle()-0.5f);
 
                 randomRotation = new Vector3(0f,MathHelper.Pi*random3, 0f);
-                randomColor = new Vector3( i%3%2*115 , (i+1)%3%2*115 , (i+2)%3%2*115 );
+                randomColor = legoPallette[i%legoPallette.Count];
                 
                 desplazamientoRandom += new Vector2((ESPARCIMIENTO*MathF.Cos(random1*MathHelper.TwoPi))*random2,ESPARCIMIENTO*(MathF.Sin(random1*MathHelper.TwoPi)*random2));
                 
@@ -90,7 +98,7 @@ namespace TGC.MonoGame.TP
                 carpintero
                     .ConPosicion(desplazamientoRandom.X,desplazamientoRandom.Y)
                     .ConRotacion(randomRotation.X,randomRotation.Y,randomRotation.Z)
-                    .ConColor(new Color(randomColor))
+                    .ConColor(randomColor)
                     .ConEscala(1f);
                     AddElemento(carpintero.BuildMueble());
             }

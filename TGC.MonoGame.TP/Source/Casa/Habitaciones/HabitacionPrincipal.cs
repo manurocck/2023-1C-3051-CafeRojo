@@ -7,7 +7,7 @@ namespace TGC.MonoGame.TP
         public const int ANCHO = 10;
         public const int LARGO = 10;
         public HabitacionPrincipal(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
-            Piso.ConTextura(TGCGame.GameContent.T_PisoMadera, 10);
+            Piso.ConTextura(TGCGame.GameContent.T_PisoMadera, 10, 10);
             Amueblar();
         }
         private void Amueblar(){

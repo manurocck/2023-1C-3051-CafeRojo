@@ -17,6 +17,9 @@ float4x4 World;
 float4x4 View;
 float4x4 Projection;
 
+// float MetrosAncho;
+// float MetrosLargo;
+
 texture Texture;
 sampler2D TextureSampler = sampler_state
 {
@@ -65,12 +68,15 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 float4 MainPS(VertexShaderOutput input) : COLOR0
 {
     float4 colorTexture = tex2D(TextureSampler, input.TextureCoordinate);
+    
+    input.TextureCoordinate.x = input.TextureCoordinate.x*0.25;
+    input.TextureCoordinate.y = input.TextureCoordinate.y;
     float4 colorOverlap = tex2D(FilterSampler, input.TextureCoordinate);
 
     if(colorOverlap.r<0.2){
         discard;
     }
-    return float4(colorTexture.rgb,0.7);
+    return float4(colorTexture.rgb,1);
 }
 
 technique BasicColorDrawing
