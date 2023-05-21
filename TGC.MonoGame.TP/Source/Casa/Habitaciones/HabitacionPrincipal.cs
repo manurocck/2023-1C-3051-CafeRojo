@@ -1,170 +1,136 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using TGC.MonoGame.TP.Design;
 using TGC.MonoGame.TP.Elementos;
 
 namespace TGC.MonoGame.TP
 {
     public class HabitacionPrincipal : IHabitacion{
-        public const int Size = 10;
-
-        internal List<ElementoDinamico> Dibujables = new List<ElementoDinamico>(); 
-        public HabitacionPrincipal(float posicionX, float posicionZ):base(Size,Size,new Vector3(posicionX,0f,posicionZ)){
-            var posicionInicial = new Vector3(posicionX,0f,posicionZ);
-            Piso.ConTextura(TGCGame.GameContent.T_PisoMadera, 10);
+        public const int ANCHO = 10;
+        public const int LARGO = 10;
+        public HabitacionPrincipal(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
+            Piso.ConTextura(TGCGame.GameContent.T_PisoMadera, 10, 10);
             Amueblar();
         }
-        public override void DrawElementos(){
-            var tShader = TGCGame.GameContent.E_TextureShader;
-            var bShader = TGCGame.GameContent.E_BasicShader;
-            var fShader = TGCGame.GameContent.E_BlacksFilter;
-            
-            foreach(var e in Elementos){
-                switch(e.GetTag()){
-                    case "Mesa":
-                        fShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_MaderaNikari);      
-                        fShader.Parameters["Filter"].SetValue(TGCGame.GameContent.T_MeshFilter);      
-                    break;
-                    case "Chair":
-                    case "Mesita":
-                        tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_MaderaNikari);      
-                    break;
-                    case "Sofa":
-                        tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Alfombra);      
-                    break;
-                    case "Sillon":
-                    case "CafeRojo":
-                        bShader.Parameters["DiffuseColor"].SetValue(Color.DarkRed.ToVector3());
-                    break;
-
-                    default:
-                    break;
-                }
-                e.Draw();
-            }
-            foreach(var d in Dibujables)
-                d.Draw();
-        }
         private void Amueblar(){
-            var carpintero = new ElementoBuilder();
-            var tShader = TGCGame.GameContent.E_TextureShader;
+            var carpintero = new ElementoBuilder(this.PuntoInicio());
             
             carpintero.Modelo(TGCGame.GameContent.M_Mesa)
-                .ConPosicion(4150f, 4150f)
-                .ConShader(tShader)
-                .ConEscala(12f)
+                .ConPosicion(5, 4.2f)
+                .ConTextura(TGCGame.GameContent.T_MarmolNegro)
+                .ConEscala(2.4f)
                 .ConRotacion(0, MathHelper.PiOver2, 0);
                 
                 AddElemento( carpintero.BuildMueble() );
             
 
             carpintero.Modelo(TGCGame.GameContent.M_Silla)
-                .ConShader(tShader)
-                .ConAltura(370f)
-                .ConEscala(10f)
+                .ConTextura(TGCGame.GameContent.T_MaderaNikari)
+                .ConAltura(0.3f)
+                .ConEscala(2f)
                 .ConRotacion(-MathHelper.PiOver2, 0, 0)
-                .ConPosicion(4150f, 2950f);
+                .ConPosicion(5, 3); // cabecera
                 AddElemento( carpintero.BuildMueble() );
 
                 carpintero
-                .ConPosicion(4150f,5150f)
+                .ConPosicion(5,5.15f) // contra-cabecera
                 .ConRotacion(-MathHelper.PiOver2, MathHelper.Pi, 0);
                 AddElemento( carpintero.BuildMueble() );
 
-            
                 carpintero
-                .ConPosicion(3650f,3650f)
+                .ConPosicion(4.5f,3.75f) // lado superior cerca de cabecera
                 .ConRotacion(-MathHelper.PiOver2, MathHelper.PiOver2, 0);
                 AddElemento( carpintero.BuildMueble() );
             
                 carpintero
-                .ConPosicion(3650f,4450f)
+                .ConPosicion(4.5f,4.5f) // lado superior cerca de contra-cabecera
                 .ConRotacion(-MathHelper.PiOver2, MathHelper.PiOver2, 0);
                 AddElemento( carpintero.BuildMueble() );
 
                 carpintero
-                .ConPosicion(4750f,3650f)
+                .ConPosicion(5.5f,3.75f) // lado inferior cerca de cabecera
                 .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*0.7f, 0);
                 AddElemento( carpintero.BuildMueble() );
 
                 carpintero
-                .ConPosicion(4750f,4450f)
+                .ConPosicion(5.5f,4.5f) // lado inferior cerca de contra-cabecera
                 .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*1.3f, 0);
                 AddElemento( carpintero.BuildMueble() );
             
         
-            carpintero.Modelo(TGCGame.GameContent.M_Sillon);
-                carpintero
-                .ConPosicion(7500f,3500)
-                .ConAltura(100f)
-                .ConRotacion(0, MathHelper.Pi, 0)
-                .ConEscala(10f);
-                AddElemento( carpintero.BuildMueble() );
+            // carpintero.Modelo(TGCGame.GameContent.M_Sillon)
+            //     .ConPosicion(0,0) //no se estan dibujando
+            //     .ConAltura(0)
+            //     .ConTextura(TGCGame.GameContent.T_Alfombra)
+            //     .ConRotacion(0, MathHelper.Pi, 0)
+            //     .ConEscala(1f);
+            //     AddElemento( carpintero.BuildMueble() );
             
 
-            carpintero.Modelo(TGCGame.GameContent.M_MuebleTV);
-                carpintero.ConPosicion(7950f,350f)
-                .ConRotacion(0, MathHelper.Pi, 0);
+            carpintero.Modelo(TGCGame.GameContent.M_MuebleTV)
+                .ConPosicion(LARGO-1f, 0.5f) // el del mueble
+                .ConRotacion(0, MathHelper.Pi, 0)
+                .ConTextura(TGCGame.GameContent.T_Reboque)
+                .ConEscala(0.25f);
                 AddElemento( carpintero.BuildMueble() );
             
             
             carpintero.Modelo(TGCGame.GameContent.M_Sofa)
-                .ConPosicion(8000f,9350f)
-                .ConShader(tShader)
+                .ConPosicion(LARGO-2f, ANCHO-0.75f)
+                .ConTextura(TGCGame.GameContent.T_Alfombra)
                 .ConRotacion(-MathHelper.PiOver2, MathHelper.Pi, 0)
-                .ConEscala(1f);
+                .ConEscala(0.2f);
                 AddElemento( carpintero.BuildMueble() );
             
 
             carpintero.Modelo(TGCGame.GameContent.M_Mesita)
-                .ConEscala(20f)
-                .ConShader(tShader)
-                .ConPosicion(8000f, 8200f)
+                .ConEscala(4f)
+                .ConTextura(TGCGame.GameContent.T_MaderaNikari)
+                .ConPosicion(LARGO-2.15f, ANCHO-1.75f)
                 .ConRotacion(-MathHelper.PiOver2, 0, 0);
                 AddElemento( carpintero.BuildMueble() );
             
 
             carpintero.Modelo(TGCGame.GameContent.M_CafeRojo)
-                .ConEscala(10f)
-                .ConAltura(390f)
-                .ConRotacion(-MathHelper.PiOver2,0f,0f)
-          
-                .ConPosicion(8000f, 8150f);
+                .ConColor(Color.DarkRed)
+                .ConEscala(2f)
+                .ConAltura(0.355f)
+                .ConPosicion(LARGO-2.15f, ANCHO-1.75f); // el acostado
+
                 AddElemento( carpintero.BuildMueble() );
 
                 carpintero
-                .ConPosicion(8050f, 8350f);
+                .ConPosicion(LARGO-2.25f, ANCHO-1.9f)
+                .ConAltura(0.355f)
+                .ConRotacion(-MathHelper.PiOver2,0f,0f); // el parado
+
                 AddElemento( carpintero.BuildMueble() );
-            
-            //Está bugueado
-            /* carpintero.Modelo(TGCGame.GameContent.M_Aparador)
-                .ConEscala(15f)
-                .ConPosicion(getCenter().X,getCenter().Z)
-                .ConRotacion(MathHelper.Pi,0,-MathHelper.PiOver2)
-                .ConShader(tShader)
-                .ConAltura(300f);
-                AddElemento( carpintero.BuildMueble() ); */
+                
+                carpintero
+                .ConPosicion(5, 4.2f)
+                .ConAltura(0.6f); // el de la mesa
+
+                AddElemento( carpintero.BuildMueble() );
 
             carpintero.Modelo(TGCGame.GameContent.M_Televisor)
-                .ConEscala(10f)
+                .ConEscala(1.75f)
                 .ConShader(TGCGame.GameContent.E_SpiralShader)
-                .ConPosicion(7500f,350f)
-                .ConAltura(100);
+
+                .ConPosicion(LARGO-1.425f, 0.5f) // el del mueble
+                .ConAltura(0.15f);
+                
                 AddElemento( carpintero.BuildMueble() );
 
                 carpintero
-                .ConAltura(650f)
-                .ConPosicion(150f, 8800f)
-                .ConRotacion(0f,MathHelper.PiOver2,0f);
+                .ConRotacion(0f,MathHelper.PiOver2,0f)
+                .ConPosicion(0.25f, ANCHO-1f) // el de la pared
+                .ConAltura(1.25f);
                 
                 AddElemento( carpintero.BuildMueble() );
 
             #region Autos Enemigos
 
-                var posicionesAutosIA = new Vector3(1000f,0f,6000f);           
                 for(int i=1; i<6; i++){
-                    Dibujables.Add(new EnemyCar(i*200f,200f,1200f, Vector3.Zero));
-                    Dibujables.Add(new EnemyCar(220f,200f,i*200f, Vector3.Zero));
+                    AddElementoDinamico(new EnemyCar(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
+                    AddElementoDinamico(new EnemyCar(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
                 }
             
             #endregion            

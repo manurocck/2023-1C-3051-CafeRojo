@@ -10,10 +10,10 @@ namespace TGC.MonoGame.TP
 {
     internal class Auto : ElementoDinamico { 
         private const float WHEEL_TURNING_LIMIT = 0.5f;
-        private const float ANGULAR_SPEED = 9000f;
+        private const float ANGULAR_SPEED = 10000f;
         private const float LINEAR_SPEED = 80f;
         private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación
-        private const float JUMP_POWER = 1000f; // Factor de ajuste para la rotación
+        private const float JUMP_POWER = 10000f; // Factor de ajuste para la rotación
         private bool PuedeSaltar() => true;
         internal override float Mass() => 3f;
         internal override float Scale() => 0.08f * TGCGame.S_METRO;
@@ -29,6 +29,8 @@ namespace TGC.MonoGame.TP
         internal override void Update(float dTime, KeyboardState keyboard) {   
             CarDrawer pivot = (CarDrawer) Drawer();
             pivot.CarPosition = this.Position();
+            this.Despertar(keyboard.GetPressedKeyCount()>0);
+
             // GIRO
             var velocidadActual = this.LinearVelocity();
             var coeficienteVelocidad = (Math.Abs(velocidadActual.X) + Math.Abs(velocidadActual.Y) + Math.Abs(velocidadActual.Z)) / 2000;  // Posiblemente podamos usar Length(velocidadActual) / Length(this.LinearVelocity())
@@ -43,9 +45,12 @@ namespace TGC.MonoGame.TP
             // IMPULSOS
             Vector3 horizontalImpulse = this.Rotation().Forward() * keyboard.AccelerationSense() * LINEAR_SPEED;
             Vector3 verticalImpulse = PuedeSaltar() && keyboard.Jumped() ? this.Rotation().Up() * JUMP_POWER : Vector3.Zero ;
-            Vector3 angularImpulse = new Vector3(0,ANGULAR_SPEED,0) * pivot.WheelTurning * Math.Min(coeficienteVelocidad * 4, 1);
+            Vector3 angularImpulse = new Vector3(0,ANGULAR_SPEED,0) * pivot.WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
 
-            this.ApplyLinearImpulse(horizontalImpulse + verticalImpulse);
+            // SUUUUPER interesante lo que pasa con este offset (investigar)
+            // Vector3 offset = TGCGame.GameContent.M_Auto.Size(); // tracción delantera
+            float offsetAmount = 2f;
+            this.ApplyLinearImpulse(horizontalImpulse + verticalImpulse, offsetAmount);
             this.ApplyAngularImpulse(angularImpulse);
         }
     }

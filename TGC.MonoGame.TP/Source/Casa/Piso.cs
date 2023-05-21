@@ -14,7 +14,8 @@ namespace TGC.MonoGame.TP
         
         private Vector3 ColorDefault = new Color(19, 38, 47).ToVector3();
         private Texture2D TexturaBaldosa = TGCGame.GameContent.T_PisoMadera;
-        private float CantidadBaldosas = 1f;
+        private float CantidadBaldosasLargo = 1f; // para hacerlo en "Tiles"
+        private float CantidadBaldosasAncho = 1f; // para hacerlo en "Tiles"
         private Matrix World;
         private StaticHandle Handle;
         internal Vector3 PosicionInicial;
@@ -25,15 +26,16 @@ namespace TGC.MonoGame.TP
 
         public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial)
         {
-            PosicionInicial = posicionInicial; 
+            PosicionInicial = posicionInicial;
+            PosicionInicial.Y += -15; // Hard-codeada para que el auto esté exáctamente sobre el piso, debería depender de S_METRO
             MetrosAncho = metrosAncho * S_METRO;
             MetrosLargo = metrosLargo * S_METRO;
             
-            Matrix Scale = Matrix.CreateScale(MetrosAncho, 0f, MetrosLargo);
+            Matrix Scale = Matrix.CreateScale(MetrosLargo, 0f, MetrosAncho);
             World = Scale 
                     * Matrix.CreateTranslation(PosicionInicial);
 
-            var boxito = new Box(MetrosAncho*2,1f, MetrosLargo*2);
+            var boxito = new Box(MetrosLargo*2,1f, MetrosAncho*2);
             
             Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
                                                 PosicionInicial.ToBepu()-Vector3.UnitY.ToBepu(),
@@ -52,9 +54,10 @@ namespace TGC.MonoGame.TP
             ColorDefault = color.ToVector3();
             return this;
         }
-        public Piso ConTextura(Texture2D texturaPiso, float cantidadBaldosas = 1){
+        public Piso ConTextura(Texture2D texturaPiso, float baldosasAncho = 1, float baldosasLargo = 1){
             Effect = TGCGame.GameContent.E_TextureTiles;
-            CantidadBaldosas = cantidadBaldosas;
+            CantidadBaldosasAncho = baldosasAncho; 
+            CantidadBaldosasLargo = baldosasLargo;
             TexturaBaldosa = texturaPiso;
             return this;
         }
@@ -68,7 +71,8 @@ namespace TGC.MonoGame.TP
 
             Effect.Parameters["DiffuseColor"]?.SetValue(ColorDefault);
             Effect.Parameters["Texture"]?.SetValue(TexturaBaldosa);
-            Effect.Parameters["TileAmount"]?.SetValue(CantidadBaldosas);
+            Effect.Parameters["TilesWide"]?.SetValue(CantidadBaldosasAncho);
+            Effect.Parameters["TilesBroad"]?.SetValue(CantidadBaldosasLargo);
             Effect.Parameters["World"].SetValue(World);
             TGCGame.GameContent.G_Quad.Draw(Effect);
         }

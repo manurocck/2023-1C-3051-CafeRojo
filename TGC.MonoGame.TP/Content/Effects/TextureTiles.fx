@@ -17,7 +17,8 @@ float4x4 World;
 float4x4 View;
 float4x4 Projection;
 
-float TileAmount;
+float TilesWide;
+float TilesBroad;
 
 texture Texture;
 sampler2D textureSampler = sampler_state
@@ -58,7 +59,9 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate.xy*TileAmount);
+    input.TextureCoordinate.x = input.TextureCoordinate.x*TilesBroad;
+    input.TextureCoordinate.y = input.TextureCoordinate.y*TilesWide;
+    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate.xy);
     return textureColor;
 }
 

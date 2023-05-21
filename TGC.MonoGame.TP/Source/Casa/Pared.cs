@@ -9,20 +9,16 @@ using TGC.MonoGame.TP.Utils;
 namespace TGC.MonoGame.TP
 {
     public class Pared{
-        // private Matrix WorldCerrada;
-        // private Matrix WorldLateral1, WorldLateral2;
-        private List<Matrix> Worlds = new List<Matrix>();
+        private const float LARGO_PUERTA = TGCGame.S_METRO * 2f;
+        public const float GROSOR = TGCGame.S_METRO * 0.1f;
+        public const float ALTURA = TGCGame.S_METRO * 2f;
         private List<float> DistanciasPuertas = new List<float>();
-        private float Largo;
-        private float LargoPuerta = TGCGame.S_METRO * 2f;
-        public const float Grosor = TGCGame.S_METRO * 0.1f;
-        public const float Altura = TGCGame.S_METRO * 2f;
+        private List<Matrix> Worlds = new List<Matrix>();
         protected Vector3 PuntoInicial = Vector3.Zero;
         protected Vector3 PuntoFinal;
         public readonly bool EsHorizontal;
-        // private bool ConPuerta = false;
-        private Effect Efecto = TGCGame.GameContent.E_TextureShader;
-        private Matrix AutoProyectado;
+        private float Largo;
+        private Effect Efecto = TGCGame.GameContent.E_TextureTiles;
         private StaticHandle Handle;
         
 
@@ -35,11 +31,11 @@ namespace TGC.MonoGame.TP
             var esteNumerito = (PuntoInicial.X+PuntoFinal.X)*0.5f;
             var otroNumerito = (PuntoInicial.Z+PuntoFinal.Z)*0.5f;
 
-            Box boxito = (!EsHorizontal)? new Box(esteNumerito*2, Altura, Grosor) 
-                                        : new Box(Grosor, Altura, otroNumerito*2);
+            Box boxito = (!EsHorizontal)? new Box(esteNumerito*2, ALTURA, GROSOR) 
+                                        : new Box(GROSOR, ALTURA, otroNumerito*2);
 
             Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
-                                                new Vector3(esteNumerito, Altura*0.5f, otroNumerito + Grosor).ToBepu(),
+                                                new Vector3(esteNumerito, ALTURA*0.5f, otroNumerito + GROSOR).ToBepu(),
                                                 TGCGame.Simulation.Shapes.Add(boxito)));
         }
 
@@ -49,12 +45,12 @@ namespace TGC.MonoGame.TP
             PuntoFinal = puntoFinal;
 
             //Largo = largoAbsoluto;
-            Largo = (EsHorizontal)? puntoFinal.Z - puntoInicial.Z : puntoFinal.X - puntoInicial.X - Grosor;
+            Largo = (EsHorizontal)? puntoFinal.Z - puntoInicial.Z : puntoFinal.X - puntoInicial.X - GROSOR;
             
-            Matrix Escala       = Matrix.CreateScale(Altura,Grosor,Largo);
+            Matrix Escala       = Matrix.CreateScale(ALTURA,GROSOR,Largo);
             Matrix LevantarQuad = Matrix.CreateRotationZ(MathHelper.PiOver2);
             Matrix Rotacion     = EsHorizontal ? Matrix.CreateRotationY(0) : Matrix.CreateRotationY(MathHelper.PiOver2);
-            Matrix Traslacion   = Matrix.CreateTranslation(PuntoInicial.X,-0,PuntoInicial.Z);
+            Matrix Traslacion   = Matrix.CreateTranslation(PuntoInicial.X,-TGCGame.S_METRO*0.1f,PuntoInicial.Z);
 
             var worldCerrada = Escala * LevantarQuad * Rotacion * Traslacion ;
             Worlds.Add(worldCerrada);
@@ -80,23 +76,23 @@ namespace TGC.MonoGame.TP
             for(i = 0 ; i < DistanciasPuertas.Count ; i++){
                 var largoParedActual = largoParedRestante*this.DistanciasPuertas[i] * ponderacionRestante;
 
-                Escala       = Matrix.CreateScale(Altura,Grosor,largoParedActual);
+                Escala       = Matrix.CreateScale(ALTURA,GROSOR,largoParedActual);
                 Traslacion   = (EsHorizontal)? 
-                            Matrix.CreateTranslation(PuntoInicial.X,-0,PuntoInicial.Z + corrimiento ) :
-                            Matrix.CreateTranslation(PuntoInicial.X + corrimiento ,-0,PuntoInicial.Z) ;
+                            Matrix.CreateTranslation(PuntoInicial.X,-TGCGame.S_METRO*0.1f,PuntoInicial.Z + corrimiento ) :
+                            Matrix.CreateTranslation(PuntoInicial.X + corrimiento ,-TGCGame.S_METRO*0.1f,PuntoInicial.Z) ;
 
                 WorldAux = Escala * LevantarQuad * Rotacion * Traslacion ;
                 this.Worlds.Add(WorldAux);
                 
 
-                ponderacionRestante = ((largoParedRestante-LargoPuerta)/Largo);
+                ponderacionRestante = ((largoParedRestante-LARGO_PUERTA)/Largo);
                 DistanciasPuertas.ForEach(d => d -= (largoParedActual/Largo) );
-                corrimiento +=(largoParedActual + LargoPuerta);
-                largoParedRestante  -= (largoParedActual + LargoPuerta);
+                corrimiento +=(largoParedActual + LARGO_PUERTA);
+                largoParedRestante  -= (largoParedActual + LARGO_PUERTA);
             }
 
             // dibuja la última
-            Escala       = Matrix.CreateScale(Altura,Grosor,largoParedRestante);
+            Escala       = Matrix.CreateScale(ALTURA,GROSOR,largoParedRestante);
             Traslacion   = (EsHorizontal)? 
                             Matrix.CreateTranslation(PuntoInicial.X,-0,PuntoInicial.Z + corrimiento ) :
                             Matrix.CreateTranslation(PuntoInicial.X + corrimiento,-0,PuntoInicial.Z) ;
@@ -117,11 +113,17 @@ namespace TGC.MonoGame.TP
             // var aabb = body.BoundingBox;
 
             // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
+            var metrosLargo = Largo/TGCGame.S_METRO;
 
             Efecto.Parameters["Texture"]?.SetValue(textura);
+            Efecto.Parameters["Filter"]?.SetValue(TGCGame.GameContent.T_MeshFilter);
 
             foreach( var w in Worlds){
                 Efecto.Parameters["World"].SetValue(w); 
+                Efecto.Parameters["TilesWide"]?.SetValue(metrosLargo*0.5f);
+                Efecto.Parameters["TilesBroad"]?.SetValue(1);
+                // Efecto.Parameters["MetrosLargo"]?.SetValue(ALTURA/TGCGame.S_METRO);
+                // Efecto.Parameters["MetrosAncho"]?.SetValue(metrosLargo);
                 TGCGame.GameContent.G_Cubo.Draw(Efecto);
             }
 
@@ -136,11 +138,6 @@ namespace TGC.MonoGame.TP
             //     TGCGame.GameContent.G_Cubo.Draw(Efecto);
             // }            
         }
-
-        public void SetProjectedAuto(Matrix projectedAuto){
-            AutoProyectado = projectedAuto;
-        }
-
         public void SetEffect(Effect nuevoEfecto){
             Efecto = nuevoEfecto;
         }

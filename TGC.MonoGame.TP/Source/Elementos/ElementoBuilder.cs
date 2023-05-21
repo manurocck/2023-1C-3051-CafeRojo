@@ -1,34 +1,39 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TGC.MonoGame.TP.Design;
+using TGC.MonoGame.TP.Drawers;
 
 namespace TGC.MonoGame.TP.Elementos
 {
     public class ElementoBuilder{
         private Model Model;
-        private Vector3 Posicion = Vector3.Zero;
+        private Vector3 PosicionRelativa;
+        private Vector3 Corrimiento = Vector3.Zero;
         private Vector3 Rotacion = Vector3.Zero;
-        private Effect Efecto = TGCGame.GameContent.E_BasicShader;
+        private IDrawer Drawer = new ColorDrawer(TGCGame.GameContent.M_CafeRojo, Color.Magenta); // drawer como static?
         private float Escala = 1f;
 
-        public ElementoBuilder(){}
+        /// <summary> Recibe una posicion pivot <paramref name="inicioHabitacion"/> sobre la cuál dibuja todos los elementos + el corrimiento indicado por los métodos <paramref name="Posicion"/> y <paramref name="Altura"/></summary> 
+        public ElementoBuilder(Vector3 inicioHabitacion) => PosicionRelativa = inicioHabitacion;
+
         public void Reset(){
-            Posicion = Vector3.Zero;
+            Corrimiento = Vector3.Zero;
             Rotacion = Vector3.Zero;
             Escala = 1f;
-            Efecto = TGCGame.GameContent.E_BasicShader;
+            Drawer = new ColorDrawer(Model, Color.Magenta);
         }
         public ElementoBuilder Modelo(Model modelo3d){
-            Reset();
             Model = modelo3d;
+            Reset();
             return this;
         }
         public ElementoBuilder ConEscala(float escala){
             Escala = escala;
             return this;
         }
-        public ElementoBuilder ConAltura(float altura){
-            Posicion.Y = altura;
+        /// <summary> La <paramref name="altura"/> del elemento. Su unidad es <paramref name="S_METRO"/></summary>
+        public ElementoBuilder ConAltura(float metrosAltura){
+            Corrimiento.Y = metrosAltura * TGCGame.S_METRO;
             return this;
         }
         public ElementoBuilder ConRotacion(float rotacionX, float rotacionY, float rotacionZ){
@@ -37,19 +42,31 @@ namespace TGC.MonoGame.TP.Elementos
             Rotacion.Z = rotacionZ;
             return this;
         }
-        public ElementoBuilder ConPosicion(float distanciaAlOrigenEnX, float distanciaAlOrigenEnZ){
-            Posicion.X = distanciaAlOrigenEnX;
-            Posicion.Z = distanciaAlOrigenEnZ;
+        /// <summary> Establece el corrimiento del objeto sobre el plano. <paramref name="metrosDistanciaAlOrigenEnX"/> y <paramref name="metrosDistanciaAlOrigenEnZ"/>  tienen como unidad a <paramref name="S_METRO"/> <code></code> <example><code> ElementoBuilder.ConPosicion(2,3); //Lo mueve 2 unidades para abajo y 3 para la izquierda desde el origen </code></example></summary> 
+        public ElementoBuilder ConPosicion(float metrosDistanciaAlOrigenEnX, float metrosDistanciaAlOrigenEnZ){
+            Corrimiento.X = metrosDistanciaAlOrigenEnX * TGCGame.S_METRO;
+            Corrimiento.Z = metrosDistanciaAlOrigenEnZ * TGCGame.S_METRO;
             return this;
         }
-        public ElementoBuilder ConShader(Effect shader){
-            Efecto = shader;
+        public ElementoBuilder ConShader(Effect shaderSinParametros){
+            Drawer = new PlainEffectDrawer(Model, shaderSinParametros);
             return this;
         }
-        public ElementoViejo BuildMueble(){
-            var elementoCreado = new ElementoViejo(Model,Posicion,Rotacion,Escala);
-            elementoCreado.SetEffect(Efecto);
-            return elementoCreado;
+        public ElementoBuilder ConTextura(Texture2D textura){
+            Drawer = new TextureDrawer(Model, textura);
+            return this;
         }
+        internal ElementoBuilder ConColor(Color color){
+            Drawer = new ColorDrawer(Model, color);
+            return this;
+        }
+        public ElementoEstatico BuildMueble(){
+            Corrimiento += PosicionRelativa;
+            return new ElementoEstatico(Drawer, Corrimiento, Rotacion, Escala);
+        }
+        // public ElementoEstatico BuildDinamico(){
+        //     Corrimiento += PosicionRelativa;
+        //     return new ElementoDinamico(Drawer, Corrimiento, Rotacion, Escala);
+        // }
     }
 }

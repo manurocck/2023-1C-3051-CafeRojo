@@ -18,11 +18,7 @@ namespace TGC.MonoGame.TP.Drawers
         internal float WheelTurning { get; set; } = 0;
         //internal Matrix CarWorld { get; set; }
 
-        internal CarDrawer(){
-            foreach(var mesh in Model.Meshes)
-            foreach(var meshPart in mesh.MeshParts)
-                meshPart.Effect = Effect;
-        }
+        internal CarDrawer(){}
 
         /*internal override void Draw(Matrix GeneralWorld)
         {
@@ -56,11 +52,14 @@ namespace TGC.MonoGame.TP.Drawers
             var world = GeneralWorld;
 
             //var aabb = simuWorld.BoundingBox;
-            
             //TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
-            
             //var quaternion = simuWorld.Pose.Orientation;
             var worldAux = Matrix.Identity;
+            
+            // set effect (se puede optimizar)
+            foreach(var mesh in Model.Meshes)
+            foreach(var meshPart in mesh.MeshParts)
+                meshPart.Effect = Effect;
 
             // acá se están dibujando las ruedas una vez. sacarlas del dibujado.
             foreach(var bone in Model.Bones){
