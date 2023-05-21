@@ -34,7 +34,7 @@ namespace TGC.MonoGame.TP
             // GIRO
             var velocidadActual = this.LinearVelocity();
             var coeficienteVelocidad = (Math.Abs(velocidadActual.X) + Math.Abs(velocidadActual.Y) + Math.Abs(velocidadActual.Z)) / 2000;  // Posiblemente podamos usar Length(velocidadActual) / Length(this.LinearVelocity())
-            Console.WriteLine("Velocidad alcanzada :    . . . . . . {0:F}%", (coeficienteVelocidad * 100f));
+            //Console.WriteLine("Velocidad alcanzada :    . . . . . . {0:F}%", (coeficienteVelocidad * 100f));
 
             // ROTACION DE RUEDAS
             pivot.WheelTurning += -Math.Sign(pivot.WheelTurning) * WHEEL_TURNING_LIMIT * dTime;

@@ -28,16 +28,20 @@ namespace TGC.MonoGame.TP
             EsHorizontal = esHorizontal;
             Ubicar(puntoInicio, puntoFinal);
  
-            var esteNumerito = (PuntoInicial.X+PuntoFinal.X)*0.5f;
-            var otroNumerito = (PuntoInicial.Z+PuntoFinal.Z)*0.5f;
+            var esteNumerito = Math.Abs(-PuntoInicial.X+PuntoFinal.X);
+            var otroNumerito = Math.Abs(-PuntoInicial.Z+PuntoFinal.Z);
 
-            Box boxito = (!EsHorizontal)? new Box(esteNumerito*2, ALTURA, GROSOR) 
-                                        : new Box(GROSOR, ALTURA, otroNumerito*2);
+            Box boxito = (!EsHorizontal)? new Box(esteNumerito, ALTURA, GROSOR) 
+                                        : new Box(GROSOR, ALTURA, otroNumerito);
+                            
+            Vector3 posicion = (!EsHorizontal)? new Vector3((PuntoInicial.X+PuntoFinal.X)/2, ALTURA*0.5f, PuntoInicial.Z):
+                                                new Vector3(PuntoInicial.X, ALTURA*0.5f, (PuntoInicial.Z+PuntoFinal.Z)/2);
 
             Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
-                                                new Vector3(esteNumerito, ALTURA*0.5f, otroNumerito + GROSOR).ToBepu(),
+                                                posicion.ToBepu(),
                                                 TGCGame.Simulation.Shapes.Add(boxito)));
         }
+
 
         ///<summary> Pared Completamente Cerrada. Me dibujo de derecha a izquierda (Horizontal) o de arriba para abajo (Vertical) </summary>
         public void Ubicar(Vector3 puntoInicial, Vector3 puntoFinal){
@@ -109,10 +113,10 @@ namespace TGC.MonoGame.TP
         }
         public void Draw(Texture2D textura){ 
             
-            // var body = TGCGame.Simulation.Statics.GetStaticReference(Handle);
-            // var aabb = body.BoundingBox;
+            //var body = TGCGame.Simulation.Statics.GetStaticReference(Handle);
+            //var aabb = body.BoundingBox;
 
-            // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
+            //TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
             var metrosLargo = Largo/TGCGame.S_METRO;
 
             Efecto.Parameters["Texture"]?.SetValue(textura);
