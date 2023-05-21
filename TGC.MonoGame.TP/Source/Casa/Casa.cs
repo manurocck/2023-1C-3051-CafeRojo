@@ -63,12 +63,12 @@ namespace TGC.MonoGame.TP{
             //               Dejarlo solo que dependa de la Habitación definir las posiciones
             //               de los objetos (en AddElemento y cuandodefinimos la PosicionInicial)
             Habitaciones.Add( new HabitacionPrincipal(0f,0f));
-            // Habitaciones.Add( new HabitacionCocina(-HabitacionCocina.Size * S_METRO, S_METRO * HabitacionPrincipal.Size/2) );
-            // Habitaciones.Add( new HabitacionPasillo1(0f, -HabitacionPasillo1.Size * S_METRO) );
+            Habitaciones.Add( new HabitacionCocina(-HabitacionCocina.LARGO * S_METRO, S_METRO * HabitacionPrincipal.ANCHO/2) );
+            Habitaciones.Add( new HabitacionPasillo(0f, -HabitacionPasillo.ANCHO * S_METRO) );
             // Habitaciones.Add( new HabitacionToilette(-HabitacionToilette.Size * S_METRO, 0));
             // Habitaciones.Add( new HabitacionPasillo2(0f, -Habitaciones[2].Ancho*2 * S_METRO));
             // Habitaciones.Add( new HabitacionOficina(0f, -S_METRO *(Habitaciones[2].Ancho*2+HabitacionOficina.Size)));
-            // Habitaciones.Add( new HabitacionDormitorio1(-S_METRO * HabitacionDormitorio1.Size , -Habitaciones[2].Ancho*2 * S_METRO ));
+            Habitaciones.Add( new HabitacionDormitorioLegos(-S_METRO * HabitacionDormitorioLegos.LARGO , -HabitacionPasillo.ANCHO* S_METRO ));
             // Habitaciones.Add( new HabitacionDormitorio2(Habitaciones[2].Ancho * S_METRO , -Habitaciones[2].Ancho*2 * S_METRO));
             // Habitaciones.Add( new HabitacionToilette(Habitaciones[5].GetVerticeExtremo().X,Habitaciones[5].GetVerticeExtremo().Z - HabitacionToilette.Size*S_METRO));
 
@@ -99,14 +99,14 @@ namespace TGC.MonoGame.TP{
             // Esqueleto.Add(new Pared(hBanioOf  .GetSegmentoInferior ().inicio, hBanioOf  .GetSegmentoInferior ().final, true ));
             
             // Exteriores de la principal 
-            Esqueleto.Add(new Pared(hPrincipal.GetSegmentoIzquierda().inicio, hPrincipal.GetSegmentoIzquierda().final));
-            Esqueleto.Add(new Pared(hPrincipal.GetSegmentoInferior ().inicio, hPrincipal.GetSegmentoInferior ().final, true));
+            // Esqueleto.Add(new Pared(hPrincipal.GetSegmentoIzquierda().inicio, hPrincipal.GetSegmentoIzquierda().final));
+            // Esqueleto.Add(new Pared(hPrincipal.GetSegmentoInferior ().inicio, hPrincipal.GetSegmentoInferior ().final, true));
 
-            // Paredes HabitacionPrincipal
-            Esqueleto.Add(new Pared(hPrincipal.GetSegmentoSuperior().inicio, hPrincipal.GetSegmentoSuperior().final, true));
-            // Esqueleto[10].AddPuerta(0.50f);
-            // Esqueleto[10].AddPuerta(0.10f);
-            Esqueleto.Add(new Pared(hPrincipal.GetSegmentoDerecha ().inicio, hPrincipal.GetSegmentoDerecha ().final));
+            // // Paredes HabitacionPrincipal
+            // Esqueleto.Add(new Pared(hPrincipal.GetSegmentoSuperior().inicio, hPrincipal.GetSegmentoSuperior().final, true));
+            // // Esqueleto[10].AddPuerta(0.50f);
+            // // Esqueleto[10].AddPuerta(0.10f);
+            // Esqueleto.Add(new Pared(hPrincipal.GetSegmentoDerecha ().inicio, hPrincipal.GetSegmentoDerecha ().final));
             // Esqueleto[11].AddPuerta(0.10f);
             // Paredes cortadas del Pasillo 1 (el más cercano a la principal)
             // Esqueleto.Add(new Pared(hDormiLego.GetSegmentoInferior().inicio, hDormiLego.GetSegmentoInferior().final, true ));
