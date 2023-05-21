@@ -18,14 +18,14 @@ namespace TGC.MonoGame.TP
         internal List<ElementoEstatico> ElementosEstaticos;
 
         //Ancho y Alto en Cantidad de Baldosas
-        public IHabitacion(int metrosAncho, int metrosLargo, Vector3 posicionInicial)
+        public IHabitacion(int metrosAncho, int metrosLargo, Vector3 traslacionEnMetros)
         {
+            PosicionInicial = traslacionEnMetros* TGCGame.S_METRO;
             MetrosAncho = metrosAncho;
             MetrosLargo = metrosLargo;
-            PosicionInicial = posicionInicial;
             ElementosDinamicos = new List<ElementoDinamico>();
             ElementosEstaticos = new List<ElementoEstatico>();
-            Piso = new Piso(metrosAncho, metrosLargo, posicionInicial);
+            Piso = new Piso(metrosAncho, metrosLargo, PosicionInicial);
         }
         public void AddElemento( ElementoEstatico e ){
             ElementosEstaticos.Add(e);
@@ -52,20 +52,31 @@ namespace TGC.MonoGame.TP
         }
         
 
-        public Vector3 GetMiddlePoint() => Piso.GetMiddlePoint();
-        public Vector3 PuntoCentro() => Piso.getCenter();
+        /*                 *|
+        |> > > UTILS        |
+        |*                 */
+
+        /// <summary> Coordenadas del centro de la habitación (sobre el piso)</summary>
+        public Vector3 PuntoCentro() => Piso.PuntoCentro();
+        /// <summary> Coordenadas del punto tomado como origen de la habitación (superior derecho)</summary>
         public Vector3 PuntoInicio() => this.PosicionInicial;
+        /// <summary> Coordenadas del punto más alejado al origen de la habitación (inferior izquierdo)</summary>
         public Vector3 PuntoExtremo() => this.PuntoCentro()*2;
-        public (Vector3 inicio, Vector3 final) GetSegmentoSuperior() =>
+
+        /// <summary> Coordenadas del lado superior de la habitación (no confundir lado con pared) <code><paramref name="inicio"/> es el punto superior de la derecha</code><code><paramref name="final"/> es el punto superior de la izquierda</code></summary>
+        public (Vector3 inicio, Vector3 final) SegmentoSuperior() =>
                     ( this.PuntoInicio(),
                     new Vector3(this.PuntoInicio().X, 0f , this.PuntoExtremo().Z));
-        public (Vector3 inicio, Vector3 final) GetSegmentoInferior() =>
+        /// <summary> Coordenadas del lado inferior de la habitación (no confundir lado con pared) <code><paramref name="inicio"/> es el punto inferior de la derecha</code><code><paramref name="final"/> es el punto inferior de la izquierda</code></summary>
+        public (Vector3 inicio, Vector3 final) SegmentoInferior() =>
                     (new Vector3(this.PuntoExtremo().X, 0f , this.PuntoInicio().Z),
                     this.PuntoExtremo());
-        public (Vector3 inicio, Vector3 final) GetSegmentoDerecha() =>
+        /// <summary> Coordenadas del lado derecho de la habitación (no confundir lado con pared) <code><paramref name="inicio"/> es el punto superior de la derecha</code><code><paramref name="final"/> es el punto inferior de la derecha</code></summary>
+        public (Vector3 inicio, Vector3 final) SegmentoDerecha() =>
                     (this.PuntoInicio(),
                     new Vector3(this.PuntoExtremo().X, 0f , this.PuntoInicio().Z));
-        public (Vector3 inicio, Vector3 final) GetSegmentoIzquierda() =>
+        /// <summary> Coordenadas del lado izquierdo de la habitación (no confundir lado con pared) <code><paramref name="inicio"/> es el punto superior de la izquierda</code><code><paramref name="final"/> es el punto inferior de la izquierda</code></summary>
+        public (Vector3 inicio, Vector3 final) SegmentoIzquierda() =>
                     (new Vector3(this.PuntoInicio().X, 0f , this.PuntoExtremo().Z),
                     this.PuntoExtremo());
     }

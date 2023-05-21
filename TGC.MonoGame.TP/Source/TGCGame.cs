@@ -102,8 +102,8 @@ namespace TGC.MonoGame.TP
 
             Casa.LoadContent();
             
-            Auto  = new Auto (Casa.GetCenter(0));
-            //Auto2 = new Auto2(Casa.GetCenter(0));
+            Auto  = new Auto (Casa.PuntoCentro(0));
+            //Auto2 = new Auto2(Casa.PuntoCentro(0));
         }
 
         protected override void Update(GameTime gameTime)
@@ -130,6 +130,7 @@ namespace TGC.MonoGame.TP
             //     MediaPlayer.Resume();
             // else if (keyboardState.IsKeyDown(Keys.P) && MediaPlayer.State == MediaState.Playing)
             //     MediaPlayer.Stop();
+
             Casa.Update(dTime, keyboardState);
             
             Camera.Mover(keyboardState);
@@ -155,7 +156,6 @@ namespace TGC.MonoGame.TP
         
         protected override void UnloadContent()
         {
-            // TODO check why Simulation.Dispose method sometimes fails
             Simulation.Dispose();
             BufferPool.Clear();
             ThreadDispatcher.Dispose();

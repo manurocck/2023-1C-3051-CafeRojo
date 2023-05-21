@@ -42,13 +42,10 @@ namespace TGC.MonoGame.TP
                                                 TGCGame.Simulation.Shapes.Add(boxito)
                                                 ));
         }
-        public Vector3 GetVerticeExtremo(){
+        public Vector3 PuntoExtremo(){
             return PosicionInicial + ( new Vector3(MetrosLargo,0f,MetrosAncho) );
         }
-        public Vector3 GetMiddlePoint(){
-            return PosicionInicial + ( new Vector3(MetrosLargo*0.5f,0f,MetrosAncho*0.5f) );
-        }
-        public Vector3 getCenter() => this.GetVerticeExtremo()*0.5f;
+        public Vector3 PuntoCentro() => this.PuntoExtremo()*0.5f;
         
         public Piso ConColor(Color color){
             ColorDefault = color.ToVector3();
@@ -65,9 +62,7 @@ namespace TGC.MonoGame.TP
         {
             // var body = TGCGame.Simulation.Statics.GetStaticReference(Handle);
             // var aabb = body.BoundingBox;
-
             // TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Red);
-
 
             Effect.Parameters["DiffuseColor"]?.SetValue(ColorDefault);
             Effect.Parameters["Texture"]?.SetValue(TexturaBaldosa);

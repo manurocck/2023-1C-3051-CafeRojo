@@ -13,33 +13,37 @@ namespace TGC.MonoGame.TP
         private List<Pared> Paredes = new List<Pared>();
         private const float ANCHO_PUERTA = 0.15f;
 
-        public Puerta(Vector3 puntoInicio, Vector3 puntoFinal, float ubicacionPuerta, bool esHorizontal){
+        /// <summary> <paramref name="ubicacionPuerta"/> es la distancia a la que está del origen (0 es lo cerca posible y 1 es lo más lejos posible)</summary> 
+        public Puerta(Vector3 puntoInicio, Vector3 puntoFinal, float ubicacionPuerta){
 
-        if(!esHorizontal){
-            if(puntoFinal.X > 0){
+            var esHorizontal = (puntoInicio.X == puntoFinal.X);
+
+            if(!esHorizontal && puntoFinal.X > 0)
+            {
                 var temp = puntoInicio;
-                puntoInicio = puntoFinal;
-                puntoFinal = temp;
+                    puntoInicio = puntoFinal;
+                    puntoFinal = temp;
             }
-        }
-        else if(puntoFinal.Z < 0){
-            var temp = puntoInicio;
-                puntoInicio = puntoFinal;
-                puntoFinal = temp;
-        }
-        
+            else if(puntoFinal.Z < 0)
+            {
+                var temp = puntoInicio;
+                    puntoInicio = puntoFinal;
+                    puntoFinal = temp;
+            }
+            
+            Vector3 finPrimerSegmento = (!esHorizontal) ? 
+                                        new Vector3(puntoInicio.X * ubicacionPuerta, puntoInicio.Y, puntoInicio.Z):
+                                        new Vector3(puntoFinal.X, puntoFinal.Y, puntoFinal.Z * ubicacionPuerta);
 
-        Vector3 finPrimerSegmento = (!esHorizontal) ? new Vector3(puntoInicio.X * ubicacionPuerta, puntoInicio.Y, puntoInicio.Z):
-                                                      new Vector3(puntoFinal.X, puntoFinal.Y, puntoFinal.Z * ubicacionPuerta);
+            Vector3 inicioSegundoSegmento = (!esHorizontal) ? 
+                                        new Vector3(puntoInicio.X * (ubicacionPuerta - ANCHO_PUERTA), puntoInicio.Y, puntoInicio.Z):
+                                        new Vector3(puntoFinal.X, puntoFinal.Y, puntoFinal.Z * (ubicacionPuerta + ANCHO_PUERTA));
+            
+            Pared primerSegmento  = new Pared(puntoInicio, finPrimerSegmento);
+            Pared segundoSegmento = new Pared(inicioSegundoSegmento, puntoFinal);
 
-        Vector3 inicioSegundoSegmento = (!esHorizontal) ? new Vector3(puntoInicio.X * (ubicacionPuerta - ANCHO_PUERTA), puntoInicio.Y, puntoInicio.Z):
-                                                          new Vector3(puntoFinal.X, puntoFinal.Y, puntoFinal.Z * (ubicacionPuerta + ANCHO_PUERTA));
-        
-        Pared primerSegmento = new Pared(puntoInicio, finPrimerSegmento, esHorizontal);
-        Pared segundoSegmento = new Pared(inicioSegundoSegmento, puntoFinal, esHorizontal);
-
-        Paredes.Add(primerSegmento);
-        Paredes.Add(segundoSegmento);
+            Paredes.Add(primerSegmento);
+            Paredes.Add(segundoSegmento);
 
         }
 
