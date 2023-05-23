@@ -8,7 +8,7 @@ using BepuPhysics.Constraints;
 using BepuUtilities;
 using BepuUtilities.Memory;
 
-namespace TGC.MonoGame.Samples.Physics.Bepu;
+namespace TGC.MonoGame.TP.Collisions;
 
 /// <summary>
 ///     Shows a completely isolated usage of the engine without using any of the other demo physics-related types.

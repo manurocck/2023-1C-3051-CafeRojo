@@ -4,7 +4,7 @@ using System.Threading;
 using BepuUtilities;
 using BepuUtilities.Memory;
 
-namespace TGC.MonoGame.Samples.Physics.Bepu;
+namespace TGC.MonoGame.TP.Collisions;
 
 /// <summary>
 ///     Provides a <see cref="IThreadDispatcher" /> implementation. Not reentrant.

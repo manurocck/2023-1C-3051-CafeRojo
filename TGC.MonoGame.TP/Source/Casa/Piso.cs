@@ -1,5 +1,3 @@
-using System;
-using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,7 +15,6 @@ namespace TGC.MonoGame.TP
         private float CantidadBaldosasLargo = 1f; // para hacerlo en "Tiles"
         private float CantidadBaldosasAncho = 1f; // para hacerlo en "Tiles"
         private Matrix World;
-        private StaticHandle Handle;
         internal Vector3 PosicionInicial;
         private Effect Effect = TGCGame.GameContent.E_BasicShader;
         private readonly float MetrosAncho;
@@ -34,13 +31,12 @@ namespace TGC.MonoGame.TP
             Matrix Scale = Matrix.CreateScale(MetrosLargo, 0f, MetrosAncho);
             World = Scale 
                     * Matrix.CreateTranslation(PosicionInicial);
-
             var boxito = new Box(MetrosLargo*2,1f, MetrosAncho*2);
-            
-            Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
-                                                PosicionInicial.ToBepu()-Vector3.UnitY.ToBepu(),
-                                                TGCGame.Simulation.Shapes.Add(boxito)
-                                                ));
+
+            TypedIndex index = TGCGame.Simulation.LoadShape<Box>(boxito);
+
+            Vector3 fixedPosition = PosicionInicial - Vector3.UnitY;
+            TGCGame.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
         }
         public Vector3 PuntoExtremo(){
             return PosicionInicial + ( new Vector3(MetrosLargo,0f,MetrosAncho) );

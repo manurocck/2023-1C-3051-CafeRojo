@@ -129,8 +129,8 @@ namespace TGC.MonoGame.TP
             #region Autos Enemigos
 
                 for(int i=1; i<6; i++){
-                    AddElementoDinamico(new EnemyCar(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
-                    AddElementoDinamico(new EnemyCar(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
+                    TGCGame.ElementoDinamicos.Add(new EnemyCar(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
+                    TGCGame.ElementoDinamicos.Add(new EnemyCar(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
                 }
             
             #endregion            

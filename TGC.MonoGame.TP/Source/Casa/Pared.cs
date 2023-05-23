@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +7,7 @@ using TGC.MonoGame.TP.Utils;
 namespace TGC.MonoGame.TP
 {
     public class Pared{
-        public const float GROSOR = TGCGame.S_METRO * 0.1f;
+        public const float GROSOR = TGCGame.S_METRO * 0.2f;
         public const float ALTURA = TGCGame.S_METRO * 2f;
         protected float LARGO;
         private Matrix World;
@@ -17,7 +15,6 @@ namespace TGC.MonoGame.TP
         protected Vector3 PuntoFinal;
         private readonly bool EsHorizontal;
         private Effect Efecto = TGCGame.GameContent.E_TextureTiles;
-        private StaticHandle Handle;
         
         ///<summary> Pared completamente cerrada</summary>
         public Pared(Vector3 puntoInicio, Vector3 puntoFinal){
@@ -42,11 +39,11 @@ namespace TGC.MonoGame.TP
             var otroNumerito = Math.Abs(-PuntoInicial.Z+PuntoFinal.Z);
             Box boxito = (!EsHorizontal)? new Box(esteNumerito, ALTURA, GROSOR) 
                                         : new Box(GROSOR, ALTURA, otroNumerito);
-            Vector3 posicion = (!EsHorizontal)? new Vector3((PuntoInicial.X+PuntoFinal.X)/2, ALTURA*0.5f, PuntoInicial.Z):
+            Vector3 fixedPosition = (!EsHorizontal)? new Vector3((PuntoInicial.X+PuntoFinal.X)/2, ALTURA*0.5f, PuntoInicial.Z):
                                                 new Vector3(PuntoInicial.X, ALTURA*0.5f, (PuntoInicial.Z+PuntoFinal.Z)/2);
-            Handle = TGCGame.Simulation.Statics.Add( new StaticDescription(
-                                                posicion.ToBepu(),
-                                                TGCGame.Simulation.Shapes.Add(boxito)));
+
+            TypedIndex index = TGCGame.Simulation.LoadShape<Box>(boxito);
+            TGCGame.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
         }
         public void Draw(Texture2D textura){ 
             

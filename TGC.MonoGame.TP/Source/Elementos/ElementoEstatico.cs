@@ -21,15 +21,11 @@ namespace TGC.MonoGame.TP.Elementos
             WorldMatrix  =  rotacion * Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
         }
 
-        public void Trasladar(Vector3 sumarPosicion){
-
-        }
-
         internal void AddToSimulation<TConvexShape>(Vector3 Position, Quaternion Rotation) where TConvexShape : unmanaged, IConvexShape
         { 
-            TGCGame.Simulation.Statics.Add(new StaticDescription(
-                Position.ToBepu(), Rotation.ToBepu(),
-                TGCGame.Simulation.Shapes.Add((TConvexShape)Shape)));
+            TypedIndex index = TGCGame.Simulation.LoadShape<TConvexShape>((TConvexShape)Shape);
+            StaticHandle Handle = TGCGame.Simulation.CreateStatic(Position.ToBepu(), Rotation.ToBepu(), index);
+            TGCGame.Simulation.Colliders.RegisterCollider(Handle, this);
         }
    }
 }

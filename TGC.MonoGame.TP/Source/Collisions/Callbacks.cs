@@ -6,8 +6,9 @@ using BepuPhysics.Collidables;
 using BepuPhysics.CollisionDetection;
 using BepuPhysics.Constraints;
 using BepuUtilities;
+using TGC.MonoGame.TP.Elementos;
 
-namespace TGC.MonoGame.Samples.Physics.Bepu;
+namespace TGC.MonoGame.TP.Collisions;
 
 public struct PoseIntegratorCallbacks : IPoseIntegratorCallbacks
 {
@@ -174,8 +175,20 @@ public struct NarrowPhaseCallbacks : INarrowPhaseCallbacks
         pairMaterial.FrictionCoefficient = FrictionCoefficient;
         pairMaterial.MaximumRecoveryVelocity = MaximumRecoveryVelocity;
         pairMaterial.SpringSettings = ContactSpringiness;
+
+        Elemento elementoA = GetCollitionHandler(pair.A);
+        Elemento elementoB = GetCollitionHandler(pair.B);
+
+        elementoA?.OnCollision(elementoB);
+        elementoB?.OnCollision(elementoA);
+
         return true;
     }
+
+    private Elemento GetCollitionHandler(CollidableReference collider) =>
+            collider.Mobility == CollidableMobility.Static ?
+            TGCGame.Simulation.Colliders.GetHandler(collider.StaticHandle) :
+            TGCGame.Simulation.Colliders.GetHandler(collider.BodyHandle);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ConfigureContactManifold(int workerIndex, CollidablePair pair, int childIndexA, int childIndexB,

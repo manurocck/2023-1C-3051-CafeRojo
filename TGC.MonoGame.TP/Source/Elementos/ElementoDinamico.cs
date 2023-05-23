@@ -7,16 +7,16 @@ using TGC.MonoGame.TP.Utils;
 namespace TGC.MonoGame.TP.Elementos
 {
     public abstract class ElementoDinamico : Elemento {
-        private BodyHandle BodyHandle { get; set; }
-        internal IConvexShape Shape { get; set; }
+        protected BodyHandle BodyHandle { get; set; }
+        internal TypedIndex Shape { get; set; }
         internal abstract float Mass();
         internal abstract float Scale();
-        internal abstract void Update(float dTime, KeyboardState keyboard);
+        internal virtual void Update(float dTime, KeyboardState keyboard) { }
 
         private const float SIMULATION_SLEEP_THRESHOLD = 0.01f;
         private const float SIMULATION_MAXIMUN_SPECULATIVE_MARGIN = 0.1f;
 
-        internal BodyReference Body() => TGCGame.Simulation.Bodies.GetBodyReference(BodyHandle);
+        internal BodyReference Body() => TGCGame.Simulation.GetBodyReference(BodyHandle);
 
         internal Quaternion Rotation() => Body().Pose.Orientation.ToQuaternion();
         internal Vector3 Position() => Body().Pose.Position;
@@ -28,20 +28,13 @@ namespace TGC.MonoGame.TP.Elementos
         internal void ApplyLinearImpulse(Vector3 impulse) => Body().ApplyLinearImpulse(impulse.ToBepu());
         internal void ApplyLinearImpulse(Vector3 impulse, float offset = 0) => 
             Body().ApplyImpulse(impulse.ToBepu(), QuaternionExtensions.Forward((this.Body().Pose.Orientation.ToQuaternion())*offset).ToBepu());
-        internal void Despertar(bool estaDespierto) { if(!Body().Awake) TGCGame.Simulation.Awakener.AwakenBody(Body()); }
+        internal void Awake() => TGCGame.Simulation.Awake(BodyHandle);
         internal Vector3 AngularVelocity() => Body().Velocity.Angular;
         internal Vector3 LinearVelocity() => Body().Velocity.Linear;
 
-        internal void AddToSimulation<TConvexShape>(Vector3 InitialPosition, Quaternion Rotation) where TConvexShape : unmanaged, IConvexShape { 
-            BodyInertia Inertia = Shape.ComputeInertia(Mass());
-            
-            TypedIndex Index = TGCGame.Simulation.Shapes.Add((TConvexShape)Shape);
-
-            BodyHandle = TGCGame.Simulation.Bodies.Add(BodyDescription.CreateDynamic(
-                new RigidPose(InitialPosition.ToBepu(), Rotation.ToBepu() ),
-                Inertia,
-                new CollidableDescription(Index, SIMULATION_MAXIMUN_SPECULATIVE_MARGIN),
-                new BodyActivityDescription(SIMULATION_SLEEP_THRESHOLD)));
+        internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 
+            BodyHandle = TGCGame.Simulation.CreateDynamic(initialPosition, initialRotation, Shape, Mass());
+            TGCGame.Simulation.Colliders.RegisterCollider(BodyHandle, this);
         }
     }
 }

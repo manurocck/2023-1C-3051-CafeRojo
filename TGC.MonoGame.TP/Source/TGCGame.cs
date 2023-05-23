@@ -6,29 +6,27 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.Samples.Physics.Bepu;
 using TGC.MonoGame.Samples.Viewer.Gizmos;
-using NumericVector3 = System.Numerics.Vector3;
+using TGC.MonoGame.TP.Collisions;
 
-using TGC.MonoGame.TP.Elementos; //To ask for World Matrix
-using TGC.MonoGame.TP.Drawers; //To draw Elements
+using System.Collections.Generic;
+using TGC.MonoGame.TP.Elementos;
 
 namespace TGC.MonoGame.TP
 {
     public class TGCGame : Game
     {
-        public const float GRAVITY = -150f;
         public const float S_METRO = 250f; // Prueben con 250 y con 1000
         internal static TGCGame Game;
         internal static Content GameContent;
+        internal static GameSimulation Simulation;
+        internal static Gizmos Gizmos;
+        //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
+        internal static List<ElementoDinamico> ElementoDinamicos = new List<ElementoDinamico>();
+        
         private GraphicsDeviceManager Graphics;
         private SpriteBatch SpriteBatch;
-        internal static Simulation Simulation;
-        internal static Gizmos Gizmos;
-        public SimpleThreadDispatcher ThreadDispatcher { get; private set; }
-        public BufferPool BufferPool { get; private set; }
         private Auto Auto;
-        //private Auto2 Auto2;
         private Camera Camera; 
         private Casa Casa;
         //private Song Soundtrack;
@@ -42,13 +40,6 @@ namespace TGC.MonoGame.TP
 
         protected override void Initialize()
         {
-            // > > > > Simulación
-            BufferPool = new BufferPool(); // optimización
-            var targetThreadCount = Math.Max(1,
-                Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
-            ThreadDispatcher = new SimpleThreadDispatcher(targetThreadCount);
-            // > > > > Fin simulación
-
             var rasterizerState = new RasterizerState();
             rasterizerState.CullMode = CullMode.None;
             GraphicsDevice.RasterizerState = rasterizerState;
@@ -68,17 +59,8 @@ namespace TGC.MonoGame.TP
 
         protected override void LoadContent()
         {
-            // > > > > Simulación
-            Simulation = Simulation.Create(
-                                BufferPool, 
-                                new NarrowPhaseCallbacks(new SpringSettings(30, 1)),
-                                new PoseIntegratorCallbacks(new NumericVector3(0, GRAVITY, 0), 0.7f, 0.9f), 
-                                new SolveDescription(8, 1));
-
-            // > > > > Fin simulación
-
-
             base.LoadContent();
+            Simulation = new GameSimulation();
             GameContent = new Content(Content, GraphicsDevice);
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -111,7 +93,7 @@ namespace TGC.MonoGame.TP
 
             Gizmos.UpdateViewProjection(Camera.View, Camera.Projection);
 
-            Simulation.Timestep(1 / 60f, ThreadDispatcher);
+            Simulation.Update();
 
             KeyboardState keyboardState =Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -146,7 +128,8 @@ namespace TGC.MonoGame.TP
                 e.Parameters["View"].SetValue(Camera.View);
                 e.Parameters["Time"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
             }
-
+            foreach (ElementoDinamico elementoDinamico in ElementoDinamicos)
+                elementoDinamico.Draw();
 
             Auto.Draw();          
             //Auto2.Draw();          
@@ -157,10 +140,6 @@ namespace TGC.MonoGame.TP
         protected override void UnloadContent()
         {
             Simulation.Dispose();
-            BufferPool.Clear();
-            ThreadDispatcher.Dispose();
-            Content.Unload();
-
             base.UnloadContent();
         }
     }

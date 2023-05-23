@@ -21,15 +21,15 @@ namespace TGC.MonoGame.TP
 
         internal Auto(Vector3 posicionInicial) {
             var boxSize = TGCGame.GameContent.M_Auto.Size() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
-            Shape = new Box(boxSize.X,boxSize.Y,boxSize.Z);
-
-            this.AddToSimulation<Box>(posicionInicial + new Vector3(0,TGCGame.S_METRO,0), Quaternion.Identity);
+            Shape = TGCGame.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
+            this.AddToSimulation(posicionInicial + new Vector3(0,TGCGame.S_METRO,0), Quaternion.Identity);
         }
 
         internal override void Update(float dTime, KeyboardState keyboard) {   
             CarDrawer pivot = (CarDrawer) Drawer();
             pivot.CarPosition = this.Position();
-            this.Despertar(keyboard.GetPressedKeyCount()>0);
+
+            if(keyboard.GetPressedKeyCount()>0) this.Awake();
 
             // GIRO
             var velocidadActual = this.LinearVelocity();

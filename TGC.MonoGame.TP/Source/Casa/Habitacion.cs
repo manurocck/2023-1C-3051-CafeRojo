@@ -30,9 +30,6 @@ namespace TGC.MonoGame.TP
         public void AddElemento( ElementoEstatico e ){
             ElementosEstaticos.Add(e);
         }
-        public void AddElementoDinamico( ElementoDinamico e ){
-            ElementosDinamicos.Add(e);
-        }
         public int cantidadElementos(){
             // Para debuggear
             return this.ElementosEstaticos.Count + this.ElementosDinamicos.Count;
