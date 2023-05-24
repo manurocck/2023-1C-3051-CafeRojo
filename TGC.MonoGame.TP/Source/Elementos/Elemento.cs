@@ -10,6 +10,6 @@ namespace TGC.MonoGame.TP.Elementos
         internal abstract Matrix World();
 
         internal virtual void Draw() => Drawer().Draw(World());
-        internal virtual void OnCollision(Elemento other) { }
+        internal virtual bool OnCollision(Elemento other) => true;
     }
 }

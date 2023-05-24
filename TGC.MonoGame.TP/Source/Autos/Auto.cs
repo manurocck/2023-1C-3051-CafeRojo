@@ -10,17 +10,17 @@ namespace TGC.MonoGame.TP
 {
     internal class Auto : ElementoDinamico { 
         private const float WHEEL_TURNING_LIMIT = 0.5f;
-        private const float ANGULAR_SPEED = 10000f;
-        private const float LINEAR_SPEED = 80f;
+        private const float ANGULAR_SPEED = 100f;
+        private const float LINEAR_SPEED = 30f;
         private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación
         private const float JUMP_POWER = 10000f; // Factor de ajuste para la rotación
         private bool PuedeSaltar() => true;
-        internal override float Mass() => 3f;
+        internal override float Mass() => 1f;
         internal override float Scale() => 0.08f * TGCGame.S_METRO;
         internal override IDrawer Drawer() => new CarDrawer();
 
         internal Auto(Vector3 posicionInicial) {
-            var boxSize = TGCGame.GameContent.M_Auto.Size() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
+            var boxSize = TGCGame.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
             Shape = TGCGame.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
             this.AddToSimulation(posicionInicial + new Vector3(0,TGCGame.S_METRO,0), Quaternion.Identity);
         }
@@ -45,7 +45,7 @@ namespace TGC.MonoGame.TP
             // IMPULSOS
             Vector3 horizontalImpulse = this.Rotation().Forward() * keyboard.AccelerationSense() * LINEAR_SPEED;
             Vector3 verticalImpulse = PuedeSaltar() && keyboard.Jumped() ? this.Rotation().Up() * JUMP_POWER : Vector3.Zero ;
-            Vector3 angularImpulse = new Vector3(0,ANGULAR_SPEED,0) * pivot.WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
+            Vector3 angularImpulse = this.Rotation().Up() * ANGULAR_SPEED * ANGULAR_SPEED * pivot.WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
 
             // SUUUUPER interesante lo que pasa con este offset (investigar)
             // Vector3 offset = TGCGame.GameContent.M_Auto.Size(); // tracción delantera

@@ -12,6 +12,7 @@ namespace TGC.MonoGame.TP
 
         private List<Pared> Paredes = new List<Pared>();
         private const float ANCHO_PUERTA = 0.15f;
+        private Effect Efecto = TGCGame.GameContent.E_TextureShader;
 
         /// <summary> <paramref name="ubicacionPuerta"/> es la distancia a la que está del origen (0 es lo cerca posible y 1 es lo más lejos posible)</summary> 
         public Puerta(Vector3 puntoInicio, Vector3 puntoFinal, float ubicacionPuerta){
@@ -47,6 +48,9 @@ namespace TGC.MonoGame.TP
 
         }
 
+        public void SetEffect(Effect effect) { 
+            foreach(Pared p in Paredes) p.SetEffect(effect);
+        }
         public void Draw(Texture2D textura){
             foreach(Pared p in Paredes) p.Draw(textura);
         }

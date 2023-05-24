@@ -16,7 +16,7 @@ namespace TGC.MonoGame.TP
 {
     public class TGCGame : Game
     {
-        public const float S_METRO = 250f; // Prueben con 250 y con 1000
+        public const float S_METRO = 250f;
         internal static TGCGame Game;
         internal static Content GameContent;
         internal static GameSimulation Simulation;

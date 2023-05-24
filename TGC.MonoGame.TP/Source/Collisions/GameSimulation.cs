@@ -10,14 +10,16 @@ namespace TGC.MonoGame.TP.Collisions;
 
 internal class GameSimulation
 {
-    private const float SIMULATION_SLEEP_THRESHOLD = 0.01f;
-    private const float SIMULATION_MAXIMUN_SPECULATIVE_MARGIN = 0.1f;
+    private const float SLEEP_THRESHOLD = 0.01f;
+    private const float MAXIMUN_SPECULATIVE_MARGIN = 0.1f;
     private const float TIME_STEP = 1 / 60f;
+    private const float FRICCION_LINEAL = 0.75f;
+    private const float FRICCION_ANGULAR = 0.1f;
     private readonly Simulation Simulation;
     private readonly BufferPool BufferPool = new BufferPool();
-    private readonly SimpleThreadDispatcher ThreadDispatcher;
-    private readonly Vector3 Gravity = new Vector3(0, -150f, 0);
+    private readonly Vector3 Gravity = new Vector3(0, -1000f, 0);
     internal readonly Colliders Colliders = new Colliders();
+    private readonly SimpleThreadDispatcher ThreadDispatcher;
 
     internal GameSimulation()
     {
@@ -27,8 +29,10 @@ internal class GameSimulation
 
     private int ThreadCount() => Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
     private Simulation CreateSimulation() => Simulation.Create(
-        BufferPool, new NarrowPhaseCallbacks(new SpringSettings(30, 1)),
-        new PoseIntegratorCallbacks(Gravity.ToBepu(), 0f, 0f), new SolveDescription(8, 1)
+        BufferPool, 
+        new NarrowPhaseCallbacks( new SpringSettings(5000, 0.3f) ),
+        new PoseIntegratorCallbacks(Gravity.ToBepu(), FRICCION_LINEAL, FRICCION_ANGULAR), 
+        new SolveDescription(8, 1)
     );
 
     internal void Update() => Simulation.Timestep(TIME_STEP, ThreadDispatcher);
@@ -49,8 +53,8 @@ internal class GameSimulation
             new RigidPose(position.ToBepu(),  rotation.ToBepu()),
             new BodyVelocity(Vector3.Zero.ToBepu()),
             inertia,
-            new CollidableDescription(shape, SIMULATION_MAXIMUN_SPECULATIVE_MARGIN),
-            new BodyActivityDescription(SIMULATION_SLEEP_THRESHOLD));
+            new CollidableDescription(shape, MAXIMUN_SPECULATIVE_MARGIN),
+            new BodyActivityDescription(SLEEP_THRESHOLD));
         return Simulation.Bodies.Add(bodyDescription);
     }
 

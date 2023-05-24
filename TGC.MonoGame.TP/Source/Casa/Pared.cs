@@ -45,6 +45,7 @@ namespace TGC.MonoGame.TP
             TypedIndex index = TGCGame.Simulation.LoadShape<Box>(boxito);
             TGCGame.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
         }
+        public void SetEffect( Effect effect) => this.Efecto = effect;
         public void Draw(Texture2D textura){ 
             
             //var body = TGCGame.Simulation.Statics.GetStaticReference(Handle);
@@ -53,9 +54,9 @@ namespace TGC.MonoGame.TP
 
             var metrosLargo = LARGO/TGCGame.S_METRO;
 
+            Efecto.Parameters["World"].SetValue(World);
             Efecto.Parameters["Texture"]?.SetValue(textura);
             Efecto.Parameters["Filter"]?.SetValue(TGCGame.GameContent.T_MeshFilter);
-            Efecto.Parameters["World"].SetValue(World); 
             Efecto.Parameters["TilesWide"]?.SetValue(metrosLargo*0.5f);
             Efecto.Parameters["TilesBroad"]?.SetValue(1);
             // Efecto.Parameters["MetrosLargo"]?.SetValue(ALTURA/TGCGame.S_METRO);

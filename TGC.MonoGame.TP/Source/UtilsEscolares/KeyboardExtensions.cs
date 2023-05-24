@@ -14,3 +14,4 @@ namespace TGC.MonoGame.TP.Utils {
         internal static bool Jumped(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Escape);
     }
 }
+
