@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 
-namespace TGC.MonoGame.TP.Drawers
+namespace TGC.MonoGame.TP.Drawers;
+internal interface IDrawer
 {
-    internal interface IDrawer
-    {
-        void Draw(Matrix World);
-    }
+    void Draw(Matrix World);
 }

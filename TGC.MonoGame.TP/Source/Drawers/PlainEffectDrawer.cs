@@ -1,30 +1,28 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers
+namespace TGC.MonoGame.TP.Drawers;
+internal class PlainEffectDrawer : IDrawer // Generalizar como EffectDrawer ?? NoParametersDrawer ??
 {
-    internal class PlainEffectDrawer : IDrawer // Generalizar como EffectDrawer ?? NoParametersDrawer ??
+    protected Effect Effect;
+    protected readonly Model Model;
+    
+    internal PlainEffectDrawer(Model Model,  Effect Effect)
     {
-        protected Effect Effect;
-        protected readonly Model Model;
-        
-        internal PlainEffectDrawer(Model Model,  Effect Effect)
-        {
-            this.Model = Model;
-            this.Effect = Effect;
-        }
+        this.Model = Model;
+        this.Effect = Effect;
+    }
 
-        void IDrawer.Draw(Matrix World)
+    void IDrawer.Draw(Matrix World)
+    {
+        ModelMeshCollection meshes = Model.Meshes;
+        foreach (ModelMesh mesh in meshes)
         {
-            ModelMeshCollection meshes = Model.Meshes;
-            foreach (ModelMesh mesh in meshes)
-            {
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                    meshPart.Effect = Effect;
+            foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                meshPart.Effect = Effect;
 
-                Effect.Parameters["World"].SetValue(mesh.ParentBone.Transform * World);
-                mesh.Draw();
-            }
+            Effect.Parameters["World"].SetValue(mesh.ParentBone.Transform * World);
+            mesh.Draw();
         }
     }
 }

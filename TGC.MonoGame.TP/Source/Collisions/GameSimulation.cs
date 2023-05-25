@@ -15,10 +15,10 @@ internal class GameSimulation
     private const float TIME_STEP = 1 / 60f;
     private const float FRICCION_LINEAL = 0.75f;
     private const float FRICCION_ANGULAR = 0.1f;
-    private readonly Simulation Simulation;
-    private readonly BufferPool BufferPool = new BufferPool();
     private readonly Vector3 Gravity = new Vector3(0, -1000f, 0);
+    private readonly BufferPool BufferPool = new BufferPool();
     internal readonly Colliders Colliders = new Colliders();
+    private readonly Simulation Simulation;
     private readonly SimpleThreadDispatcher ThreadDispatcher;
 
     internal GameSimulation()
@@ -58,8 +58,8 @@ internal class GameSimulation
         return Simulation.Bodies.Add(bodyDescription);
     }
 
-    internal void DestroyStatic(StaticHandle handle) => Simulation.Statics.Remove(handle);
-    internal void DestroyBody(BodyHandle handle) => Simulation.Bodies.Remove(handle);
+    // internal void DestroyStatic(StaticHandle handle) => Simulation.Statics.Remove(handle);
+    // internal void DestroyBody(BodyHandle handle) => Simulation.Bodies.Remove(handle);
 
     internal void Dispose()
     {

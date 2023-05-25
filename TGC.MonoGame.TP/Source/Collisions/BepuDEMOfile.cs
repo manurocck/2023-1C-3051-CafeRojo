@@ -8,10 +8,7 @@ using BepuPhysics.Constraints;
 using BepuUtilities;
 using BepuUtilities.Memory;
 
-namespace TGC.MonoGame.TP.Collisions;
-
 // Muestra un ejemplo de uso de BepuPhysics completamente aislado de otros archivos 
-
 public static class SimpleSelfContainedDemo
 {
     
