@@ -1,9 +1,7 @@
 
-using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using TGC.MonoGame.TP.Drawers;
-using TGC.MonoGame.TP.Utils;
 
 namespace TGC.MonoGame.TP.Elementos;
 public class ElementoEstatico : Elemento {

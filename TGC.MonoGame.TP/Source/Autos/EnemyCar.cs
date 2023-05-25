@@ -5,6 +5,7 @@ using TGC.MonoGame.TP.Utils;
 
 using TGC.MonoGame.TP.Drawers;
 using TGC.MonoGame.TP.Elementos;
+using Microsoft.Xna.Framework.Input;
 
 namespace TGC.MonoGame.TP;
 internal class EnemyCar : ElementoDinamico {
@@ -12,6 +13,8 @@ internal class EnemyCar : ElementoDinamico {
     internal override float Scale() => 1.4f;
     internal override IDrawer Drawer() => this.StateDrawer;
     private IDrawer StateDrawer = new TextureDrawer(TGCGame.GameContent.M_AutoEnemigo, TGCGame.GameContent.T_MarmolNegro);
+    private bool Dirty = false;
+    private float StateTimer = 0;
 
     internal EnemyCar(float posX, float posY, float posZ, Vector3 rotacion) 
     {
@@ -22,14 +25,28 @@ internal class EnemyCar : ElementoDinamico {
         Shape = TGCGame.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
         this.AddToSimulation(PosicionInicial, Quaternion.Identity);
     }
+    internal override void Update(float dTime, KeyboardState _)
+    {
+        StateTimer += dTime;
+        
+        if(StateTimer > 2){
+            if(Dirty) {
+                StateDrawer = new NotDrawer();
+                StateTimer = 0;
+            }
+            if(!Dirty) StateDrawer = new TextureDrawer(TGCGame.GameContent.M_AutoEnemigo, TGCGame.GameContent.T_MarmolNegro); 
+            Dirty = false;
+        }
+    }
 
     internal override bool OnCollision(Elemento other)
     {
         if(other is not Auto _){
             return true;
         }
+
+        if(!Dirty) Dirty = !Dirty;
         
-        StateDrawer = new TextureDrawer(TGCGame.GameContent.M_AutoEnemigo, TGCGame.GameContent.T_Ladrillos);
         return false;
     }
 }

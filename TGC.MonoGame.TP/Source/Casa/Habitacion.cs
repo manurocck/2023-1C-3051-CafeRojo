@@ -50,7 +50,7 @@ public abstract class IHabitacion
     /// <summary> Coordenadas del centro de la habitación (sobre el piso)</summary>
     public Vector3 PuntoCentro() => Piso.PuntoCentro();
     /// <summary> Coordenadas del punto más alejado al origen de la habitación (inferior izquierdo)</summary>
-    public Vector3 PuntoExtremo() => this.PuntoCentro()*2;
+    public Vector3 PuntoExtremo() => Piso.PuntoExtremo();
 
     /// <summary> Coordenadas del lado superior de la habitación (no confundir lado con pared) <code><paramref name="inicio"/> es el punto superior de la derecha</code><code><paramref name="final"/> es el punto superior de la izquierda</code></summary>
     public (Vector3 inicio, Vector3 final) SegmentoSuperior() =>

@@ -9,14 +9,16 @@ using TGC.MonoGame.TP.Drawers;
 namespace TGC.MonoGame.TP;
 internal class Auto : ElementoDinamico { 
     private const float WHEEL_TURNING_LIMIT = 0.5f;
-    private const float ANGULAR_SPEED = 100f;
+    private const float ANGULAR_SPEED = 30f;
     private const float LINEAR_SPEED = 30f;
     private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación
     private const float JUMP_POWER = 10000f; // Factor de ajuste para la rotación
     private bool PuedeSaltar() => true;
     internal override float Mass() => 1f;
     internal override float Scale() => 0.08f * TGCGame.S_METRO;
-    internal override IDrawer Drawer() => new CarDrawer();
+    internal override IDrawer Drawer() => new CarDrawer(this);
+    internal float WheelTurning = 0f; 
+    internal float WheelRotation = 0f;
 
     internal Auto(Vector3 posicionInicial) {
         var boxSize = TGCGame.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
@@ -36,15 +38,15 @@ internal class Auto : ElementoDinamico {
         //Console.WriteLine("Velocidad alcanzada :    . . . . . . {0:F}%", (coeficienteVelocidad * 100f));
 
         // ROTACION DE RUEDAS
-        pivot.WheelTurning += -Math.Sign(pivot.WheelTurning) * WHEEL_TURNING_LIMIT * dTime;
-        pivot.WheelTurning = Math.Clamp(pivot.WheelTurning + keyboard.TurningAxis() * WHEEL_TURNING_LIMIT * dTime * 4f, -WHEEL_TURNING_LIMIT, WHEEL_TURNING_LIMIT);
+        WheelTurning += -Math.Sign(WheelTurning) * WHEEL_TURNING_LIMIT * dTime;
+        WheelTurning = Math.Clamp(WheelTurning + keyboard.TurningAxis() * WHEEL_TURNING_LIMIT * dTime * 4f, -WHEEL_TURNING_LIMIT, WHEEL_TURNING_LIMIT);
 
-        pivot.WheelRotation += this.AngularVelocity().Y * WHEEL_ROTATION_FACTOR;
+        WheelRotation += this.AngularVelocity().Y * WHEEL_ROTATION_FACTOR;
 
         // IMPULSOS
         Vector3 horizontalImpulse = this.Rotation().Forward() * keyboard.AccelerationSense() * LINEAR_SPEED;
         Vector3 verticalImpulse = PuedeSaltar() && keyboard.Jumped() ? this.Rotation().Up() * JUMP_POWER : Vector3.Zero ;
-        Vector3 angularImpulse = this.Rotation().Up() * ANGULAR_SPEED * ANGULAR_SPEED * pivot.WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
+        Vector3 angularImpulse = this.Rotation().Up() * ANGULAR_SPEED * ANGULAR_SPEED * WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
 
         // SUUUUPER interesante lo que pasa con este offset (investigar)
         // Vector3 offset = TGCGame.GameContent.M_Auto.Size(); // tracción delantera

@@ -14,7 +14,7 @@ internal class GameSimulation
     private const float MAXIMUN_SPECULATIVE_MARGIN = 0.1f;
     private const float TIME_STEP = 1 / 60f;
     private const float FRICCION_LINEAL = 0.75f;
-    private const float FRICCION_ANGULAR = 0.1f;
+    private const float FRICCION_ANGULAR = 0.95f;
     private readonly Vector3 Gravity = new Vector3(0, -1000f, 0);
     private readonly BufferPool BufferPool = new BufferPool();
     internal readonly Colliders Colliders = new Colliders();
@@ -39,6 +39,7 @@ internal class GameSimulation
      
     internal TypedIndex LoadShape<S>(S shape) where S : unmanaged, IShape => Simulation.Shapes.Add(shape);
 
+    internal StaticReference GetStaticReference(StaticHandle handle) => Simulation.Statics.GetStaticReference(handle);
     internal BodyReference GetBodyReference(BodyHandle handle) => Simulation.Bodies.GetBodyReference(handle);
     internal void Awake(BodyHandle handle) => Simulation.Awakener.AwakenBody(handle);
 

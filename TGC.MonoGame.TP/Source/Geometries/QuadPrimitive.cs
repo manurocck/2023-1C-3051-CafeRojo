@@ -3,19 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TGC.MonoGame.TP.Geometries
 {
-    internal class QuadPrimitive
+    internal class QuadPrimitive : IGeometryPrimitive
     {
-        internal QuadPrimitive(GraphicsDevice graphicsDevice)
-        {
-            CreateVertexBuffer(graphicsDevice);
-            CreateIndexBuffer(graphicsDevice);
-        }
-
-        private VertexBuffer Vertices { get; set; }
-
-        private IndexBuffer Indices { get; set; }
-
-        private void CreateVertexBuffer(GraphicsDevice graphicsDevice)
+        internal QuadPrimitive(GraphicsDevice graphicsDevice) : base (graphicsDevice) { }
+        internal override void CreateVertexBuffer(GraphicsDevice graphicsDevice)
         {
             Vector2 textureCoordinateLowerLeft = Vector2.Zero;
             Vector2 textureCoordinateLowerRight = Vector2.UnitX;
@@ -38,8 +29,7 @@ namespace TGC.MonoGame.TP.Geometries
                 BufferUsage.WriteOnly);
             Vertices.SetData(vertices);
         }
-
-        private void CreateIndexBuffer(GraphicsDevice graphicsDevice)
+        internal override void CreateIndexBuffer(GraphicsDevice graphicsDevice)
         {
             var indices = new ushort[]
             {
@@ -50,20 +40,6 @@ namespace TGC.MonoGame.TP.Geometries
             Indices = new IndexBuffer(graphicsDevice, IndexElementSize.SixteenBits, indices.Length,
                 BufferUsage.WriteOnly);
             Indices.SetData(indices);
-        }
-
-        public void Draw(Effect effect)
-        {
-            var graphicsDevice = effect.GraphicsDevice;
-
-            graphicsDevice.SetVertexBuffer(Vertices);
-            graphicsDevice.Indices = Indices;
-            
-            foreach (var effectPass in effect.CurrentTechnique.Passes)
-            {
-                effectPass.Apply();
-                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, Indices.IndexCount / 3);
-            }
         }
     }
 }

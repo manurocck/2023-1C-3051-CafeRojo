@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.Samples.Viewer.Gizmos;
 using TGC.MonoGame.TP.Collisions;
+using TGC.MonoGame.TP.Utils;
 
 using System.Collections.Generic;
 using TGC.MonoGame.TP.Elementos;
@@ -23,7 +24,7 @@ public class TGCGame : Game
     private Camera Camera; 
     private Casa Casa;
     private Auto Auto;
-    internal static List<ElementoDinamico> ElementoDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
+    internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
     public TGCGame() {
         Graphics = new GraphicsDeviceManager(this);
@@ -77,6 +78,7 @@ public class TGCGame : Game
                                         
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
+        foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
         
         Camera.Update(Auto.World());
         Camera.Mover(keyboardState);
@@ -93,12 +95,21 @@ public class TGCGame : Game
             e.Parameters["View"].SetValue(Camera.View);
             e.Parameters["Time"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
         }
-        foreach (ElementoDinamico elementoDinamico in ElementoDinamicos)
+        foreach (ElementoDinamico elementoDinamico in ElementosDinamicos)
             elementoDinamico.Draw();
 
         Auto.Draw();          
         Casa.Draw();
         Gizmos.Draw();
+        this.DebugGizmos();
+    }
+    private void DebugGizmos()
+    {
+        BoundingBox aabb;
+        foreach(ElementoDinamico e in ElementosDinamicos){
+            aabb = e.Body().BoundingBox.ToBoundingBox(); 
+            TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
+        }
     }
     protected override void UnloadContent()
     {

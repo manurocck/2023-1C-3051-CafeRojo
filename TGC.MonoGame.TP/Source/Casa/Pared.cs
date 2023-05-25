@@ -1,4 +1,5 @@
 using System;
+using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,11 +10,11 @@ public class Pared{
     public const float GROSOR = TGCGame.S_METRO * 0.2f;
     public const float ALTURA = TGCGame.S_METRO * 2f;
     protected float LARGO;
-    private Matrix World;
+    private Matrix World;    
+    internal StaticHandle Handle;
     private (Vector3 Inicio , Vector3 Final) Coordenadas = (Vector3.Zero, Vector3.Zero);
     private Effect Efecto = TGCGame.GameContent.E_TextureTiles;
     
-    ///<summary> Pared completamente cerrada</summary>
     public Pared(Vector3 puntoInicio, Vector3 puntoFinal){
         var esHorizontal = (puntoInicio.X == puntoFinal.X);
         Coordenadas = (puntoInicio, puntoFinal);
@@ -32,23 +33,22 @@ public class Pared{
 
     private void AddToSimulation(){
         var esHorizontal = (this.Coordenadas.Inicio.X == this.Coordenadas.Final.X);
-        var esteNumerito = Math.Abs(-Coordenadas.Inicio.X+Coordenadas.Final.X);
-        var otroNumerito = Math.Abs(-Coordenadas.Inicio.Z+Coordenadas.Final.Z);
+        var esteNumerito = Math.Abs(-Coordenadas.Inicio.X + Coordenadas.Final.X);
+        var otroNumerito = Math.Abs(-Coordenadas.Inicio.Z + Coordenadas.Final.Z);
 
-        Box boxito = (!esHorizontal)? new Box(esteNumerito, ALTURA, GROSOR) 
+        Box boxito = (!esHorizontal)? new Box(esteNumerito+GROSOR, ALTURA, GROSOR) 
                                     : new Box(GROSOR, ALTURA, otroNumerito);
-        Vector3 fixedPosition = (!esHorizontal)? new Vector3((Coordenadas.Inicio.X+Coordenadas.Final.X)/2, ALTURA*0.5f, Coordenadas.Inicio.Z):
-                                            new Vector3(Coordenadas.Inicio.X, ALTURA*0.5f, (Coordenadas.Inicio.Z+Coordenadas.Final.Z)/2);
 
+        Vector3 fixedPosition = (!esHorizontal)? 
+                                new Vector3((Coordenadas.Inicio.X+Coordenadas.Final.X)*0.5f-GROSOR*0.5f, ALTURA*0.5f, Coordenadas.Inicio.Z+GROSOR*0.5f):
+                                new Vector3(Coordenadas.Inicio.X-GROSOR*0.5f, ALTURA*0.5f, (Coordenadas.Inicio.Z+Coordenadas.Final.Z)*0.5f);
+
+        
         TypedIndex index = TGCGame.Simulation.LoadShape<Box>(boxito);
-        TGCGame.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
+        Handle = TGCGame.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
     }
     public void SetEffect( Effect effect) => this.Efecto = effect;
     public void Draw(Texture2D textura){ 
-        
-        //var body = TGCGame.Simulation.Statics.GetStaticReference(Handle);
-        //var aabb = body.BoundingBox;
-        //TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
 
         var metrosLargo = LARGO/TGCGame.S_METRO;
 
@@ -57,8 +57,14 @@ public class Pared{
         Efecto.Parameters["Filter"]?.SetValue(TGCGame.GameContent.T_MeshFilter);
         Efecto.Parameters["TilesWide"]?.SetValue(metrosLargo*0.5f);
         Efecto.Parameters["TilesBroad"]?.SetValue(1);
-        // Efecto.Parameters["MetrosLargo"]?.SetValue(ALTURA/TGCGame.S_METRO);
-        // Efecto.Parameters["MetrosAncho"]?.SetValue(metrosLargo);
         TGCGame.GameContent.G_Cubo.Draw(Efecto);
+
+        this.DebugGizmos();
+    }
+    private void DebugGizmos()
+    {
+        var body = TGCGame.Simulation.GetStaticReference(Handle);
+        var aabb = body.BoundingBox;
+        TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Red);
     }
 }

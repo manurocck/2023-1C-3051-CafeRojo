@@ -13,66 +13,46 @@ internal class CarDrawer : IDrawer
 
     //UPDATE
     internal Vector3 CarPosition { private get; set; } = Vector3.Zero;
-    internal float WheelRotation { get; set; } = 0;
-    internal float WheelTurning { get; set; } = 0;
+    internal float WheelRotation() => Auto.WheelRotation;
+    internal float WheelTurning() => Auto.WheelTurning;
+    internal Auto Auto;
 
-    internal CarDrawer(){}
+    internal CarDrawer(Auto auto) => Auto = auto;
     void IDrawer.Draw(Matrix GeneralWorld){
-        //var simuWorld = this.Body();
-        var world = GeneralWorld;
-        //var aabb = simuWorld.BoundingBox;
-        //TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Black);
-        //var quaternion = simuWorld.Pose.Orientation;
-        var worldAux = Matrix.Identity;
+        Matrix world = GeneralWorld;
+        Matrix worldAux = Matrix.Identity;
         
-        // set effect (se puede optimizar)
-        foreach(var mesh in Model.Meshes)
-        foreach(var meshPart in mesh.MeshParts)
-            meshPart.Effect = Effect;
-
-        // acá se están dibujando las ruedas una vez. sacarlas del dibujado.
-        foreach(var bone in Model.Bones){
+        foreach(ModelBone bone in Model.Bones){
             switch(bone.Name){
                 case "Car":
-                    foreach(var mesh in bone.Meshes){  
-                        foreach(var meshPart in mesh.MeshParts){
-                            meshPart.Effect.Parameters["World"]?.SetValue(world);
-                        }
-                        mesh.Draw();
-                    }
+                    worldAux = world;
                 break;
-                case "WheelA": // Adelante derecha
-                case "WheelB": // Adelante izquierda
-                    worldAux = 
-                                Matrix.CreateScale(1.5f)
-                                * Matrix.CreateRotationY(WheelTurning)                      // giro del volante
+                case "WheelA": // FRONT RIGHT
+                case "WheelB": // FRONT LEFT
+                    worldAux =  Matrix.CreateScale(1.5f)
+                                * Matrix.CreateRotationY(WheelTurning())                      // giro del volante
                                 * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
-                                * Matrix.CreateRotationY(WheelRotation)                     // giro con el auto
+                                * Matrix.CreateRotationY(WheelRotation())                     // giro con el auto
                                 * world
                                 ;
-                    foreach(var mesh in bone.Meshes){
-                        foreach(var meshPart in mesh.MeshParts){
-                            // Escalo -> Rotación extra -> Llevo a su lugar -> Rotación auto -> Traslación auto
-                            meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
-                        }
-                        mesh.Draw();
-                    }
                 break;
-                case "WheelC": // Atras izquierda
-                case "WheelD": // Atras derecha
+                case "WheelC": // BACK LEFT
+                case "WheelD": // BACK RIGHT
                     worldAux = 
                                 Matrix.CreateScale(2f)
                                 * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
-                                * Matrix.CreateRotationY(WheelRotation)                   // giro con el auto
+                                * Matrix.CreateRotationY(WheelRotation())                   // giro con el auto
                                 * world 
                                 ;
-                    foreach(var mesh in bone.Meshes){
-                        foreach(var meshPart in mesh.MeshParts){
-                            meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
-                        }
-                        mesh.Draw();
-                    }
                 break;
+            }
+
+            foreach(var mesh in bone.Meshes){  
+                foreach(var meshPart in mesh.MeshParts){
+                    meshPart.Effect = Effect;
+                    meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
+                }
+                mesh.Draw();
             }
         }
     }

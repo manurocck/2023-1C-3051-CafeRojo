@@ -15,7 +15,6 @@ public struct PoseIntegratorCallbacks : IPoseIntegratorCallbacks
     //      Valores entre 0 y 1. Siendo 0 sin fricción y 1 dejándolo casi inmóvil.
     public float LinearDamping;
     public float AngularDamping;
-
     private Vector3Wide GravityWideDt;
     private Vector<float> LinearDampingDt;
     private Vector<float> AngularDampingDt;

@@ -6,30 +6,26 @@ namespace TGC.MonoGame.TP;
 
 class Camera
 {
-    private float AxisDistanceToTarget = 4f * TGCGame.S_METRO;
+    private float DISTANCIA_AL_AUTO = 4f * TGCGame.S_METRO;
     public Matrix Projection { get; private set; }
     public Matrix View { get; private set; }
-    private Vector3 CurrentRightVector { get; set; } = Vector3.Right;
 
     public Camera(float aspectRatio)
     {
-        //Projection = Matrix.CreatePerspectiveFieldOfView(MathF.PI / 3f, aspectRatio, 0.1f, 100000f);
-
         //Matriz de proyeccion casi isometrica, entre mas cerca del 0 este el primer 
         // valor se respeta mas la isometria pero tambien se rompe todo si es muy bajo
         Projection = Matrix.CreatePerspectiveFieldOfView(0.5f, aspectRatio, 0.1f, 100000f);
     }
-
     public void Mover(KeyboardState keyboardState){
         var multiplicador = 0.025f*TGCGame.S_METRO;
         if(keyboardState.IsKeyDown(Keys.LeftShift)){
             multiplicador = 1f;
         }   
         if(keyboardState.IsKeyDown(Keys.Down)){
-            AxisDistanceToTarget += 2f*multiplicador;
+            DISTANCIA_AL_AUTO += 2f*multiplicador;
         }
         if(keyboardState.IsKeyDown(Keys.Up)){
-            AxisDistanceToTarget -= 2f*multiplicador;
+            DISTANCIA_AL_AUTO -= 2f*multiplicador;
         }
     }
     public void Update(Matrix followedWorld)
@@ -37,8 +33,8 @@ class Camera
         var followedPosition = followedWorld.Translation;
         
         var offsetedPosition = followedPosition 
-            + CurrentRightVector * AxisDistanceToTarget
-            + Vector3.Up * AxisDistanceToTarget;
+            + Vector3.Right * DISTANCIA_AL_AUTO
+            + Vector3.Up * DISTANCIA_AL_AUTO;
 
         var forward = (followedPosition - offsetedPosition);
         forward.Normalize();
@@ -49,7 +45,7 @@ class Camera
         //View = Matrix.CreateLookAt(offsetedPosition, followedPosition, cameraCorrectUp);
 
         //Matriz de vista isometrica
-        View = Matrix.CreateLookAt(followedPosition + new Vector3(1, 1, 1) * AxisDistanceToTarget, followedPosition, new Vector3(-1, 1, -1));
+        View = Matrix.CreateLookAt(followedPosition + new Vector3(1, 1, 1) * DISTANCIA_AL_AUTO, followedPosition, new Vector3(-1, 1, -1));
 
     }
 }
