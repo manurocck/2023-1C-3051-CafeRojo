@@ -11,6 +11,6 @@ public static class KeyboardExtensions {
 
     internal static float AccelerationSense(this KeyboardState keyboard) => keyboard.GetAxis(Keys.W, Keys.S);
     internal static float TurningAxis(this KeyboardState keyboard) => keyboard.GetAxis(Keys.A, Keys.D);
-    internal static bool Jumped(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Escape);
+    internal static bool Jumped(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Space);
 }
 

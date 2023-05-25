@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.Samples.Viewer.Gizmos.Geometries
+namespace PistonDerby.Gizmo.Geometries
 {
     /// <summary>
     ///     Gizmo for drawing Wire Spheres.

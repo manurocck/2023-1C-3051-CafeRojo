@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.Samples.Viewer.Gizmos.Geometries
+namespace PistonDerby.Gizmo.Geometries
 {
     /// <summary>
     ///     Abstract class for any geometry that contains a circle.

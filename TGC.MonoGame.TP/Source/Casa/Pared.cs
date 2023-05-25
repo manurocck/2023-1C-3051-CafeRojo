@@ -63,6 +63,6 @@ public class Pared{
     {
         var body = PistonDerby.Simulation.GetStaticReference(Handle);
         var aabb = body.BoundingBox;
-        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Red);
+        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Turquoise);
     }
 }

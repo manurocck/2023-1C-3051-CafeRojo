@@ -2,64 +2,43 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using TGC.MonoGame.Samples.Viewer.Gizmos.Geometries;
+using PistonDerby.Gizmo.Geometries;
 
 
-namespace TGC.MonoGame.Samples.Viewer.Gizmos
+namespace PistonDerby.Gizmo
 {
-    /// <summary>
-    ///     Renders Gizmos
-    /// </summary>
     public class Gizmos
     {
-        /// <summary>
-        ///     Creates a GizmosRenderer.
-        /// </summary>
         public Gizmos()
         {
             NoDepth = new DepthStencilState();
             NoDepth.DepthBufferEnable = false;
             NoDepth.DepthBufferFunction = CompareFunction.Always;
         }
-
-        private AxisLines AxisLines { get; set; }
-
         private EffectPass BackgroundPass { get; set; }
-
         private Color BaseColor { get; set; }
         private EffectParameter ColorParameter { get; set; }
         private ContentManager Content { get; set; }
         private CubeGizmoGeometry Cube { get; set; }
         private CylinderGizmoGeometry Cylinder { get; set; }
         private DiskGizmoGeometry Disk { get; set; }
-
         private Dictionary<GizmoGeometry, Dictionary<Color, List<Matrix>>> DrawInstances { get; } =
             new Dictionary<GizmoGeometry, Dictionary<Color, List<Matrix>>>();
-
         private Effect Effect { get; set; }
         private EffectPass ForegroundPass { get; set; }
-
         private GraphicsDevice GraphicsDevice { get; set; }
-
         private LineSegmentGizmoGeometry LineSegment { get; set; }
-
         private DepthStencilState NoDepth { get; }
         private PolyLineGizmoGeometry PolyLine { get; set; }
         private Dictionary<Color, List<Vector3[]>> PolyLinesToDraw { get; } = new Dictionary<Color, List<Vector3[]>>();
         private Matrix Projection { get; set; }
         private SphereGizmoGeometry Sphere { get; set; }
-
         private Matrix View { get; set; }
         private Matrix ViewProjection { get; set; }
         private EffectParameter WorldViewProjectionParameter { get; set; }
 
         public bool Enabled { get; set; } = true;
-
-        /// <summary>
-        ///     Loads all the content necessary for drawing Gizmos.
-        /// </summary>
-        /// <param name="device">The GraphicsDevice to use when drawing. It is also used to bind buffers.</param>
-        /// <param name="content">The ContentManager to manage Gizmos resources.</param>
+        
         public void LoadContent(GraphicsDevice device, ContentManager content)
         {
             GraphicsDevice = device;
@@ -79,7 +58,7 @@ namespace TGC.MonoGame.Samples.Viewer.Gizmos
             PolyLine = new PolyLineGizmoGeometry(GraphicsDevice);
             Disk = new DiskGizmoGeometry(GraphicsDevice, 20);
             Cylinder = new CylinderGizmoGeometry(GraphicsDevice, 20);
-            AxisLines = new AxisLines(GraphicsDevice, Content.Load<Model>("Models/geometries/arrow"));
+            // AxisLines = new AxisLines(GraphicsDevice, Content.Load<Model>("Models/geometries/arrow"));
 
             DrawInstances[LineSegment] = new Dictionary<Color, List<Matrix>>();
             DrawInstances[Sphere] = new Dictionary<Color, List<Matrix>>();
@@ -312,7 +291,7 @@ namespace TGC.MonoGame.Samples.Viewer.Gizmos
             View = view;
             Projection = projection;
             ViewProjection = View * Projection;
-            AxisLines.SetView(view);
+            // AxisLines.SetView(view);
         }
 
         /// <summary>
@@ -338,7 +317,7 @@ namespace TGC.MonoGame.Samples.Viewer.Gizmos
             DrawBaseGizmosGeometries(ForegroundPass);
             DrawPolyLines(ForegroundPass);
 
-            AxisLines.Draw();
+            // AxisLines.Draw();
 
             CleanDrawInstances();
         }

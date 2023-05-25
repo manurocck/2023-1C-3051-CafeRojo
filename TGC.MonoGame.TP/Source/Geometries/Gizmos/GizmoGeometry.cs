@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.Samples.Viewer.Gizmos.Geometries
+namespace PistonDerby.Gizmo.Geometries
 {
     /// <summary>
     ///     Gizmo that is drawn using non-user indexed line lists.

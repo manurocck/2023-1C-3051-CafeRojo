@@ -50,4 +50,5 @@ public class Puerta{
     public void Draw(Texture2D textura){
         foreach(Pared p in Paredes) p.Draw(textura);
     }
+    public void DebugGizmos() { foreach(Pared p in Paredes) p.DebugGizmos(); }
 }

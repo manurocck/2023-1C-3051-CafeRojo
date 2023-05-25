@@ -1,20 +1,22 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.Samples.Viewer.Gizmos;
+
+using PistonDerby.Elementos;
 using PistonDerby.Collisions;
 using PistonDerby.Utils;
-
-using System.Collections.Generic;
-using PistonDerby.Elementos;
+using PistonDerby.Gizmo;
 
 namespace PistonDerby;
 
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
+    private const bool DEBUG_GIZMOS = false;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
@@ -46,6 +48,7 @@ public class PistonDerby : Game
         Simulation = new GameSimulation();
         Reproductor = new AudioPlayer();
         Gizmos = new Gizmos();
+        Gizmos.Enabled = DEBUG_GIZMOS;
         Casa = new Casa();
 
         base.Initialize();
@@ -101,15 +104,17 @@ public class PistonDerby : Game
         Auto.Draw();          
         Casa.Draw();
         Gizmos.Draw();
-        // this.DebugGizmos();
+
+        this.DebugGizmos();
     }
     private void DebugGizmos()
     {
+        Auto.DebugGizmos();
         Casa.DebugGizmos();
         BoundingBox aabb;
         foreach(ElementoDinamico e in ElementosDinamicos){
             aabb = e.Body().BoundingBox.ToBoundingBox(); 
-            PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
+            PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.DeepPink);
         }
     }
     protected override void UnloadContent()
