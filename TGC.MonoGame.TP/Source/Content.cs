@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using TGC.MonoGame.TP.Geometries;
+using PistonDerby.Geometries;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 
 public class Content
 {

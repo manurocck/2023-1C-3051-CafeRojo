@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TGC.MonoGame.Samples.Viewer.Gizmos;
-using TGC.MonoGame.TP.Collisions;
-using TGC.MonoGame.TP.Utils;
+using PistonDerby.Collisions;
+using PistonDerby.Utils;
 
 using System.Collections.Generic;
-using TGC.MonoGame.TP.Elementos;
+using PistonDerby.Elementos;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 
-public class TGCGame : Game 
+public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
     private GraphicsDeviceManager Graphics;
@@ -26,7 +26,7 @@ public class TGCGame : Game
     private Auto Auto;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
-    public TGCGame() {
+    public PistonDerby() {
         Graphics = new GraphicsDeviceManager(this);
         IsMouseVisible = true;
     }
@@ -101,14 +101,15 @@ public class TGCGame : Game
         Auto.Draw();          
         Casa.Draw();
         Gizmos.Draw();
-        this.DebugGizmos();
+        // this.DebugGizmos();
     }
     private void DebugGizmos()
     {
+        Casa.DebugGizmos();
         BoundingBox aabb;
         foreach(ElementoDinamico e in ElementosDinamicos){
             aabb = e.Body().BoundingBox.ToBoundingBox(); 
-            TGCGame.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
+            PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
         }
     }
     protected override void UnloadContent()

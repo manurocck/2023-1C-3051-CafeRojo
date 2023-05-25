@@ -2,14 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal class CarDrawer : IDrawer
 {
-    private const float AUTO_SCALE = 0.056f * TGCGame.S_METRO;
+    private const float AUTO_SCALE = 0.056f * PistonDerby.S_METRO;
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ERROR_TRASLACION_RUEDAS = AUTO_SCALE*0.01f;
-    private static Effect Effect => TGCGame.GameContent.E_SpiralShader;
-    protected Model Model => TGCGame.GameContent.M_Auto;
+    private static Effect Effect => PistonDerby.GameContent.E_SpiralShader;
+    protected Model Model => PistonDerby.GameContent.M_Auto;
 
     //UPDATE
     internal Vector3 CarPosition { private get; set; } = Vector3.Zero;

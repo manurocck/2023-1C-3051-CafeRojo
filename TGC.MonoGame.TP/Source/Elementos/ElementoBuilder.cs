@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TGC.MonoGame.TP.Drawers;
+using PistonDerby.Drawers;
 
-namespace TGC.MonoGame.TP.Elementos;
+namespace PistonDerby.Elementos;
 public class ElementoBuilder{
     private Model Model;
     private Vector3 PosicionRelativa;
     private Vector3 Corrimiento = Vector3.Zero;
     private Vector3 Rotacion = Vector3.Zero;
-    private IDrawer Drawer = new ColorDrawer(TGCGame.GameContent.M_CafeRojo, Color.Magenta); // drawer como static?
+    private IDrawer Drawer = new ColorDrawer(PistonDerby.GameContent.M_CafeRojo, Color.Magenta); // drawer como static?
     private float Escala = 1f;
 
     /// <summary> Recibe una posicion pivot <paramref name="inicioHabitacion"/> sobre la cuál dibuja todos los elementos + el corrimiento indicado por los métodos <paramref name="Posicion"/> y <paramref name="Altura"/></summary> 
@@ -31,7 +31,7 @@ public class ElementoBuilder{
     }
     /// <summary> La <paramref name="altura"/> del elemento. Su unidad es <paramref name="S_METRO"/></summary>
     public ElementoBuilder ConAltura(float metrosAltura){
-        Corrimiento.Y = metrosAltura * TGCGame.S_METRO;
+        Corrimiento.Y = metrosAltura * PistonDerby.S_METRO;
         return this;
     }
     public ElementoBuilder ConRotacion(float rotacionX, float rotacionY, float rotacionZ){
@@ -42,8 +42,8 @@ public class ElementoBuilder{
     }
     /// <summary> Establece el corrimiento del objeto sobre el plano. <paramref name="metrosDistanciaAlOrigenEnX"/> y <paramref name="metrosDistanciaAlOrigenEnZ"/>  tienen como unidad a <paramref name="S_METRO"/> <code></code> <example><code> ElementoBuilder.ConPosicion(2,3); //Lo mueve 2 unidades para abajo y 3 para la izquierda desde el origen </code></example></summary> 
     public ElementoBuilder ConPosicion(float metrosDistanciaAlOrigenEnX, float metrosDistanciaAlOrigenEnZ){
-        Corrimiento.X = metrosDistanciaAlOrigenEnX * TGCGame.S_METRO;
-        Corrimiento.Z = metrosDistanciaAlOrigenEnZ * TGCGame.S_METRO;
+        Corrimiento.X = metrosDistanciaAlOrigenEnX * PistonDerby.S_METRO;
+        Corrimiento.Z = metrosDistanciaAlOrigenEnZ * PistonDerby.S_METRO;
         return this;
     }
     public ElementoBuilder ConShader(Effect shaderSinParametros){

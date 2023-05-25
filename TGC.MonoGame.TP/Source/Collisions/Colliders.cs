@@ -1,9 +1,9 @@
 using BepuPhysics;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using TGC.MonoGame.TP.Elementos;
+using PistonDerby.Elementos;
 
-namespace TGC.MonoGame.TP.Collisions;
+namespace PistonDerby.Collisions;
 
 class Colliders
 {

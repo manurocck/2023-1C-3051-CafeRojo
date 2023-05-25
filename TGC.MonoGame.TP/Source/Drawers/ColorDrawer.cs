@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal class ColorDrawer : IDrawer
 {
-    private static Effect Effect => TGCGame.GameContent.E_BasicShader;
+    private static Effect Effect => PistonDerby.GameContent.E_BasicShader;
     protected readonly Model Model;
     protected readonly Color Color;
 

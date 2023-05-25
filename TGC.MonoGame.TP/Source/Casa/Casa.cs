@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 public class Casa {
 
-    private const float S_METRO = TGCGame.S_METRO;
+    private const float S_METRO = PistonDerby.S_METRO;
     private List<IHabitacion> Habitaciones;
     private List<Pared> Esqueleto;
     private List<Puerta> Puertas;
@@ -27,11 +27,11 @@ public class Casa {
     public void Draw(){
         
         for(int i=0 ; i<Esqueleto.Count; i++) // paredes traslúcidas
-            if (i>=indexInicioExteriores) Esqueleto[i].SetEffect(TGCGame.GameContent.E_BlacksFilter);
+            if (i>=indexInicioExteriores) Esqueleto[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
         
         foreach(var h in Habitaciones) h.Draw();
-        foreach(Puerta p in Puertas) p.Draw(TGCGame.GameContent.T_Concreto);
-        foreach(Pared p in Esqueleto) p.Draw(TGCGame.GameContent.T_Concreto);
+        foreach(Puerta p in Puertas) p.Draw(PistonDerby.GameContent.T_Concreto);
+        foreach(Pared p in Esqueleto) p.Draw(PistonDerby.GameContent.T_Concreto);
 
     }
 
@@ -89,5 +89,10 @@ public class Casa {
         Esqueleto.Add(new Pared(hCocina   .SegmentoIzquierda().inicio, hCocina   .SegmentoIzquierda().final ));
         Esqueleto.Add(new Pared(hDormiLego.SegmentoInferior ().final,  hPasillo  .SegmentoSuperior ().final ));
 
+    }
+    public void DebugGizmos(){
+        foreach(IHabitacion h in Habitaciones) h.DebugGizmos();
+        foreach(Pared p in Esqueleto) p.DebugGizmos();
+        // foreach(Puerta p in Puertas) p.DebugGizmos();
     }
 }

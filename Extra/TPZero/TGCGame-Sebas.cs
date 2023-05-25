@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Content.Models;
+using PistonDerby.Content.Models;
 
 using System.Linq;
 
-namespace TGC.MonoGame.TP
+namespace PistonDerby
 {
     /// <summary>
     ///     Clase principal del juego.
     /// </summary>
-    public class TGCGame : Game
+    public class PistonDerby : Game
     {
         public const string ContentFolder3D = "Models/";
         public const string ContentFolderEffects = "Effects/";
@@ -33,7 +33,7 @@ namespace TGC.MonoGame.TP
         private Vector3 JumpPower { get; set; }   
         private Matrix CarWorld { get; set; }
 
-        public TGCGame()
+        public PistonDerby()
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

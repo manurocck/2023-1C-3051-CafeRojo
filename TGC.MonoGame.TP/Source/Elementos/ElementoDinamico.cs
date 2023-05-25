@@ -2,16 +2,16 @@ using BepuPhysics;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Utils;
+using PistonDerby.Utils;
 
-namespace TGC.MonoGame.TP.Elementos;
+namespace PistonDerby.Elementos;
 public abstract class ElementoDinamico : Elemento {
     protected BodyHandle BodyHandle { get; set; }
     internal TypedIndex Shape { get; set; }
     internal abstract float Mass();
     internal abstract float Scale();
     internal virtual void Update(float dTime, KeyboardState keyboard) { }
-    internal BodyReference Body() => TGCGame.Simulation.GetBodyReference(BodyHandle);
+    internal BodyReference Body() => PistonDerby.Simulation.GetBodyReference(BodyHandle);
 
     internal Quaternion Rotation() => Body().Pose.Orientation.ToQuaternion();
     internal Vector3 Position() => Body().Pose.Position;
@@ -22,12 +22,12 @@ public abstract class ElementoDinamico : Elemento {
     internal void ApplyAngularImpulse(Vector3 impulse) => Body().ApplyAngularImpulse(impulse.ToBepu());
     internal void ApplyLinearImpulse(Vector3 impulse, float offset = 0) => 
         Body().ApplyImpulse(impulse.ToBepu(), QuaternionExtensions.Forward((this.Body().Pose.Orientation.ToQuaternion())*offset).ToBepu());
-    internal void Awake() => TGCGame.Simulation.Awake(BodyHandle);
+    internal void Awake() => PistonDerby.Simulation.Awake(BodyHandle);
     internal Vector3 AngularVelocity() => Body().Velocity.Angular;
     internal Vector3 LinearVelocity() => Body().Velocity.Linear;
 
     internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 
-        BodyHandle = TGCGame.Simulation.CreateDynamic(initialPosition, initialRotation, Shape, Mass());
-        TGCGame.Simulation.Colliders.RegisterCollider(BodyHandle, this);
+        BodyHandle = PistonDerby.Simulation.CreateDynamic(initialPosition, initialRotation, Shape, Mass());
+        PistonDerby.Simulation.Colliders.RegisterCollider(BodyHandle, this);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace TGC.MonoGame.TP.Collisions
+namespace PistonDerby.Collisions
 {
     /// <summary>
     ///     Utilidades para hacer detección de colisiones

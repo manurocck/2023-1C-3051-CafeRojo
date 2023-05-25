@@ -2,11 +2,11 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BepuPhysics.Collidables;
-using TGC.MonoGame.TP.Utils;
-using TGC.MonoGame.TP.Elementos;
-using TGC.MonoGame.TP.Drawers;
+using PistonDerby.Utils;
+using PistonDerby.Elementos;
+using PistonDerby.Drawers;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 internal class Auto : ElementoDinamico { 
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ANGULAR_SPEED = 30f;
@@ -15,15 +15,15 @@ internal class Auto : ElementoDinamico {
     private const float JUMP_POWER = 10000f; // Factor de ajuste para la rotación
     private bool PuedeSaltar() => true;
     internal override float Mass() => 1f;
-    internal override float Scale() => 0.08f * TGCGame.S_METRO;
+    internal override float Scale() => 0.08f * PistonDerby.S_METRO;
     internal override IDrawer Drawer() => new CarDrawer(this);
     internal float WheelTurning = 0f; 
     internal float WheelRotation = 0f;
 
     internal Auto(Vector3 posicionInicial) {
-        var boxSize = TGCGame.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
-        Shape = TGCGame.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
-        this.AddToSimulation(posicionInicial + new Vector3(0,TGCGame.S_METRO,0), Quaternion.Identity);
+        var boxSize = PistonDerby.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
+        Shape = PistonDerby.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
+        this.AddToSimulation(posicionInicial + new Vector3(0,PistonDerby.S_METRO,0), Quaternion.Identity);
     }
 
     internal override void Update(float dTime, KeyboardState keyboard) {   
@@ -49,7 +49,7 @@ internal class Auto : ElementoDinamico {
         Vector3 angularImpulse = this.Rotation().Up() * ANGULAR_SPEED * ANGULAR_SPEED * WheelTurning; /* (* Math.Min(coeficienteVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
 
         // SUUUUPER interesante lo que pasa con este offset (investigar)
-        // Vector3 offset = TGCGame.GameContent.M_Auto.Size(); // tracción delantera
+        // Vector3 offset = PistonDerby.GameContent.M_Auto.Size(); // tracción delantera
         float offsetAmount = 2f;
         this.ApplyLinearImpulse(horizontalImpulse + verticalImpulse, offsetAmount);
         this.ApplyAngularImpulse(angularImpulse);

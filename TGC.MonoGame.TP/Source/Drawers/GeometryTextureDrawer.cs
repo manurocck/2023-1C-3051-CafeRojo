@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TGC.MonoGame.TP.Geometries;
+using PistonDerby.Geometries;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 
 internal class GeometryTextureDrawer : IDrawer{
-    private Effect Efecto = TGCGame.GameContent.E_TextureTiles;
+    private Effect Efecto = PistonDerby.GameContent.E_TextureTiles;
     private Texture2D Texture;
     private IGeometryPrimitive Geometry;
     internal GeometryTextureDrawer(IGeometryPrimitive geometry, Texture2D texture){

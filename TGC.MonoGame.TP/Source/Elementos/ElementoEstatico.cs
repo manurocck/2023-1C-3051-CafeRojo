@@ -1,9 +1,9 @@
 
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
-using TGC.MonoGame.TP.Drawers;
+using PistonDerby.Drawers;
 
-namespace TGC.MonoGame.TP.Elementos;
+namespace PistonDerby.Elementos;
 public class ElementoEstatico : Elemento {
     internal IConvexShape Shape { get; set; }
     private IDrawer SavedDrawer;

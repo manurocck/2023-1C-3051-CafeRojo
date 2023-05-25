@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 public class Puerta{
 
     private List<Pared> Paredes = new List<Pared>();
-    private const float ANCHO_PUERTA = 0.15f;
-    private Effect Efecto = TGCGame.GameContent.E_TextureShader;
+    private const float ANCHO_PUERTA = 0.25f;
+    private Effect Efecto = PistonDerby.GameContent.E_TextureShader;
 
     // Ubicacion es la distancia a la que está del origen (0 es lo cerca posible y 1 es lo más lejos posible)
     public Puerta(Vector3 puntoInicio, Vector3 puntoFinal, float ubicacionPuerta){

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal interface IDrawer
 {
     void Draw(Matrix World);

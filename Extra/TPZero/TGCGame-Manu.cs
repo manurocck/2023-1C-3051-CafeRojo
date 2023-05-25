@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Content.Models;
+using PistonDerby.Content.Models;
 
-namespace TGC.MonoGame.TP
+namespace PistonDerby
 {
     /// <summary>
     ///     Clase principal del juego.
     /// </summary>
-    public class TGCGame : Game
+    public class PistonDerby : Game
     {
         public const string ContentFolder3D = "Models/";
         public const string ContentFolderEffects = "Effects/";
@@ -42,7 +42,7 @@ namespace TGC.MonoGame.TP
 
 
         ///     Constructor del juego.
-        public TGCGame()
+        public PistonDerby()
         {
             // Se encarga de la configuracion y administracion del Graphics Device.
             Graphics = new GraphicsDeviceManager(this);

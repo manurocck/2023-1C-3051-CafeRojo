@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using BepuVector3 = System.Numerics.Vector3;
 
-namespace TGC.MonoGame.TP.Utils;
+namespace PistonDerby.Utils;
 
 public static class Vector3Extensions {
     internal static BepuVector3 ToBepu(this Vector3 vector3) => new BepuVector3(vector3.X, vector3.Y, vector3.Z);

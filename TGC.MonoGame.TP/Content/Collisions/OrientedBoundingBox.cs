@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace TGC.MonoGame.TP.Collisions
+namespace PistonDerby.Collisions
 {
     /// <summary>
     ///     Represents an Oriented-BoundingBox (OBB).

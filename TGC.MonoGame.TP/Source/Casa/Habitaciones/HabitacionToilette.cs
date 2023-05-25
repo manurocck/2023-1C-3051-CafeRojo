@@ -1,7 +1,7 @@
 // using Microsoft.Xna.Framework;
-// using TGC.MonoGame.TP.Elementos;
+// using PistonDerby.Elementos;
 
-// namespace TGC.MonoGame.TP
+// namespace PistonDerby
 // {
 //     public class HabitacionToilette : IHabitacion{
 //         public const int ANCHO = 4;
@@ -15,8 +15,8 @@
 
         
 //         public override void DrawElementos(){
-//             var bShader = TGCGame.GameContent.E_BasicShader;
-//             var mShader = TGCGame.GameContent.E_TextureMirror;
+//             var bShader = PistonDerby.GameContent.E_BasicShader;
+//             var mShader = PistonDerby.GameContent.E_TextureMirror;
 //             foreach(var e in Elementos){
 //                 switch(e.GetTag()){
 //                     case "Bacha":
@@ -24,7 +24,7 @@
 //                         bShader.Parameters["DiffuseColor"].SetValue(Color.White.ToVector3());
 //                     break;
 //                     case "Baniera":
-//                         mShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Ladrillos);
+//                         mShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Ladrillos);
 //                     break;
 
 //                     default:
@@ -37,14 +37,14 @@
 //         private void Amueblar(){
 //             var carpintero = new ElementoBuilder(this.PuntoInicio());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Inodoro)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Inodoro)
 //                 .ConPosicion(1500f, 500f)
 //                 .ConRotacion(-MathHelper.PiOver2,0,0)
 //                 .ConEscala(15f);
 //                 AddElemento(carpintero.BuildMueble());
             
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Baniera)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Baniera)
 //                 .ConPosicion(1500f, 3000)
 //                 .ConShader(mShader)
 //                 .ConRotacion(0f, MathHelper.Pi, 0f)
@@ -52,7 +52,7 @@
 //                 AddElemento(carpintero.BuildMueble());
             
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Bacha)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Bacha)
 //                 .ConPosicion(3000f, -100f)
 //                 .ConRotacion(-MathHelper.PiOver2, 0f, 0f)
 //                 .ConAltura(1000f)

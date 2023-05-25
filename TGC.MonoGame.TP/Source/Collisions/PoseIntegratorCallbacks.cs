@@ -3,7 +3,7 @@ using System.Numerics;
 using BepuPhysics;
 using BepuUtilities;
 
-namespace TGC.MonoGame.TP.Collisions;
+namespace PistonDerby.Collisions;
 
 public struct PoseIntegratorCallbacks : IPoseIntegratorCallbacks
 {

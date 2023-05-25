@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Geometries;
+namespace PistonDerby.Geometries;
 
 public abstract class IGeometryPrimitive{
     internal VertexBuffer Vertices { get; set; }

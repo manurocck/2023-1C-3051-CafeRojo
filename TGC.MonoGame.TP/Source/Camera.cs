@@ -2,11 +2,11 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 
 class Camera
 {
-    private float DISTANCIA_AL_AUTO = 4f * TGCGame.S_METRO;
+    private float DISTANCIA_AL_AUTO = 4f * PistonDerby.S_METRO;
     public Matrix Projection { get; private set; }
     public Matrix View { get; private set; }
 
@@ -17,7 +17,7 @@ class Camera
         Projection = Matrix.CreatePerspectiveFieldOfView(0.5f, aspectRatio, 0.1f, 100000f);
     }
     public void Mover(KeyboardState keyboardState){
-        var multiplicador = 0.025f*TGCGame.S_METRO;
+        var multiplicador = 0.025f*PistonDerby.S_METRO;
         if(keyboardState.IsKeyDown(Keys.LeftShift)){
             multiplicador = 1f;
         }   

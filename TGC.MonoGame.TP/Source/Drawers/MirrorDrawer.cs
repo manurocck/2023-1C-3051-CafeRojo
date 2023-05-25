@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal class MirrorDrawer : IDrawer
 {
-    protected Effect Effect = TGCGame.GameContent.E_TextureMirror;
+    protected Effect Effect = PistonDerby.GameContent.E_TextureMirror;
     protected readonly Model Model;
     protected readonly Texture2D Texture;
 

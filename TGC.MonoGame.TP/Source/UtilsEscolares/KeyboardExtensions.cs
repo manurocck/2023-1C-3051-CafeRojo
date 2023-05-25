@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace TGC.MonoGame.TP.Utils;
+namespace PistonDerby.Utils;
 
 public static class KeyboardExtensions {
     private static float GetAxis(this KeyboardState keyboard, Keys positiveKey, Keys negativeKey) {

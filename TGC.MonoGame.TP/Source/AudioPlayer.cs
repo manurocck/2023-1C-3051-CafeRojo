@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 
 public class AudioPlayer
 {
@@ -13,7 +13,7 @@ public class AudioPlayer
         // MediaPlayer.Volume = 0.5f;
     }
     internal void LoadContent(){
-        Soundtrack = TGCGame.GameContent.S_SynthWars;
+        Soundtrack = PistonDerby.GameContent.S_SynthWars;
         MediaPlayer.Play(Soundtrack);
     }
     internal void Update(KeyboardState keyboardState)

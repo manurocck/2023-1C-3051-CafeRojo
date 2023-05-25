@@ -4,9 +4,9 @@ using BepuPhysics.Collidables;
 using BepuPhysics.Constraints;
 using BepuUtilities.Memory;
 using Microsoft.Xna.Framework;
-using TGC.MonoGame.TP.Utils;
+using PistonDerby.Utils;
 
-namespace TGC.MonoGame.TP.Collisions;
+namespace PistonDerby.Collisions;
 
 internal class GameSimulation
 {
@@ -58,6 +58,8 @@ internal class GameSimulation
             new BodyActivityDescription(SLEEP_THRESHOLD));
         return Simulation.Bodies.Add(bodyDescription);
     }
+
+    public void DebugGizmos() { /* considerar agregarlo acá */ }
 
     // internal void DestroyStatic(StaticHandle handle) => Simulation.Statics.Remove(handle);
     // internal void DestroyBody(BodyHandle handle) => Simulation.Bodies.Remove(handle);

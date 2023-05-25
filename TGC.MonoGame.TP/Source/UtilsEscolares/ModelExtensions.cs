@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace TGC.MonoGame.TP.Utils;
+namespace PistonDerby.Utils;
 public static class ModelExtensions {
     /// <summarize> Devuelve el tamaño de la caja que envuelve tu corazon </summarize> 
     public static Vector3 Dimensiones(this Microsoft.Xna.Framework.Graphics.Model model)

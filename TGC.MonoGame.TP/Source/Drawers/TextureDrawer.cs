@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal class TextureDrawer : IDrawer
 {
-    protected Effect Effect = TGCGame.GameContent.E_TextureShader;
+    protected Effect Effect = PistonDerby.GameContent.E_TextureShader;
     protected readonly Model Model;
     protected readonly Texture2D Texture;
 

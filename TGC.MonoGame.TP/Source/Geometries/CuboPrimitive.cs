@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Geometries;
+namespace PistonDerby.Geometries;
 internal class CuboPrimitive : IGeometryPrimitive
 {
     internal CuboPrimitive(GraphicsDevice graphicsDevice) : base(graphicsDevice) { }

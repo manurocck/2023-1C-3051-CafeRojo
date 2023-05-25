@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 public static class Program
 {
     [STAThread]
     static void Main()
     {
-        using (var game = new TGCGame())
+        using (var game = new PistonDerby())
             game.Run();
     }
 }

@@ -1,7 +1,7 @@
 // using System;
 // using Microsoft.Xna.Framework;
 
-// namespace TGC.MonoGame.TP
+// namespace PistonDerby
 // {
 
 //     public class HabitacionConferencias : IHabitacion{

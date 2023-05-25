@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TGC.MonoGame.TP.Drawers;
+namespace PistonDerby.Drawers;
 internal class PlainEffectDrawer : IDrawer // Generalizar como EffectDrawer ?? NoParametersDrawer ??
 {
     protected Effect Effect;

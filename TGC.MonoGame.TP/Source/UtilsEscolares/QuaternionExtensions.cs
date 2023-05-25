@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using BepuQuaternion = System.Numerics.Quaternion;
 
-namespace TGC.MonoGame.TP.Utils;
+namespace PistonDerby.Utils;
 
 public static class QuaternionExtensions {
     internal static Quaternion ToQuaternion(this BepuQuaternion bepuQuaternion) => new Quaternion(bepuQuaternion.X, bepuQuaternion.Y, bepuQuaternion.Z, bepuQuaternion.W);

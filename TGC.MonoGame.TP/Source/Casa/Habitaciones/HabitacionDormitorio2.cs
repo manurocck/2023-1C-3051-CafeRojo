@@ -1,7 +1,7 @@
 // using Microsoft.Xna.Framework;
-// using TGC.MonoGame.TP.Elementos;
+// using PistonDerby.Elementos;
 
-// namespace TGC.MonoGame.TP
+// namespace PistonDerby
 // {
 //     public class HabitacionDormitorio2 : IHabitacion{
 //         public const int ANCHO = 5;
@@ -14,25 +14,25 @@
 //         }
         
 //         public override void DrawElementos(){
-//             var tShader = TGCGame.GameContent.E_TextureShader;
-//             var bShader = TGCGame.GameContent.E_BasicShader;
+//             var tShader = PistonDerby.GameContent.E_TextureShader;
+//             var bShader = PistonDerby.GameContent.E_BasicShader;
 //             foreach(var e in Elementos){
 //                 switch(e.GetTag()){
 //                     case "Alfil":
 //                     case "Torre":
-//                         tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_PisoMadera);      
+//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_PisoMadera);      
 //                     break;
 //                     case "Sillon":
 //                         bShader.Parameters["DiffuseColor"].SetValue(Color.White.ToVector3());
 //                     break;
 //                     case "Dragon":
-//                         tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Dragon);
+//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Dragon);
 //                     break;
 //                     case "Dragona":
 //                         bShader.Parameters["DiffuseColor"].SetValue(Color.MediumVioletRed.ToVector3());
 //                     break;
 //                     case "Cama":
-//                         tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_PisoMaderaClaro);
+//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_PisoMaderaClaro);
 //                     break;
 //                     case "Juego":
 //                         bShader.Parameters["DiffuseColor"].SetValue(Color.Gray.ToVector3());
@@ -41,7 +41,7 @@
 //                         bShader.Parameters["DiffuseColor"].SetValue(Color.Red.ToVector3());
 //                     break;
 //                     case "Armario1":
-//                         tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_PisoMadera);
+//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_PisoMadera);
 //                     break;
 
 //                     default:
@@ -57,41 +57,41 @@
 
 //             var carpintero = new ElementoBuilder(this.PuntoInicio());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Dragon)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Dragon)
 //                 .ConPosicion(400f, 400f)
 //                 .ConShader(tShader)
 //                 .ConAltura(2000f)
 //                 .ConRotacion(MathHelper.PiOver4,MathHelper.PiOver4,0f);
 //                 AddElemento(carpintero.BuildMueble());
 
-//           /*  carpintero.Modelo(TGCGame.GameContent.M_Cama)
+//           /*  carpintero.Modelo(PistonDerby.GameContent.M_Cama)
 //                 .ConPosicion(1000f, 2000f)
 //                 .ConAltura(0f)
 //                 AddElemento(carpintero.BuildMueble());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Juego)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Juego)
 //                 .ConPosicion(3000f, 400f)
 //                 .ConAltura(500f)
 //                 AddElemento(carpintero.BuildMueble());
             
-//             carpintero.Modelo(TGCGame.GameContent.M_Puff)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Puff)
 //                 .ConPosicion(4000f, 300f)
 //                 .ConAltura(0f)
 //                 AddElemento(carpintero.BuildMueble());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Armario1)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Armario1)
 //                 .ConPosicion(4700f, 2000f)
 //                 .ConAltura(500f)
 //                 .ConRotacion(0f,-MathHelper.Pi,0f);
 //                 AddElemento(carpintero.BuildMueble());  */
                 
-//             carpintero.Modelo(TGCGame.GameContent.M_Dragona)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Dragona)
 //                 .ConPosicion(400f, 4500f)
 //                 .ConAltura(2000f)
 //                 .ConRotacion(MathHelper.PiOver4,MathHelper.PiOver4*3,0f);
 //                 AddElemento(carpintero.BuildMueble());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Sillon)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Sillon)
 //                 .ConEscala(100f)
 
 //                 .ConPosicion(ubicacionSet.X+50f, ubicacionSet.Z+2150f)
@@ -110,8 +110,8 @@
 
 //             ubicacionSet = new Vector3(200f,0f,200f);
 //             #region Set Ajedrez
-//             carpintero.Modelo(TGCGame.GameContent.M_Torre)
-//                 .ConShader(TGCGame.GameContent.E_TextureShader)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Torre)
+//                 .ConShader(PistonDerby.GameContent.E_TextureShader)
                 
 //                 .ConPosicion(ubicacionSet.X - 200f, ubicacionSet.Z - 200f);
 //                 AddElemento(carpintero.BuildMueble());
@@ -120,8 +120,8 @@
 //                 .ConPosicion(ubicacionSet.X + 400f, ubicacionSet.Z + 400f);
 //                 AddElemento(carpintero.BuildMueble());
 
-//             carpintero.Modelo(TGCGame.GameContent.M_Alfil)
-//                 .ConShader(TGCGame.GameContent.E_TextureShader)
+//             carpintero.Modelo(PistonDerby.GameContent.M_Alfil)
+//                 .ConShader(PistonDerby.GameContent.E_TextureShader)
 
 //                 .ConPosicion(ubicacionSet.X, ubicacionSet.Z +400f);
 //                 AddElemento(carpintero.BuildMueble());

@@ -1,23 +1,23 @@
 using Microsoft.Xna.Framework;
-using TGC.MonoGame.TP.Elementos;
+using PistonDerby.Elementos;
 
-namespace TGC.MonoGame.TP
+namespace PistonDerby
 {
     public class HabitacionCocina : IHabitacion{
         public const int ANCHO = 6;
         public const int LARGO = 6;
         private const float SeparacionDePared = 0; 
         public HabitacionCocina(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
-            Piso.ConTextura(TGCGame.GameContent.T_PisoCeramica, 10, 10);
+            Piso.ConTextura(PistonDerby.GameContent.T_PisoCeramica, 10, 10);
 
             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
             
             Amueblar();
         }
        //public override void DrawElementos(){
-         //   var mShader = TGCGame.GameContent.E_TextureMirror;
-           // var bShader = TGCGame.GameContent.E_BasicShader;
-            //var tShader = TGCGame.GameContent.E_TextureShader;
+         //   var mShader = PistonDerby.GameContent.E_TextureMirror;
+           // var bShader = PistonDerby.GameContent.E_BasicShader;
+            //var tShader = PistonDerby.GameContent.E_TextureShader;
             //foreach(var mueble in Elementos){
               //  switch(mueble.GetTag()){
                 //    case "Olla":
@@ -25,10 +25,10 @@ namespace TGC.MonoGame.TP
                     //break;
                     //break;
                    // case "ParedCocina":
-                     //   tShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Ladrillos);
+                     //   tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Ladrillos);
                     //break;
                     //default:
-                      //  mShader.Parameters["Texture"].SetValue(TGCGame.GameContent.T_Marmol);
+                      //  mShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Marmol);
                    // break;
                // }
              //   mueble.Draw();
@@ -39,36 +39,36 @@ namespace TGC.MonoGame.TP
             
             var alturaMesada = 0.6f;
 
-            carpintero.Modelo(TGCGame.GameContent.M_Mesada)
+            carpintero.Modelo(PistonDerby.GameContent.M_Mesada)
                 .ConAltura(alturaMesada)
                 .ConPosicion(SeparacionDePared+0.25f,2.25f)
                 .ConRotacion(0,MathHelper.PiOver2,0)
-                .ConTextura(TGCGame.GameContent.T_MarmolNegro)
+                .ConTextura(PistonDerby.GameContent.T_MarmolNegro)
                 .ConEscala(2.25f);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_MesadaLateral2)
+            carpintero.Modelo(PistonDerby.GameContent.M_MesadaLateral2)
                 .ConPosicion(SeparacionDePared+0.05f,0.85f)
-                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConTextura(PistonDerby.GameContent.T_Marmol)
                 .ConRotacion(0,MathHelper.PiOver2,0)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_PlatosApilados)
+            carpintero.Modelo(PistonDerby.GameContent.M_PlatosApilados)
                 .ConPosicion(SeparacionDePared+0.25f,2.5f)
                 .ConColor(Color.LightBlue)
                 .ConAltura(alturaMesada)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_MesadaCentral)
+            carpintero.Modelo(PistonDerby.GameContent.M_MesadaCentral)
                 .ConPosicion(SeparacionDePared+0.05f,1.45f)
                 .ConRotacion(0,MathHelper.PiOver2,0)
-                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConTextura(PistonDerby.GameContent.T_Marmol)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_Olla)
+            carpintero.Modelo(PistonDerby.GameContent.M_Olla)
                 .ConPosicion(2.2f,SeparacionDePared+0.45f)
                 .ConColor(Color.DarkSlateBlue)
                 .ConAltura(alturaMesada)
@@ -80,7 +80,7 @@ namespace TGC.MonoGame.TP
                 .ConAltura(alturaMesada+0.08f);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Plato)
+            carpintero.Modelo(PistonDerby.GameContent.M_Plato)
                 .ConPosicion(SeparacionDePared+0.5f,1.5f)
                 .ConAltura(alturaMesada+1)
                 .ConColor(Color.Aquamarine)
@@ -100,14 +100,14 @@ namespace TGC.MonoGame.TP
                 .ConRotacion(0,MathHelper.PiOver2,0);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_MesadaLateral)
+            carpintero.Modelo(PistonDerby.GameContent.M_MesadaLateral)
                 .ConPosicion(SeparacionDePared+0.05f,2.05f)
                 .ConRotacion(0,MathHelper.PiOver2,0)
-                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConTextura(PistonDerby.GameContent.T_Marmol)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_PlatoGrande)
+            carpintero.Modelo(PistonDerby.GameContent.M_PlatoGrande)
                 .ConPosicion(1,SeparacionDePared+0.1f)
                 .ConColor(Color.WhiteSmoke)
                 .ConAltura(alturaMesada + 1)
@@ -115,21 +115,21 @@ namespace TGC.MonoGame.TP
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Botella)
+            carpintero.Modelo(PistonDerby.GameContent.M_Botella)
                 .ConPosicion(1,SeparacionDePared + 0.2f)
                 .ConAltura(alturaMesada+0.05f)
                 .ConColor(Color.Azure)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Maceta2)
+            carpintero.Modelo(PistonDerby.GameContent.M_Maceta2)
                 .ConPosicion(SeparacionDePared+0.2f,3)
                 .ConColor(Color.IndianRed)
                 .ConAltura(alturaMesada)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_Maceta3)
+            carpintero.Modelo(PistonDerby.GameContent.M_Maceta3)
                .ConPosicion(SeparacionDePared+0.2f,3)
                 .ConColor(Color.IndianRed)
                 .ConAltura(alturaMesada+1.05f)
@@ -137,35 +137,35 @@ namespace TGC.MonoGame.TP
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_ParedCocina)
+            carpintero.Modelo(PistonDerby.GameContent.M_ParedCocina)
                 .ConPosicion(0,0)
                 .ConRotacion(0,MathHelper.PiOver2,0)
-                .ConTextura(TGCGame.GameContent.T_MarmolNegro)
+                .ConTextura(PistonDerby.GameContent.T_MarmolNegro)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Cocine)
+            carpintero.Modelo(PistonDerby.GameContent.M_Cocine)
                 .ConPosicion(2.25f,0.4f)
                 .ConAltura(0.45f)
                 .ConColor(Color.Silver)
                 .ConEscala(0.45f);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Alacena)
+            carpintero.Modelo(PistonDerby.GameContent.M_Alacena)
                 .ConPosicion(2.6f,0)
                 .ConAltura(alturaMesada * 2.5f)
-                .ConTextura(TGCGame.GameContent.T_Marmol)
+                .ConTextura(PistonDerby.GameContent.T_Marmol)
                 .ConEscala(5);
                 AddElemento(carpintero.BuildMueble());
 
-            carpintero.Modelo(TGCGame.GameContent.M_Maceta)
+            carpintero.Modelo(PistonDerby.GameContent.M_Maceta)
                 .ConPosicion(SeparacionDePared+0.2f,2.5f)
                 .ConColor(Color.IndianRed)
                 .ConAltura(alturaMesada+1.05f)
                 .ConEscala(6);
                 AddElemento(carpintero.BuildMueble());
             
-            carpintero.Modelo(TGCGame.GameContent.M_Maceta4)
+            carpintero.Modelo(PistonDerby.GameContent.M_Maceta4)
                 .ConPosicion(SeparacionDePared+0.25f,0.55f)
                 .ConColor(Color.IndianRed)
                 .ConAltura(alturaMesada+1.05f)

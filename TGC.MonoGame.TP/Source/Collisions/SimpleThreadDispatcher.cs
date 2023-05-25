@@ -4,7 +4,7 @@ using System.Threading;
 using BepuUtilities;
 using BepuUtilities.Memory;
 
-namespace TGC.MonoGame.TP.Collisions;
+namespace PistonDerby.Collisions;
 
 /// <summary>
 ///     Provides a <see cref="IThreadDispatcher" /> implementation. Not reentrant.

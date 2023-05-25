@@ -6,9 +6,9 @@ using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuPhysics.CollisionDetection;
 using BepuPhysics.Constraints;
-using TGC.MonoGame.TP.Elementos;
+using PistonDerby.Elementos;
 
-namespace TGC.MonoGame.TP.Collisions;
+namespace PistonDerby.Collisions;
 
 public struct NarrowPhaseCallbacks : INarrowPhaseCallbacks
 {
@@ -140,8 +140,8 @@ public struct NarrowPhaseCallbacks : INarrowPhaseCallbacks
 
     private Elemento GetCollitionHandler(CollidableReference collider) =>
             collider.Mobility == CollidableMobility.Static ?
-                TGCGame.Simulation.Colliders.GetHandler(collider.StaticHandle) :
-                TGCGame.Simulation.Colliders.GetHandler(collider.BodyHandle);
+                PistonDerby.Simulation.Colliders.GetHandler(collider.StaticHandle) :
+                PistonDerby.Simulation.Colliders.GetHandler(collider.BodyHandle);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool ConfigureContactManifold(int workerIndex, CollidablePair pair, int childIndexA, int childIndexB,

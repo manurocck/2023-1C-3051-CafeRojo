@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using TGC.MonoGame.TP.Elementos;
+using PistonDerby.Elementos;
 
-namespace TGC.MonoGame.TP;
+namespace PistonDerby;
 public abstract class IHabitacion
 {
-    private const float S_METRO = TGCGame.S_METRO;
+    private const float S_METRO = PistonDerby.S_METRO;
     public readonly int MetrosAncho;
     public readonly int MetrosLargo;
     internal Vector3 PosicionInicial;
@@ -17,7 +17,7 @@ public abstract class IHabitacion
     // Ancho y Alto en Cantidad de Baldosas
     public IHabitacion(int metrosAncho, int metrosLargo, Vector3 traslacionEnMetros)
     {
-        PosicionInicial = traslacionEnMetros* TGCGame.S_METRO;
+        PosicionInicial = traslacionEnMetros* PistonDerby.S_METRO;
         MetrosAncho = metrosAncho;
         MetrosLargo = metrosLargo;
         Muebles = new List<ElementoEstatico>();
@@ -40,6 +40,8 @@ public abstract class IHabitacion
         Piso.Draw();
         foreach(var e in Muebles) e.Draw();
     }
+
+    public void DebugGizmos() => this.Piso.DebugGizmos();
 
     /*                 *|
     |> > > UTILS        |
