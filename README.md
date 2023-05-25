@@ -35,8 +35,4 @@ Villegas Avalos,	Carlos Alejandro | *Charly* |  Tire carrier
 Greco,	Luca | Luquitas | Tire carrier
 
 ## Diseño Actual
-Clases Verdes  |  Clases Amarillas | Clases Rojas
-------- | ------------------| ------
-Clases que vamos a utilizar *solo para implementar su lógica.* Son de apoyo y **no deberían ser modificadas.** | Se van a modificar constantemente. Acá va toda la lógica de movimiento, ubicación en el espacio, colisiones, etc | Son Interfaces o de apoyo para un desarrollo libre de errores o confusiones
-
-<img src="https://user-images.githubusercontent.com/22857096/232848566-efbd58b0-4afa-4236-9829-bfb6537efde5.png" width=100% height=100%>
+![Diagrama de clases](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/c05bb0ba-d649-41f1-a53f-ee12a18b3462)
