@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using PistonDerby.Autos;
 
 namespace PistonDerby.Drawers;
 internal class CarDrawer : IDrawer

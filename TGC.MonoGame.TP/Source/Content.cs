@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using PistonDerby.Geometries;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace PistonDerby;
 
@@ -32,6 +31,7 @@ public class Content
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TextureMirror, E_TextureTiles, E_Traslucid;
+    internal readonly Effect H_BarraEffect;
     #endregion
     
     #region texturas
@@ -41,6 +41,7 @@ public class Content
     #endregion
     
     internal readonly List<Effect> Efectos = new List<Effect>();
+    internal readonly List<Effect> EfectosHUD = new List<Effect>();
     internal readonly Song S_SynthWars;
     internal readonly QuadPrimitive G_Quad;
     internal readonly CuboPrimitive G_Cubo;
@@ -57,11 +58,13 @@ public class Content
         // Efectos
         Efectos.Add(E_BasicShader   = LoadEffect("BasicShader")         );
         Efectos.Add(E_TextureShader = LoadEffect("TextureShader")       );
-        Efectos.Add(E_TextureTiles  = LoadEffect("TextureTiles")       );
+        Efectos.Add(E_TextureTiles  = LoadEffect("TextureTiles")        );
         Efectos.Add(E_TextureMirror = LoadEffect("TextureMirrorShader") );
         Efectos.Add(E_SpiralShader  = LoadEffect("SpiralShader")        );
         Efectos.Add(E_BlacksFilter  = LoadEffect("BlacksFilter")        );
-        Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")        );
+        Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")   );
+        
+        EfectosHUD.Add(H_BarraEffect     = LoadEffect("BarraHUD"));
 
 
         // Texturas

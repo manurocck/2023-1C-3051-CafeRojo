@@ -10,6 +10,8 @@ using PistonDerby.Elementos;
 using PistonDerby.Collisions;
 using PistonDerby.Utils;
 using PistonDerby.Gizmo;
+using PistonDerby.HUD;
+using PistonDerby.Autos;
 
 namespace PistonDerby;
 
@@ -17,11 +19,13 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     private const bool DEBUG_GIZMOS = false;
+    private const bool FULL_SCREEN = false;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
     internal static Content GameContent;
     internal static Gizmos Gizmos;
+    private PistonDerbyHUD HUD;
     private AudioPlayer Reproductor;
     private Camera Camera; 
     private Casa Casa;
@@ -40,8 +44,12 @@ public class PistonDerby : Game
         GraphicsDevice.RasterizerState = rasterizerState; // CullCounterClockwise; para activar el Culling
         GraphicsDevice.BlendState = BlendState.AlphaBlend;     
 
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height*3/4;
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width*3/4;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        Graphics.IsFullScreen=FULL_SCREEN;
+
+        HUD = new PistonDerbyHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+        
         Graphics.ApplyChanges();
     
         Camera = new Camera(GraphicsDevice.Viewport.AspectRatio);
@@ -50,6 +58,7 @@ public class PistonDerby : Game
         Gizmos = new Gizmos();
         Gizmos.Enabled = DEBUG_GIZMOS;
         Casa = new Casa();
+
 
         base.Initialize();
     }
@@ -65,6 +74,7 @@ public class PistonDerby : Game
         Casa.LoadContent();
 
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
+        foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
         Auto  = new Auto (Casa.PuntoCentro(0));
     }
@@ -83,8 +93,10 @@ public class PistonDerby : Game
         Auto.Update(dTime, Keyboard.GetState());
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
         
-        Camera.Update(Auto.World());
         Camera.Mover(keyboardState);
+
+        Camera.Update(Auto.World());
+        HUD.Update(Auto.World());
         
         Simulation.Update();
 
@@ -104,6 +116,8 @@ public class PistonDerby : Game
         Auto.Draw();          
         Casa.Draw();
         Gizmos.Draw();
+
+        HUD.Draw();
 
         this.DebugGizmos();
     }

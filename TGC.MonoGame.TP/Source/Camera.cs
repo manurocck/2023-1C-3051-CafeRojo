@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 namespace PistonDerby;
 
 class Camera
 {
     private float DISTANCIA_AL_AUTO = 4f * PistonDerby.S_METRO;
+    private Vector3 CameraPosition = Vector3.Zero;
+    private Vector3 FollowedPosition = Vector3.Zero;
     public Matrix Projection { get; private set; }
     public Matrix View { get; private set; }
 
@@ -30,22 +31,12 @@ class Camera
     }
     public void Update(Matrix followedWorld)
     {
-        var followedPosition = followedWorld.Translation;
-        
-        var offsetedPosition = followedPosition 
-            + Vector3.Right * DISTANCIA_AL_AUTO
-            + Vector3.Up * DISTANCIA_AL_AUTO;
-
-        var forward = (followedPosition - offsetedPosition);
-        forward.Normalize();
-
-        var right = Vector3.Cross(forward, Vector3.Up);
-        var cameraCorrectUp = Vector3.Cross(right, forward);
-
-        //View = Matrix.CreateLookAt(offsetedPosition, followedPosition, cameraCorrectUp);
+        FollowedPosition = followedWorld.Translation;
+        CameraPosition = FollowedPosition + new Vector3(1, 1, 1) * DISTANCIA_AL_AUTO;
+        Vector3 cameraNormal = new Vector3(-1, 1, -1);
 
         //Matriz de vista isometrica
-        View = Matrix.CreateLookAt(followedPosition + new Vector3(1, 1, 1) * DISTANCIA_AL_AUTO, followedPosition, new Vector3(-1, 1, -1));
+        View = Matrix.CreateLookAt(CameraPosition, FollowedPosition, cameraNormal);
 
     }
 }

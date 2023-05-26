@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using PistonDerby.Autos;
 using PistonDerby.Elementos;
 
 namespace PistonDerby.Mapa;
@@ -53,19 +54,10 @@ public class HabitacionPrincipal : IHabitacion{
             .ConPosicion(5.5f,4.5f) // lado inferior cerca de contra-cabecera
             .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*1.3f, 0);
             AddElemento( carpintero.BuildMueble() );
-        
-    
-        // carpintero.Modelo(PistonDerby.GameContent.M_Sillon)
-        //     .ConPosicion(0,0) //no se estan dibujando
-        //     .ConAltura(0)
-        //     .ConTextura(PistonDerby.GameContent.T_Alfombra)
-        //     .ConRotacion(0, MathHelper.Pi, 0)
-        //     .ConEscala(1f);
-        //     AddElemento( carpintero.BuildMueble() );
-        
+
 
         carpintero.Modelo(PistonDerby.GameContent.M_MuebleTV)
-            .ConPosicion(LARGO-1f, 0.5f) // el del mueble
+            .ConPosicion(LARGO-1f, 0.5f)
             .ConRotacion(0, MathHelper.Pi, 0)
             .ConTextura(PistonDerby.GameContent.T_Reboque)
             .ConEscala(0.25f);
@@ -128,8 +120,8 @@ public class HabitacionPrincipal : IHabitacion{
         #region Autos Enemigos
 
             for(int i=1; i<6; i++){
-                PistonDerby.ElementosDinamicos.Add(new EnemyCar(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
-                PistonDerby.ElementosDinamicos.Add(new EnemyCar(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
+                PistonDerby.ElementosDinamicos.Add(new AutoEnemigo(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
+                PistonDerby.ElementosDinamicos.Add(new AutoEnemigo(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
             }
         
         #endregion            

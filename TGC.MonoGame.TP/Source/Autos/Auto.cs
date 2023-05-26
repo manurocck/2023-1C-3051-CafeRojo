@@ -6,7 +6,7 @@ using PistonDerby.Utils;
 using PistonDerby.Elementos;
 using PistonDerby.Drawers;
 
-namespace PistonDerby;
+namespace PistonDerby.Autos;
 internal class Auto : ElementoDinamico { 
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ANGULAR_SPEED = 1.8f * PistonDerby.S_METRO;
@@ -91,7 +91,7 @@ internal class Auto : ElementoDinamico {
     }
     internal override bool OnCollision(Elemento other)
     {
-        if(other is EnemyCar _){
+        if(other is AutoEnemigo _){
             Console.WriteLine("Toqué un enemy car");
         }
         if(other is Piso _){
