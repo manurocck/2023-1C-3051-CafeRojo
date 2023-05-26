@@ -19,7 +19,7 @@ public class Casa {
     }
     public void LoadContent(){
         disponerHabitaciones();
-        construirParedes();
+        // construirParedes();
     }
     public void Update(float dTime, KeyboardState keyboardState){
         foreach(var h in Habitaciones)
@@ -51,10 +51,15 @@ public class Casa {
                 traslacionHorizontal : Cuántos METROS se va a mover para la izquierda o para la derecha        
         */
 
-        Habitaciones.Add( new HabitacionPrincipal       (0f,0f));
-        Habitaciones.Add( new HabitacionCocina          (-HabitacionCocina.LARGO, HabitacionPrincipal.ANCHO/2) );
-        Habitaciones.Add( new HabitacionPasillo         (0f, -HabitacionPasillo.ANCHO) );
-        Habitaciones.Add( new HabitacionDormitorioLegos (-HabitacionDormitorioLegos.LARGO , -HabitacionPasillo.ANCHO));
+        Habitaciones.Add( new HabitacionOficina(0f,0f));
+        // Habitaciones.Add( new HabitacionDescanso(0f,0f));
+        // Habitaciones.Add( new HabitacionToilette(0f,0f));
+        // Habitaciones.Add( new HabitacionConferencias(0f,0f));
+        
+        // Habitaciones.Add( new HabitacionPrincipal       (0f,0f));
+        // Habitaciones.Add( new HabitacionCocina          (-HabitacionCocina.LARGO, HabitacionPrincipal.ANCHO/2) );
+        // Habitaciones.Add( new HabitacionPasillo         (0f, -HabitacionPasillo.ANCHO) );
+        // Habitaciones.Add( new HabitacionDormitorioLegos (-HabitacionDormitorioLegos.LARGO , -HabitacionPasillo.ANCHO));
         
         foreach(var h in Habitaciones)
             Console.WriteLine("Habitacion cargada con {0:D}"+ " modelos.", h.cantidadElementos());
