@@ -17,7 +17,15 @@ float4x4 World;
 float4x4 View;
 float4x4 Projection;
 
-float PorcentajeBarra;
+texture Texture;
+sampler2D textureSampler = sampler_state
+{
+    Texture = (Texture);
+    MagFilter = Linear;
+    MinFilter = Linear;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
 struct VertexShaderInput
 {
@@ -41,7 +49,6 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
     float4 viewPosition = mul(worldPosition, View);	
 	// View space to Projection space
     output.Position = mul(viewPosition, Projection);
-
     output.TextureCoordinate = input.TextureCoordinate;
 
     return output;
@@ -49,12 +56,11 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
-    if(input.TextureCoordinate.x > PorcentajeBarra){ 
-        return float4( 0.605, 0.133, 0.148 , 0.5); // daño
-    }
-    return float4( 0.316, 0.445, 0.23 , 0.5);
-
+    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate.xy);
+    
+    return textureColor;
 }
+
 
 technique BasicColorDrawing
 {

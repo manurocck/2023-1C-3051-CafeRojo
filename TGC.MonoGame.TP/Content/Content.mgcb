@@ -13,12 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Effects/BarraHUD.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/BarraHUD.fx
-
 #begin Effects/BasicShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -37,11 +31,23 @@
 /processorParam:DebugMode=Auto
 /build:Effects/Gizmos.fx
 
+#begin Effects/HealthHUD.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/HealthHUD.fx
+
 #begin Effects/SpiralShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Effects/SpiralShader.fx
+
+#begin Effects/TextureHUD.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/TextureHUD.fx
 
 #begin Effects/TextureMirrorShader.fx
 /importer:EffectImporter
@@ -66,6 +72,12 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Effects/TextureTraslucida.fx
+
+#begin Effects/TurboHUD.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/TurboHUD.fx
 
 #begin Models/Autos/CombatVehicle/CombatVehicle.fbx
 /importer:FbxImporter
@@ -1286,6 +1298,12 @@
 /processorParam:Quality=Best
 /build:Music/SynthWars.mp3
 
+#begin Sounds/Metralleta.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Metralleta.wav
+
 #begin Textures/Alfombra.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1358,6 +1376,30 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Concreto.jpg
 
+#begin Textures/HUD/BulletAmmo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=True
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/HUD/BulletAmmo.png
+
+#begin Textures/HUD/EmptyBulletAmmo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/HUD/EmptyBulletAmmo.png
+
 #begin Textures/MaderaNikari.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1387,7 +1429,7 @@
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
 /processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
+/processorParam:GenerateMipmaps=True
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Content;
 using PistonDerby.Geometries;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace PistonDerby;
 
@@ -31,18 +33,21 @@ public class Content
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TextureMirror, E_TextureTiles, E_Traslucid;
-    internal readonly Effect H_BarraEffect;
+    internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
     #region texturas
     internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto;
+    internal readonly Texture2D HT_Bullet, HT_EmptyBullet;
     #endregion
+    
+    internal readonly SoundEffect S_Metralleta;
+    internal readonly Song S_SynthWars;
     
     internal readonly List<Effect> Efectos = new List<Effect>();
     internal readonly List<Effect> EfectosHUD = new List<Effect>();
-    internal readonly Song S_SynthWars;
     internal readonly QuadPrimitive G_Quad;
     internal readonly CuboPrimitive G_Cubo;
     
@@ -64,7 +69,9 @@ public class Content
         Efectos.Add(E_BlacksFilter  = LoadEffect("BlacksFilter")        );
         Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")   );
         
-        EfectosHUD.Add(H_BarraEffect     = LoadEffect("BarraHUD"));
+        EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
+        EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
+        EfectosHUD.Add(HE_TextureHUD  = LoadEffect("TextureHUD"));
 
 
         // Texturas
@@ -86,8 +93,13 @@ public class Content
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
         T_RacingCar         = LoadTexture("Autos/RacingCarMetalic");
 
+        HT_Bullet           = LoadTexture("HUD/BulletAmmo");
+        HT_EmptyBullet      = LoadTexture("HUD/EmptyBulletAmmo");
+
+
         // Sonidos
         S_SynthWars         = LoadSong("SynthWars");
+        S_Metralleta        = LoadSound("Metralleta");
         
         #region Modelos ( Shader , CarpetaUbicacion, Etiqueta )
         M_Auto              = LoadModel("Autos/", "RacingCar"     );
@@ -154,10 +166,12 @@ public class Content
         #endregion
     }
 
+
     public Model LoadModel(string dir) => ContentManager.Load<Model>(ContentFolder3D + dir);
     public Effect LoadEffect(string dir) => ContentManager.Load<Effect>(ContentFolderEffects + dir);
     public Texture2D LoadTexture(string dir) => ContentManager.Load<Texture2D>(ContentFolderTextures + dir);
     public Song LoadSong(string dir) => ContentManager.Load<Song>(ContentFolderMusic + dir);
+    private SoundEffect LoadSound(string dir) => ContentManager.Load<SoundEffect>(ContentFolderSounds + dir);
     public Model LoadModel(string carpeta, string tag){
         var model = LoadModel(carpeta+tag+'/'+tag);
         model.Tag = tag;

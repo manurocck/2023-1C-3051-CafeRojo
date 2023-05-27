@@ -5,33 +5,49 @@ using BepuPhysics.Collidables;
 using PistonDerby.Utils;
 using PistonDerby.Elementos;
 using PistonDerby.Drawers;
+using PistonDerby.HUD;
 
 namespace PistonDerby.Autos;
 internal class Auto : ElementoDinamico { 
+    #region Config
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ANGULAR_SPEED = 1.8f * PistonDerby.S_METRO;
     private const float LINEAR_SPEED = 0.12f * PistonDerby.S_METRO;
     private const float JUMP_POWER = 1f * PistonDerby.S_METRO;
     private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación (setead para S_METRO = 250f) puede fallar (o no) si se cambia
+    #endregion Settings
     internal override IDrawer Drawer() => new CarDrawer(this);
     internal override float Scale() => 0.08f * PistonDerby.S_METRO;
     internal override float Mass() => 1f;
+    private CarHUD DisplayEstado;
+    private float Vida = 1;
+    private float Turbo = 1;
+    private int MunicionMetralleta = 50;
     private bool PuedeSaltar = true;
+    private float TimerInmune = 3;
     internal float WheelTurning = 0f; 
     internal float WheelRotation = 0f;
-    internal BoundingBox shadowBaseBox;
 
-    internal Auto(Vector3 posicionInicial) {
+    internal Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
+        this.DisplayEstado = EstadoInicial;
+
         var boxSize = PistonDerby.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
         Shape = PistonDerby.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
         this.AddToSimulation(posicionInicial + new Vector3(0,PistonDerby.S_METRO,0), Quaternion.Identity);
-
-        shadowBaseBox = new BoundingBox(this.Body().BoundingBox.Min,this.Body().BoundingBox.Max);
     }
 
     internal override void Update(float dTime, KeyboardState keyboard) {
 
         if(keyboard.GetPressedKeyCount()>0) this.Awake();
+        
+        TimerInmune+=dTime;
+        Turbo = Math.Max(Turbo - 0.2f*dTime, 0);
+        this.DisplayEstado.Update(this.World(), Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
+        
+        if(!this.Body().Awake) return;
+
+        if(keyboard.IsKeyDown(Keys.L)) DisplayEstado.BulletAmmo.PullingTrigger(dTime);
+        if(keyboard.IsKeyUp(Keys.L)) DisplayEstado.BulletAmmo.ReleasingTrigger();
 
         //  ESTADO ACTUAL
         //
@@ -91,8 +107,23 @@ internal class Auto : ElementoDinamico {
     }
     internal override bool OnCollision(Elemento other)
     {
-        if(other is AutoEnemigo _){
-            Console.WriteLine("Toqué un enemy car");
+        if(other is AutoEnemigo enemigo){
+            if(enemigo.Dirty){
+                Console.WriteLine("Toqué un enemy car");
+                Turbo = 1;
+            }
+
+            if(TimerInmune > 3){
+                var hitDamage = 0.1f;
+                TimerInmune = 0;
+                Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
+                Console.WriteLine("> > > > > > > > > > > > >");
+                Console.WriteLine(">");
+                Console.WriteLine("> > Recibí daño un enemy car");
+                Console.WriteLine("> > Vida actual : {0:F}", Vida*100);
+                Console.WriteLine(">");
+                Console.WriteLine("> > > > > > > > > > > > >");
+            }
         }
         if(other is Piso _){
             Console.WriteLine("Toqué el piso");

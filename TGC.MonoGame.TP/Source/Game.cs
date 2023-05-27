@@ -25,7 +25,7 @@ public class PistonDerby : Game
     internal static GameSimulation Simulation;
     internal static Content GameContent;
     internal static Gizmos Gizmos;
-    private PistonDerbyHUD HUD;
+    private CarHUD CarHUD;
     private AudioPlayer Reproductor;
     private Camera Camera; 
     private Casa Casa;
@@ -46,9 +46,10 @@ public class PistonDerby : Game
 
         Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        Graphics.IsFullScreen=FULL_SCREEN;
+        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        Graphics.IsFullScreen = FULL_SCREEN;
 
-        HUD = new PistonDerbyHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         
         Graphics.ApplyChanges();
     
@@ -58,7 +59,6 @@ public class PistonDerby : Game
         Gizmos = new Gizmos();
         Gizmos.Enabled = DEBUG_GIZMOS;
         Casa = new Casa();
-
 
         base.Initialize();
     }
@@ -76,7 +76,8 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
-        Auto  = new Auto (Casa.PuntoCentro(0));
+        CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+        Auto   = new Auto (Casa.PuntoCentro(0), CarHUD);
     }
 
     protected override void Update(GameTime gameTime)
@@ -85,6 +86,7 @@ public class PistonDerby : Game
         float dTime = Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds); 
 
         if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
+        if (Keyboard.GetState().IsKeyDown(Keys.G)) Gizmos.Enabled = !Gizmos.Enabled;
 
         Reproductor.Update(Keyboard.GetState());
         Gizmos.UpdateViewProjection(Camera.View, Camera.Projection);
@@ -96,7 +98,6 @@ public class PistonDerby : Game
         Camera.Mover(keyboardState);
 
         Camera.Update(Auto.World());
-        HUD.Update(Auto.World());
         
         Simulation.Update();
 
@@ -117,9 +118,9 @@ public class PistonDerby : Game
         Casa.Draw();
         Gizmos.Draw();
 
-        HUD.Draw();
-
         this.DebugGizmos();
+
+        CarHUD.Draw();
     }
     private void DebugGizmos()
     {
