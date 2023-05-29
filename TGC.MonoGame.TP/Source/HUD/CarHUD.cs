@@ -49,21 +49,5 @@ public class CarHUD
         HealthBar.Draw();
         TurboBar.Draw();
         BulletAmmo.Draw();
-
-
-        // Ejemplo template
-        // efecto = PistonDerby.GameContent.HE_HealthHUD;
-        // Matrix World = AjusteQuad() 
-        //                     *
-        //                     Matrix.CreateScale(size.X,size.Y,0)
-        //                     * 
-        //                     Matrix.CreateTranslation(FollowedPosition)
-        //                     *
-        //                     AjusteFinal();
-                            
-        // efecto.Parameters["PorcentajeBarra"]?.SetValue(1);
-        // efecto.Parameters["World"].SetValue(World);
-        // PistonDerby.GameContent.G_Quad.Draw(efecto);
-
     }
 }

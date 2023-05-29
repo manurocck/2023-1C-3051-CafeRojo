@@ -41,7 +41,7 @@ internal class Auto : ElementoDinamico {
         if(keyboard.GetPressedKeyCount()>0) this.Awake();
         
         TimerInmune+=dTime;
-        Turbo = Math.Max(Turbo - 0.2f*dTime, 0);
+        Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
         this.DisplayEstado.Update(this.World(), Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
         
         if(!this.Body().Awake) return;

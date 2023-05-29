@@ -32,7 +32,7 @@ public class Content
     
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
-                        E_TextureMirror, E_TextureTiles, E_Traslucid;
+                        E_TwoTextureMix, E_TextureTiles, E_Traslucid;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -41,6 +41,7 @@ public class Content
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto;
     internal readonly Texture2D HT_Bullet, HT_EmptyBullet;
+    internal readonly Texture2D PT_Presentacion1, PT_Presentacion2, PT_Presentacion3, PT_Presentacion0;  
     #endregion
     
     internal readonly SoundEffect S_Metralleta;
@@ -64,10 +65,10 @@ public class Content
         Efectos.Add(E_BasicShader   = LoadEffect("BasicShader")         );
         Efectos.Add(E_TextureShader = LoadEffect("TextureShader")       );
         Efectos.Add(E_TextureTiles  = LoadEffect("TextureTiles")        );
-        Efectos.Add(E_TextureMirror = LoadEffect("TextureMirrorShader") );
         Efectos.Add(E_SpiralShader  = LoadEffect("SpiralShader")        );
         Efectos.Add(E_BlacksFilter  = LoadEffect("BlacksFilter")        );
         Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")   );
+        Efectos.Add(E_TwoTextureMix = LoadEffect("TwoTextureMix")       );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
@@ -95,6 +96,11 @@ public class Content
 
         HT_Bullet           = LoadTexture("HUD/BulletAmmo");
         HT_EmptyBullet      = LoadTexture("HUD/EmptyBulletAmmo");
+
+        PT_Presentacion0    = LoadTexture("Presentation/Presentacion0");
+        PT_Presentacion1    = LoadTexture("Presentation/Presentacion1");
+        PT_Presentacion2    = LoadTexture("Presentation/Presentacion2");
+        PT_Presentacion3    = LoadTexture("Presentation/Presentacion3");
 
 
         // Sonidos

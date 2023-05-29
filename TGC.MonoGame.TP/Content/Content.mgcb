@@ -49,12 +49,6 @@
 /processorParam:DebugMode=Auto
 /build:Effects/TextureHUD.fx
 
-#begin Effects/TextureMirrorShader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/TextureMirrorShader.fx
-
 #begin Effects/TextureShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -78,6 +72,12 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Effects/TurboHUD.fx
+
+#begin Effects/TwoTextureMix.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/TwoTextureMix.fx
 
 #begin Models/Autos/CombatVehicle/CombatVehicle.fbx
 /importer:FbxImporter
@@ -1519,6 +1519,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/PisoMaderaClaro.jpg
+
+#begin Textures/Presentation/Presentacion0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Presentation/Presentacion0.png
+
+#begin Textures/Presentation/Presentacion1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Presentation/Presentacion1.png
+
+#begin Textures/Presentation/Presentacion2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Presentation/Presentacion2.png
+
+#begin Textures/Presentation/Presentacion3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Presentation/Presentacion3.png
 
 #begin Textures/Reboque.jpg
 /importer:TextureImporter

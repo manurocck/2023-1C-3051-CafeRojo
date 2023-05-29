@@ -26,6 +26,7 @@ public class BulletAmmo : IAmmoHUD {
         Window.Width = width;
         Window.Heigth = heigth;
         Instance = Sound.CreateInstance();
+        Instance.Volume = 0.1f;
     }
 
     public void PullingTrigger(float dt){
@@ -64,7 +65,7 @@ public class BulletAmmo : IAmmoHUD {
             
             Matrix tempWorld = QuadWorld * (movimientoHorizontal * movimientoVertical)* AjusteFinal();
             
-            this.Efecto().Parameters["Texture"]?.SetValue(this.Texture());
+            this.Efecto().Parameters["Texture"].SetValue(this.Texture());
             this.Efecto().Parameters["World"].SetValue(tempWorld);
             PistonDerby.GameContent.G_Quad.Draw(this.Efecto());
             
