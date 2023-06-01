@@ -12,16 +12,18 @@ using PistonDerby.Utils;
 using PistonDerby.Gizmo;
 using PistonDerby.HUD;
 using PistonDerby.Autos;
+using PistonDerby.Navigation;
 
 namespace PistonDerby;
 
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
-    private const bool DEBUG_GIZMOS = false;
+    private const bool DEBUG_GIZMOS = true;
     private const bool FULL_SCREEN = false;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
+    private Presentation Presentation;
     internal static GameSimulation Simulation;
     internal static Content GameContent;
     internal static Gizmos Gizmos;
@@ -44,10 +46,10 @@ public class PistonDerby : Game
         GraphicsDevice.RasterizerState = rasterizerState; // CullCounterClockwise; para activar el Culling
         GraphicsDevice.BlendState = BlendState.AlphaBlend;     
 
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
-        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
         Graphics.IsFullScreen = FULL_SCREEN;
 
         
@@ -77,6 +79,7 @@ public class PistonDerby : Game
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+        // Presentation = new Presentation(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         Auto   = new Auto (Casa.PuntoCentro(0), CarHUD);
     }
 
@@ -105,7 +108,7 @@ public class PistonDerby : Game
     }
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.DimGray);
+        GraphicsDevice.Clear(Color.Black);
 
         foreach (var e in GameContent.Efectos){
             e.Parameters["View"].SetValue(Camera.View);
@@ -121,6 +124,7 @@ public class PistonDerby : Game
         this.DebugGizmos();
 
         CarHUD.Draw();
+        // Presentation.Draw(Convert.ToSingle(gameTime.TotalGameTime.TotalSeconds));
     }
     private void DebugGizmos()
     {

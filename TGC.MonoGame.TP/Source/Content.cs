@@ -45,7 +45,7 @@ public class Content
     #endregion
     
     internal readonly SoundEffect S_Metralleta;
-    internal readonly Song S_SynthWars;
+    internal readonly Song S_SynthWars, S_MeiHuaSan;
     
     internal readonly List<Effect> Efectos = new List<Effect>();
     internal readonly List<Effect> EfectosHUD = new List<Effect>();
@@ -105,6 +105,7 @@ public class Content
 
         // Sonidos
         S_SynthWars         = LoadSong("SynthWars");
+        S_MeiHuaSan         = LoadSong("MeiHuaSen");
         S_Metralleta        = LoadSound("Metralleta");
         
         #region Modelos ( Shader , CarpetaUbicacion, Etiqueta )

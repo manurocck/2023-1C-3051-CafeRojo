@@ -38,93 +38,162 @@ sampler2D textureSampler2 = sampler_state
     AddressV = Wrap;
 };
 
-float4 rgbToHsv(float4 color) {
-  color.r /= 255, color.g /= 255, color.b /= 255;
+float4 rgba_to_hsva(float4 rgba)
+{
+    float r = rgba.r;
+    float g = rgba.g;
+    float b = rgba.b;
+    float a = rgba.a;
 
-  float max1 = max(color.r, color.g); 
-  float maxOK = max(max1, color.b); 
-  float min1 = min(color.r, color.g);
-  float minOK = min(min1, color.b);
-  float h, s, v = maxOK;
+    // Convert RGB to HSL
+    float cmax = max(max(r, g), b);
+    float cmin = min(min(r, g), b);
+    float delta = cmax - cmin;
 
-  float d = maxOK - minOK;
-  s = maxOK == 0 ? 0 : d / maxOK;
+    float h = 0.0;
+    float s = 0.0;
+    float v = cmax;
 
-  if (maxOK == minOK) {
-    h = 0; // achromatic
-  } else {
-    if(maxOK == color.r) h = (color.g - color.b) / d + (color.g < color.b ? 6 : 0);
-    else if(maxOK == color.g) h = (color.b - color.r) / d + 2;
-    else if(maxOK == color.b) h = (color.r - color.g) / d + 4;
-    
-    h /= 6;
-  }
-  return float4(h, s, v, color.a);
+    if (delta != 0.0)
+    {
+        // Calculate Hue
+        if (cmax == r)
+            h = (g - b) / delta;
+        else if (cmax == g)
+            h = 2.0 + (b - r) / delta;
+        else if (cmax == b)
+            h = 4.0 + (r - g) / delta;
+
+        h /= 6.0;
+
+        // Calculate Saturation
+        s = delta / cmax;
+    }
+    return float4(h, s, v, a);
 }
+float4 hsva_to_rgba(float4 hsva)
+{
+    float h = hsva.x;
+    float s = hsva.y;
+    float v = hsva.z;
+    float a = hsva.w;
 
-float4 hsvToRgb(float4 colorHSV) {
+    // Convert HSL to RGB
+    float4 rgba = float4(0.0, 0.0, 0.0, a);
+
+    if (s == 0.0)
+    {
+        // If saturation is 0, color is grayscale
+        rgba.rgb = v.xxx;
+    }
+    else
+    {
+        float h6 = h * 6.0;
+        float i = floor(h6);
+        float f = h6 - i;
+        float p = v * (1.0 - s);
+        float q = v * (1.0 - s * f);
+        float t = v * (1.0 - s * (1.0 - f));
+
+        if (i == 0.0)
+            rgba.rgb = float3(v, t, p);
+        else if (i == 1.0)
+            rgba.rgb = float3(q, v, p);
+        else if (i == 2.0)
+            rgba.rgb = float3(p, v, t);
+        else if (i == 3.0)
+            rgba.rgb = float3(p, q, v);
+        else if (i == 4.0)
+            rgba.rgb = float3(t, p, v);
+        else
+            rgba.rgb = float3(v, p, q);
+    }
+
+    return rgba;
+}
+float4 rgba_to_hsla(float4 rgba)
+{
+    float r = rgba.r;
+    float g = rgba.g;
+    float b = rgba.b;
+    float a = rgba.a;
+
+    // Convert RGB to HSL
+    float cmax = max(max(r, g), b);
+    float cmin = min(min(r, g), b);
+    float delta = cmax - cmin;
+
+    float h = 0.0;
+    float s = 0.0;
+    float l = (cmax + cmin) * 0.5;
+
+    if (delta != 0.0)
+    {
+        // Calculate Hue
+        if (cmax == r)
+            h = (g - b) / delta;
+        else if (cmax == g)
+            h = 2.0 + (b - r) / delta;
+        else if (cmax == b)
+            h = 4.0 + (r - g) / delta;
+
+        h /= 6.0;
+
+        // Calculate Saturation
+        if (l < 0.5)
+            s = delta / (cmax + cmin);
+        else
+            s = delta / (2.0 - cmax - cmin);
+    }
+
+    return float4(h, s, l, a);
+}
+float hue_to_rgb(float p, float q, float t)
+{
+    if (t < 0.0) t += 1.0;
+    if (t > 1.0) t -= 1.0;
+
+    if (t < (1.0 / 6.0)) return p + (q - p) * 6.0 * t;
+    if (t < 0.5) return q;
+    if (t < (2.0 / 3.0)) return p + (q - p) * (2.0 / 3.0 - t) * 6.0;
+
+    return p;
+}
+float4 hsla_to_rgba(float4 hsla)
+{
+    float h = hsla.x;
+    float s = hsla.y;
+    float l = hsla.z;
+    float a = hsla.w;
+
+    // Convert HSL to RGB
     float r, g, b;
 
-    float i = floor(colorHSV.r * 6);
-    float f = colorHSV.r * 6 - i;
-    float p = colorHSV.b * (1 - colorHSV.g);
-    float q = colorHSV.b * (1 - f * colorHSV.g);
-    float t = colorHSV.b * (1 - (1 - f) * colorHSV.g);
-    
-    float aMod = fmod(i,6);
+    if (s == 0.0)
+    {
+        // If saturation is 0, color is grayscale
+        r = g = b = l;
+    }
+    else
+    {
+        float q;
 
-    if(aMod == 0){
-        r = colorHSV.b, g = t, b = p;
-    }else if( aMod == 1){
-        r = q, g = colorHSV.b, b = p;
-    }else if( aMod == 2){
-        r = p, g = colorHSV.b, b = t;
-    }else if( aMod == 3){
-        r = p, g = q, b = colorHSV.b;
-    }else if( aMod == 4){
-        r = t, g = p, b = colorHSV.b;
-    }else if( aMod == 5){
-        r = colorHSV.b, g = p, b = q;
+        if (l < 0.5)
+            q = l * (1.0 + s);
+        else
+            q = l + s - l * s;
+
+        float p = 2.0 * l - q;
+        r = hue_to_rgb(p, q, h + (1.0 / 3.0));
+        g = hue_to_rgb(p, q, h);
+        b = hue_to_rgb(p, q, h - (1.0 / 3.0));
     }
 
-    return float4(r, g, b, colorHSV.a);
+    return float4(r, g, b, a);
 }
 
-// a.rgba == a.hsva
-float4 LerpHSV (float4 colorA, float4 colorB, float t) {
-    // Hue interpolation
-    float h;
-    float d = colorB.r - colorA.r;
-    if (colorA.r > colorB.r)
-    {
-        // Swap (a.h, b.h)
-        float h3 = colorB.r;
-        colorB.r = colorA.r;
-        colorA.r = h3;
 
-        d = -d;
-        t = 1 - t;
-    }
 
-    if (d > 0.5) // 180deg
-    {
-        colorA.r = colorA.r + 1; // 360deg
-        h = ( colorA.r + t * (colorB.r - colorA.r) ) % 1; // 360deg
-    }
-    if (d <= 0.5) // 180deg
-    {
-        h = colorA.r + t * d;
-    }
-
-    // Interpolates the rest
-    return float4
-    (
-        h,            // H
-        colorA.g + t * (colorB.g-colorA.g),    // S
-        colorA.b + t * (colorB.b-colorA.b),    // V
-        colorA.a + t * (colorB.a-colorA.a)    // A
-    );
-}
 
 struct VertexShaderInput
 {
@@ -153,18 +222,36 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 
     return output;
 }
+float4 lerp_hue(float4 hsva1, float4 hsva2, float t)
+{
+    float4 result;
+
+    // Interpolate hue
+    float hue1 = hsva1.x;
+    float hue2 = hsva2.x;
+    float hue = lerp(hue1, hue2, t);
+    result.x = hue;
+
+    // Interpolate saturation, value, and alpha
+    result.yzw = lerp(hsva1.yzw, hsva2.yzw, t);
+
+    return result;
+}
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
     float4 textureColor  = tex2D(textureSampler, input.TextureCoordinate.xy);
     float4 textureColor2 = tex2D(textureSampler2, input.TextureCoordinate.xy);
 
-    float4 TextureColorHSL  = rgbToHsv(textureColor);
-    float4 TextureColorHSL2 = rgbToHsv(textureColor2);
+    // textureColor  = rgba_to_hsva(textureColor);
+    // textureColor2 = rgba_to_hsva(textureColor2);
+    
+    // textureColor = lerp_hue(textureColor, textureColor2, LerpAmount);
+    textureColor = lerp(textureColor, textureColor2, LerpAmount);
 
-    float4 TextLerpHSV = LerpHSV(TextureColorHSL, TextureColorHSL2, LerpAmount);
-
-    return TextLerpHSV;
+    // textureColor  = hsva_to_rgba(textureColor);
+    
+    return textureColor;
 }
 
 technique BasicColorDrawing

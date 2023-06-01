@@ -8,13 +8,13 @@ public class AudioPlayer
 {
     private Song Soundtrack;
     internal AudioPlayer( ){
-        MediaPlayer.IsMuted = true;
-        MediaPlayer.IsRepeating = true;
-        // MediaPlayer.Volume = 0.5f;
+        MediaPlayer.IsMuted = false;
+        MediaPlayer.IsRepeating = false;
+        MediaPlayer.Volume = 0.05f;
     }
     internal void LoadContent(){
         Soundtrack = PistonDerby.GameContent.S_SynthWars;
-        MediaPlayer.Play(Soundtrack);
+        // MediaPlayer.Play(Soundtrack);
     }
     internal void Update(KeyboardState keyboardState)
     {
