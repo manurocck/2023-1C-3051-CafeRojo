@@ -19,9 +19,9 @@ namespace PistonDerby;
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
-    private const bool DEBUG_GIZMOS = true;
+    private const bool DEBUG_GIZMOS = false;
     private const bool FULL_SCREEN = false;
-    private const bool INITIAL_ANIMATION = false;
+    private const bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;

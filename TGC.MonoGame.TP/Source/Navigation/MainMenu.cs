@@ -30,7 +30,7 @@ internal class MainMenu : IMenuItem
     private void DrawTitle(){
         var effect = PistonDerby.GameContent.E_TextureShader;
         effect.Parameters["View"].SetValue(HUDView);
-        effect.Parameters["World"].SetValue(FullScreenWorld());
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.75f,0.75f) * AjusteFinal(1));
         effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Start);
         PistonDerby.GameContent.G_Quad.Draw(effect);
     }
@@ -39,7 +39,7 @@ internal class MainMenu : IMenuItem
     {
         Effect efecto = PistonDerby.GameContent.E_TextureItermitente;
         efecto.Parameters["View"].SetValue(HUDView);
-        efecto.Parameters["World"].SetValue(FullScreenWorld());
+        efecto.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.75f,0.75f) * AjusteFinal(1));
         efecto.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Play);
         efecto.Parameters["Time"].SetValue(secondsElapsed%1);
 
@@ -95,12 +95,6 @@ internal class MainMenu : IMenuItem
                
         this.DrawTitle();
         this.DrawPlay(secondsElapsed);
-        // effect = PistonDerby.GameContent.E_BasicShader;
-        // effect.Parameters["World"].SetValue(FullScreenWorld());
-        // effect.Parameters["View"].SetValue(HUDView);
-
-        // effect.Parameters["Intensidad"].SetValue(0.5f);
-        // effect.Parameters["DiffuseColor"].SetValue(Color.DarkRed.ToVector3());
         
         return !Transition;
     }
