@@ -21,7 +21,7 @@ public class PistonDerby : Game
     public const float S_METRO = 250f;
     private const bool DEBUG_GIZMOS = true;
     private const bool FULL_SCREEN = false;
-    private const bool INITIAL_ANIMATION = true;
+    private const bool INITIAL_ANIMATION = false;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
@@ -33,7 +33,7 @@ public class PistonDerby : Game
     private Camera Camera; 
     private Casa Casa;
     private Auto Auto; 
-    private AutoIA AutoIA;
+    private AutoDummy AutoDummy;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
     public PistonDerby() {
@@ -82,7 +82,7 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
-        AutoIA   = new AutoIA (Casa.PuntoCentro(0));
+        AutoDummy   = new AutoDummy (Casa.PuntoCentro(0));
 
         Auto   = new Auto (Casa.PuntoCentro(0));
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -106,7 +106,7 @@ public class PistonDerby : Game
 
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
-        // AutoIA.Update(dTime);
+        AutoDummy.Update(dTime);
 
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
 
@@ -133,7 +133,7 @@ public class PistonDerby : Game
             elementoDinamico.Draw();
 
         Auto.Draw(); 
-        AutoIA.Draw();
+        AutoDummy.Draw();
                  
         Casa.Draw();
         Gizmos.Draw();
