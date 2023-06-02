@@ -24,6 +24,7 @@ internal class ColorDrawer : IDrawer
             foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 meshPart.Effect = Effect;
 
+            Effect.Parameters["Intensidad"].SetValue(1);
             Effect.Parameters["World"].SetValue(mesh.ParentBone.Transform * World);
             mesh.Draw();
         }

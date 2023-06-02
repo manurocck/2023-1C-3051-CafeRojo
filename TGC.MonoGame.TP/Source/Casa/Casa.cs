@@ -31,8 +31,8 @@ public class Casa {
             if (i>=indexInicioExteriores) Esqueleto[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
         
         foreach(var h in Habitaciones) h.Draw();
-        foreach(Puerta p in Puertas) p.Draw(PistonDerby.GameContent.T_Concreto);
-        foreach(Pared p in Esqueleto) p.Draw(PistonDerby.GameContent.T_Concreto);
+        foreach(Puerta p in Puertas) p.Draw(PistonDerby.GameContent.T_CubosMadera);
+        foreach(Pared p in Esqueleto) p.Draw(PistonDerby.GameContent.T_CubosMadera);
 
     }
 

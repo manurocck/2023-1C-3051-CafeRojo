@@ -23,9 +23,9 @@ public class PistonDerby : Game
     private const bool FULL_SCREEN = false;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
-    private Presentation Presentation;
     internal static GameSimulation Simulation;
     internal static Content GameContent;
+    internal static GameMenu GameMenu;
     internal static Gizmos Gizmos;
     private CarHUD CarHUD;
     private AudioPlayer Reproductor;
@@ -71,6 +71,8 @@ public class PistonDerby : Game
         GameContent = new Content(Content, GraphicsDevice);
         SpriteBatch = new SpriteBatch(GraphicsDevice);
 
+        GameMenu = new GameMenu(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+        
         Gizmos.LoadContent(GraphicsDevice, new ContentManager(Content.ServiceProvider, "Content"));
         Reproductor.LoadContent();
         Casa.LoadContent();
@@ -79,10 +81,8 @@ public class PistonDerby : Game
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-        // Presentation = new Presentation(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         Auto   = new Auto (Casa.PuntoCentro(0), CarHUD);
     }
-
     protected override void Update(GameTime gameTime)
     {
         KeyboardState keyboardState = Keyboard.GetState();
@@ -90,25 +90,32 @@ public class PistonDerby : Game
 
         if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
         if (Keyboard.GetState().IsKeyDown(Keys.G)) Gizmos.Enabled = !Gizmos.Enabled;
+        if(DEBUG_GIZMOS) Gizmos.UpdateViewProjection(Camera.View, Camera.Projection);
 
-        Reproductor.Update(Keyboard.GetState());
-        Gizmos.UpdateViewProjection(Camera.View, Camera.Projection);
-                                        
+        // if(GameMenu.isRunning()) {
+        //     GameMenu.Update(gameTime, keyboardState, Mouse.GetState());
+        //     return;
+        // }
+
+        Reproductor.Update(Keyboard.GetState());                      
+
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
-        
         Camera.Mover(keyboardState);
-
         Camera.Update(Auto.World());
-        
-        Simulation.Update();
 
+        Simulation.Update();
         base.Update(gameTime);
     }
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
+
+        // if(GameMenu.isRunning()) {
+        //     GameMenu.Draw(gameTime);
+        //     return;
+        // }
 
         foreach (var e in GameContent.Efectos){
             e.Parameters["View"].SetValue(Camera.View);
@@ -124,7 +131,6 @@ public class PistonDerby : Game
         this.DebugGizmos();
 
         CarHUD.Draw();
-        // Presentation.Draw(Convert.ToSingle(gameTime.TotalGameTime.TotalSeconds));
     }
     private void DebugGizmos()
     {

@@ -53,8 +53,8 @@ public class BulletAmmo : IAmmoHUD {
         int j = 0;
         for(int i = TotalAmmo; i>0; i--){
             TexturaVariable = (i<TotalAmmo-ShootedAmmo)? 
-                            PistonDerby.GameContent.HT_Bullet :     // primero dibuja las no vacias 
-                            PistonDerby.GameContent.HT_EmptyBullet;            
+                            PistonDerby.GameContent.TH_Bullet :     // primero dibuja las no vacias 
+                            PistonDerby.GameContent.TH_EmptyBullet;            
             if(i==TotalAmmo*0.5f) {
                 j++;
                 variableHeight = this.Ubicacion().Y;

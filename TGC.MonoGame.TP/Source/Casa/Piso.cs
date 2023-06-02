@@ -38,6 +38,8 @@ public class Piso : ElementoEstatico
         Handle = PistonDerby.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
     }
     public Vector3 PuntoExtremo() => PosicionInicial + ( new Vector3(MetrosLargo,0f,MetrosAncho) );
+    public Vector3 PuntoExtremoIzquierdo() => PosicionInicial + ( new Vector3(0f,0f,MetrosAncho) );
+    public Vector3 PuntoExtremoDerecho() => PosicionInicial + ( new Vector3(MetrosLargo,0f,0f) );
     public Vector3 PuntoCentro() => PosicionInicial + ( new Vector3(MetrosLargo*0.5f,0f,MetrosAncho*0.5f) );
     public Piso ConTextura(Texture2D texturaPiso, float baldosasAncho = 1, float baldosasLargo = 1){
         TextureTilesAncho = baldosasAncho; 

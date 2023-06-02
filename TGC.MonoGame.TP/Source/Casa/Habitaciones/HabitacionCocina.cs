@@ -13,26 +13,6 @@ public class HabitacionCocina : IHabitacion{
         
         Amueblar();
     }
-    //public override void DrawElementos(){
-        //   var mShader = PistonDerby.GameContent.E_TextureMirror;
-        // var bShader = PistonDerby.GameContent.E_BasicShader;
-        //var tShader = PistonDerby.GameContent.E_TextureShader;
-        //foreach(var mueble in Elementos){
-            //  switch(mueble.GetTag()){
-            //    case "Olla":
-                //      bShader.Parameters["DiffuseColor"].SetValue(Color.DarkSlateBlue.ToVector3());
-                //break;
-                //break;
-                // case "ParedCocina":
-                    //   tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Ladrillos);
-                //break;
-                //default:
-                    //  mShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_Marmol);
-                // break;
-            // }
-            //   mueble.Draw();
-        //}
-    //}
     private void Amueblar(){
         var carpintero = new ElementoBuilder(this.PuntoInicio());
         

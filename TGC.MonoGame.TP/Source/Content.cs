@@ -32,16 +32,18 @@ public class Content
     
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
-                        E_TwoTextureMix, E_TextureTiles, E_Traslucid;
+                        E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
     #region texturas
     internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
-                        T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto;
-    internal readonly Texture2D HT_Bullet, HT_EmptyBullet;
-    internal readonly Texture2D PT_Presentacion1, PT_Presentacion2, PT_Presentacion3, PT_Presentacion0;  
+                        T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
+                        T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto;
+    internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
+    internal readonly Texture2D TM_Start, TM_Play;
+    internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     #endregion
     
     internal readonly SoundEffect S_Metralleta;
@@ -69,6 +71,7 @@ public class Content
         Efectos.Add(E_BlacksFilter  = LoadEffect("BlacksFilter")        );
         Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")   );
         Efectos.Add(E_TwoTextureMix = LoadEffect("TwoTextureMix")       );
+        Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")       );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
@@ -86,21 +89,30 @@ public class Content
         T_MaderaNikari      = LoadTexture("MaderaNikari");
         T_PisoMadera        = LoadTexture("PisoMadera");
         T_PisoMaderaClaro   = LoadTexture("PisoMaderaClaro");
+        T_PisoMaderaElegante= LoadTexture("PisoMaderaElegante");
+        T_CubosMadera       = LoadTexture("CubosMadera");
         T_PisoCeramica      = LoadTexture("PisoCeramica");
         T_PisoAlfombrado    = LoadTexture("PisoAlfombra");
+        T_PisoPasto         = LoadTexture("PisoPasto");
         T_AlfombraHabitacion= LoadTexture("AlfombraHabitacion");
         T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
         T_RacingCar         = LoadTexture("Autos/RacingCarMetalic");
 
-        HT_Bullet           = LoadTexture("HUD/BulletAmmo");
-        HT_EmptyBullet      = LoadTexture("HUD/EmptyBulletAmmo");
+        // Imágenes del HUD
+        TH_Bullet           = LoadTexture("HUD/BulletAmmo");
+        TH_EmptyBullet      = LoadTexture("HUD/EmptyBulletAmmo");
 
-        PT_Presentacion0    = LoadTexture("Presentation/Presentacion0");
-        PT_Presentacion1    = LoadTexture("Presentation/Presentacion1");
-        PT_Presentacion2    = LoadTexture("Presentation/Presentacion2");
-        PT_Presentacion3    = LoadTexture("Presentation/Presentacion3");
+        // Imágenes Presentación
+        TP_Presentacion0    = LoadTexture("Presentation/Presentacion0");
+        TP_Presentacion1    = LoadTexture("Presentation/Presentacion1");
+        TP_Presentacion2    = LoadTexture("Presentation/Presentacion2");
+        TP_Presentacion3    = LoadTexture("Presentation/Presentacion3");
+
+        // Imágenes Presentación
+        TM_Start            = LoadTexture("Menu/Start");
+        TM_Play             = LoadTexture("Menu/Play");
 
 
         // Sonidos
