@@ -1,6 +1,8 @@
+using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Drawers;
+using PistonDerby.Utils;
 
 namespace PistonDerby.Elementos;
 public class ElementoBuilder{
@@ -8,7 +10,7 @@ public class ElementoBuilder{
     private Vector3 PosicionRelativa;
     private Vector3 Corrimiento = Vector3.Zero;
     private Vector3 Rotacion = Vector3.Zero;
-    private IDrawer Drawer = new ColorDrawer(PistonDerby.GameContent.M_CafeRojo, Color.Magenta); // drawer como static?
+    private IDrawer Drawer = new ColorDrawer(Color.Magenta); // drawer como static?
     private float Escala = 1f;
 
     /// <summary> Recibe una posicion pivot <paramref name="inicioHabitacion"/> sobre la cuál dibuja todos los elementos + el corrimiento indicado por los métodos <paramref name="Posicion"/> y <paramref name="Altura"/></summary> 
@@ -18,7 +20,7 @@ public class ElementoBuilder{
         Corrimiento = Vector3.Zero;
         Rotacion = Vector3.Zero;
         Escala = 1f;
-        Drawer = new ColorDrawer(Model, Color.Magenta);
+        Drawer = new ColorDrawer(Color.Magenta);
     }
     public ElementoBuilder Modelo(Model modelo3d){
         Model = modelo3d;
@@ -47,20 +49,22 @@ public class ElementoBuilder{
         return this;
     }
     public ElementoBuilder ConShader(Effect shaderSinParametros){
-        Drawer = new PlainEffectDrawer(Model, shaderSinParametros);
+        Drawer = new PlainEffectDrawer(shaderSinParametros);
         return this;
     }
     public ElementoBuilder ConTextura(Texture2D textura){
-        Drawer = new TextureDrawer(Model, textura);
+        Drawer = new TextureDrawer(textura);
         return this;
     }
     internal ElementoBuilder ConColor(Color color){
-        Drawer = new ColorDrawer(Model, color);
+        Drawer = new ColorDrawer(color);
         return this;
     }
     public ElementoEstatico BuildMueble(){
         Corrimiento += PosicionRelativa;
-        return new ElementoEstatico(Drawer, Corrimiento, Rotacion, Escala);
+        ElementoEstatico elemento = new ElementoEstatico(Model, Drawer, Corrimiento, Rotacion, Escala);
+
+        return elemento;
     }
     // public ElementoEstatico BuildDinamico(){
     //     Corrimiento += PosicionRelativa;

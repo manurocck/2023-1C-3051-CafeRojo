@@ -6,7 +6,7 @@ using PistonDerby.Utils;
 
 namespace PistonDerby.Elementos;
 public abstract class ElementoDinamico : Elemento {
-    protected BodyHandle BodyHandle { get; set; }
+    protected BodyHandle BodyHandle { get; private set; }
     internal TypedIndex Shape { get; set; }
     internal abstract float Mass();
     internal abstract float Scale();
@@ -15,7 +15,7 @@ public abstract class ElementoDinamico : Elemento {
 
     internal Quaternion Rotation() => Body().Pose.Orientation.ToQuaternion();
     internal Vector3 Position() => Body().Pose.Position;
-    internal override Matrix World() => Matrix.CreateScale(Scale()) * 
+    internal override Matrix World  =>  Matrix.CreateScale(Scale()) * 
                                         Matrix.CreateFromQuaternion(Rotation()) * 
                                         Matrix.CreateTranslation(Position());
 
@@ -25,6 +25,22 @@ public abstract class ElementoDinamico : Elemento {
     internal void Awake() => PistonDerby.Simulation.Awake(BodyHandle);
     internal Vector3 AngularVelocity() => Body().Velocity.Angular;
     internal Vector3 LinearVelocity() => Body().Velocity.Linear;
+
+    protected override void DebugGizmos()
+    {
+        BoundingBox aabb = this.Body().BoundingBox.ToBoundingBox(); 
+        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
+        
+
+        BoundingBox sombraAcual = new BoundingBox(this.Body().BoundingBox.Min, this.Body().BoundingBox.Max);
+        float alturaBoxSombra = sombraAcual.Max.Y - sombraAcual.Min.Y;
+        
+        sombraAcual.Min.Y = -alturaBoxSombra*0.5f;
+        sombraAcual.Max.Y = -alturaBoxSombra*0.5f;
+        
+        aabb = sombraAcual; 
+        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Magenta);
+    }
 
     internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 
         BodyHandle = PistonDerby.Simulation.CreateDynamic(initialPosition, initialRotation, Shape, Mass());

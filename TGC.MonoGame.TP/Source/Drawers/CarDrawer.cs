@@ -10,7 +10,6 @@ internal class CarDrawer : IDrawer
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ERROR_TRASLACION_RUEDAS = AUTO_SCALE*0.01f;
     private static Effect Effect => PistonDerby.GameContent.E_SpiralShader;
-    protected Model Model => PistonDerby.GameContent.M_Auto;
 
     //UPDATE
     internal Vector3 CarPosition { private get; set; } = Vector3.Zero;
@@ -19,7 +18,7 @@ internal class CarDrawer : IDrawer
     internal Auto Auto;
 
     internal CarDrawer(Auto auto) => Auto = auto;
-    void IDrawer.Draw(Matrix GeneralWorld){
+    void IDrawer.Draw(Model Model, Matrix GeneralWorld){
         Matrix world = GeneralWorld;
         Matrix worldAux = Matrix.Identity;
         

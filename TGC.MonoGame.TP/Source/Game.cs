@@ -19,7 +19,7 @@ namespace PistonDerby;
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
-    private const bool DEBUG_GIZMOS = false;
+    internal static bool DEBUG_GIZMOS = false;
     private const bool FULL_SCREEN = false;
     private const bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
@@ -111,7 +111,7 @@ public class PistonDerby : Game
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
 
         Camera.Mover(keyboardState);
-        Camera.Update(Auto.World());
+        Camera.Update(Auto.World);
 
         Simulation.Update();
         base.Update(gameTime);
@@ -144,7 +144,6 @@ public class PistonDerby : Game
     }
     private void DebugGizmos()
     {
-        Auto.DebugGizmos();
         Casa.DebugGizmos();
         BoundingBox aabb;
         foreach(ElementoDinamico e in ElementosDinamicos){

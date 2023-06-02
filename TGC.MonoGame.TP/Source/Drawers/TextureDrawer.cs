@@ -5,16 +5,14 @@ namespace PistonDerby.Drawers;
 internal class TextureDrawer : IDrawer
 {
     protected Effect Effect = PistonDerby.GameContent.E_TextureShader;
-    protected readonly Model Model;
     protected readonly Texture2D Texture;
 
-    internal TextureDrawer(Model Model, Texture2D Texture)
+    internal TextureDrawer(Texture2D Texture)
     {
-        this.Model = Model;
         this.Texture = Texture;
     }
 
-    void IDrawer.Draw(Matrix World)
+    void IDrawer.Draw(Model Model, Matrix World)
     {
         ModelMeshCollection meshes = Model.Meshes;;
 

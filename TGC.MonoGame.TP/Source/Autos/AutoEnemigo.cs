@@ -1,6 +1,7 @@
 
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Utils;
 
 using PistonDerby.Drawers;
@@ -11,8 +12,9 @@ namespace PistonDerby.Autos;
 internal class AutoEnemigo : ElementoDinamico {
     internal override float Mass() => 0.0001f; //Es indistinto
     internal override float Scale() => 1.4f;
-    internal override IDrawer Drawer() => this.StateDrawer;
-    private IDrawer StateDrawer = new TextureDrawer(PistonDerby.GameContent.M_AutoEnemigo, PistonDerby.GameContent.T_MarmolNegro);
+    internal override IDrawer Drawer => this.StateDrawer;
+    internal override Model Model => PistonDerby.GameContent.M_AutoEnemigo;
+    private IDrawer StateDrawer = new TextureDrawer(PistonDerby.GameContent.T_MarmolNegro);
     public bool Dirty = false;
     private float StateTimer = 0;
 
@@ -21,8 +23,8 @@ internal class AutoEnemigo : ElementoDinamico {
         var PosicionInicial = new Vector3(posX, posY, posZ) * PistonDerby.S_METRO;
         PosicionInicial.Y = 2f; // Hard-code de la altura
 
-        var boxSize = PistonDerby.GameContent.M_AutoEnemigo.Dimensiones() * 0.01f; //SIMU_BOX_SCALE Que va a ir a Content
-        Shape = PistonDerby.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
+        Box box = PistonDerby.GameContent.M_AutoEnemigo.GeneraterBox(this.Scale());
+        Shape = PistonDerby.Simulation.LoadShape<Box>(box);
         this.AddToSimulation(PosicionInicial, Quaternion.Identity);
     }
     internal override void Update(float dTime, KeyboardState _)
@@ -34,7 +36,7 @@ internal class AutoEnemigo : ElementoDinamico {
                 StateDrawer = new NotDrawer();
                 StateTimer = 0;
             }
-            if(!Dirty) StateDrawer = new TextureDrawer(PistonDerby.GameContent.M_AutoEnemigo, PistonDerby.GameContent.T_MarmolNegro); 
+            if(!Dirty) StateDrawer = new TextureDrawer(PistonDerby.GameContent.T_MarmolNegro); 
             Dirty = false;
         }
     }

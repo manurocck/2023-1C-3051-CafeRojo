@@ -6,6 +6,8 @@ using PistonDerby.Utils;
 using PistonDerby.Elementos;
 using PistonDerby.Drawers;
 using PistonDerby.HUD;
+using PistonDerby.Collisions;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PistonDerby.Autos;
 internal class Auto : ElementoDinamico { 
@@ -16,22 +18,22 @@ internal class Auto : ElementoDinamico {
     private const float JUMP_POWER = 1f * PistonDerby.S_METRO;
     private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación (setead para S_METRO = 250f) puede fallar (o no) si se cambia
     #endregion Settings
-    internal override IDrawer Drawer() => new CarDrawer(this);
+    internal override Model Model => PistonDerby.GameContent.M_Auto;
+    internal override IDrawer Drawer => new CarDrawer(this);
     internal override float Scale() => 0.08f * PistonDerby.S_METRO;
     internal override float Mass() => 1f;
     private CarHUD DisplayEstado;
     private float Vida = 1;
     private float Turbo = 1;
-    private int MunicionMetralleta = 50;
+    //private int MunicionMetralleta = 50;
     private bool PuedeSaltar = true;
     private float TimerInmune = 3;
-    internal float WheelTurning = 0f; 
+    internal float WheelTurning = 0f;
     internal float WheelRotation = 0f;
 
     internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
-        var boxSize = PistonDerby.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
-        Shape = PistonDerby.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
-        this.AddToSimulation(posicionInicial + new Vector3(0,PistonDerby.S_METRO,0), Quaternion.Identity);
+        Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, PistonDerby.GameContent.M_Auto, this.Scale());
+        this.AddToSimulation(posicionInicial + new Vector3(200,PistonDerby.S_METRO,200), Quaternion.Identity);
     }
     internal void AsociarHUD(CarHUD EstadoInicial) => this.DisplayEstado = EstadoInicial;
 
@@ -41,7 +43,7 @@ internal class Auto : ElementoDinamico {
         
         TimerInmune+=dTime;
         Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
-        this.DisplayEstado?.Update(this.World(), Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
+        this.DisplayEstado?.Update(this.World, Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
         
         if(!this.Body().Awake) return;
 
@@ -147,20 +149,5 @@ internal class Auto : ElementoDinamico {
         //     Console.WriteLine("Toqué el piso");
                     
         return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox());
-    }
-    public void DebugGizmos()
-    {
-        BoundingBox aabb = this.Body().BoundingBox.ToBoundingBox(); 
-        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
-        
-
-        BoundingBox sombraAcual = new BoundingBox(this.Body().BoundingBox.Min, this.Body().BoundingBox.Max);
-        float alturaBoxSombra = sombraAcual.Max.Y - sombraAcual.Min.Y;
-        
-        sombraAcual.Min.Y = -alturaBoxSombra*0.5f;
-        sombraAcual.Max.Y = -alturaBoxSombra*0.5f;
-        
-        aabb = sombraAcual; 
-        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Magenta);
     }
 }

@@ -4,6 +4,7 @@ using BepuPhysics.Collidables;
 using BepuPhysics.Constraints;
 using BepuUtilities.Memory;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Utils;
 
 namespace PistonDerby.Collisions;
@@ -18,6 +19,8 @@ internal class GameSimulation
     private readonly Vector3 Gravity = new Vector3(0, -1000f, 0);
     private readonly BufferPool BufferPool = new BufferPool();
     internal readonly Colliders Colliders = new Colliders();
+    private readonly ShapeLoader ShapeLoader;
+    
     private readonly Simulation Simulation;
     private readonly SimpleThreadDispatcher ThreadDispatcher;
 
@@ -25,6 +28,7 @@ internal class GameSimulation
     {
         this.ThreadDispatcher = new SimpleThreadDispatcher(ThreadCount());
         this.Simulation = CreateSimulation();
+        ShapeLoader = new ShapeLoader(Simulation.Shapes);
     }
 
     private int ThreadCount() => Math.Max(1, Environment.ProcessorCount > 4 ? Environment.ProcessorCount - 2 : Environment.ProcessorCount - 1);
@@ -38,6 +42,7 @@ internal class GameSimulation
     internal void Update() => Simulation.Timestep(TIME_STEP, ThreadDispatcher);
      
     internal TypedIndex LoadShape<S>(S shape) where S : unmanaged, IShape => Simulation.Shapes.Add(shape);
+    internal TypedIndex LoadShape(ShapeType shapeType, Model model, float scale = 1f)  => ShapeLoader.LoadShape(shapeType, model, scale);
 
     internal StaticReference GetStaticReference(StaticHandle handle) => Simulation.Statics.GetStaticReference(handle);
     internal BodyReference GetBodyReference(BodyHandle handle) => Simulation.Bodies.GetBodyReference(handle);

@@ -11,7 +11,7 @@ internal class MainMenu : IMenuItem
     private bool Transition = false;
     private Piso Piso = new Piso(15,15,new Vector3(-PistonDerby.S_METRO * 3f ,0,-PistonDerby.S_METRO * 3f ));
     private Pared Pared1, Pared2;
-    private AutoDummy AutoIA;
+    //private AutoDummy AutoIA;
 
     private (float X, float Y ) Window;
     public MainMenu(int width, int heigth) : base(width, heigth) {

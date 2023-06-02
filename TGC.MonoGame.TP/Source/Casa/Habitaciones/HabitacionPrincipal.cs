@@ -21,13 +21,13 @@ public class HabitacionPrincipal : IHabitacion{
             
             AddElemento( carpintero.BuildMueble() );
         
-
+        /////////////////////
         carpintero.Modelo(PistonDerby.GameContent.M_Silla)
             .ConTextura(PistonDerby.GameContent.T_MaderaNikari)
             .ConAltura(0.3f)
             .ConEscala(2f)
             .ConRotacion(-MathHelper.PiOver2, 0, 0)
-            .ConPosicion(5, 3); // cabecera
+            .ConPosicion(7, 3); // cabecera
             AddElemento( carpintero.BuildMueble() );
 
             carpintero
@@ -54,7 +54,7 @@ public class HabitacionPrincipal : IHabitacion{
             .ConPosicion(5.5f,4.5f) // lado inferior cerca de contra-cabecera
             .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*1.3f, 0);
             AddElemento( carpintero.BuildMueble() );
-
+        /////////////////////
 
         carpintero.Modelo(PistonDerby.GameContent.M_MuebleTV)
             .ConPosicion(LARGO-1f, 0.5f)

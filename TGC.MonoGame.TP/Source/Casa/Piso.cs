@@ -20,7 +20,7 @@ public class Piso : ElementoEstatico
     internal StaticHandle Handle;
     private Matrix TempWorld;
 
-    public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
+    public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(null, new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
     {
         PosicionInicial = posicionInicial;
         PosicionInicial.Y += -15; // Hard-codeada para que el auto esté exáctamente sobre el piso, debería depender de S_METRO
@@ -59,7 +59,7 @@ public class Piso : ElementoEstatico
         PistonDerby.GameContent.G_Quad.Draw(Effect);
     }
 
-    public void DebugGizmos()
+    public new void DebugGizmos()
     {
         var body = PistonDerby.Simulation.GetStaticReference(Handle);
         var aabb = body.BoundingBox;

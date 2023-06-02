@@ -13,7 +13,7 @@ internal class GeometryTextureDrawer : IDrawer{
         this.Geometry = geometry;
     }
 
-    void IDrawer.Draw(Matrix World)
+    void IDrawer.Draw(Model Model, Matrix World)
     {
         Efecto.Parameters["World"].SetValue(World);
         Geometry.Draw(Efecto);

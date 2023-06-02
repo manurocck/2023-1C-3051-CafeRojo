@@ -5,16 +5,14 @@ namespace PistonDerby.Drawers;
 internal class ColorDrawer : IDrawer
 {
     private static Effect Effect => PistonDerby.GameContent.E_BasicShader;
-    protected readonly Model Model;
     protected readonly Color Color;
 
-    internal ColorDrawer(Model Model, Color Color)
+    internal ColorDrawer(Color Color)
     {
-        this.Model = Model;
         this.Color = Color;
     }
 
-    void IDrawer.Draw(Matrix World)
+    void IDrawer.Draw(Model Model, Matrix World)
     {
         ModelMeshCollection meshes = Model.Meshes;
         Effect.Parameters["DiffuseColor"].SetValue(Color.ToVector3());

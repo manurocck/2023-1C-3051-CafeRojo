@@ -5,15 +5,13 @@ namespace PistonDerby.Drawers;
 internal class PlainEffectDrawer : IDrawer // Generalizar como EffectDrawer ?? NoParametersDrawer ??
 {
     protected Effect Effect;
-    protected readonly Model Model;
     
-    internal PlainEffectDrawer(Model Model,  Effect Effect)
+    internal PlainEffectDrawer(Effect Effect)
     {
-        this.Model = Model;
         this.Effect = Effect;
     }
 
-    void IDrawer.Draw(Matrix World)
+    void IDrawer.Draw(Model Model, Matrix World)
     {
         ModelMeshCollection meshes = Model.Meshes;
         foreach (ModelMesh mesh in meshes)
