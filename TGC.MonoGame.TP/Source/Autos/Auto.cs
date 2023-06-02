@@ -28,13 +28,12 @@ internal class Auto : ElementoDinamico {
     internal float WheelTurning = 0f; 
     internal float WheelRotation = 0f;
 
-    internal Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
-        this.DisplayEstado = EstadoInicial;
-
+    internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
         var boxSize = PistonDerby.GameContent.M_Auto.Dimensiones() * 0.010f * this.Scale(); //SIMU_BOX_SCALE Que va a ir a Content
         Shape = PistonDerby.Simulation.LoadShape<Box>(new Box(boxSize.X,boxSize.Y,boxSize.Z));
         this.AddToSimulation(posicionInicial + new Vector3(0,PistonDerby.S_METRO,0), Quaternion.Identity);
     }
+    internal void AsociarHUD(CarHUD EstadoInicial) => this.DisplayEstado = EstadoInicial;
 
     internal override void Update(float dTime, KeyboardState keyboard) {
 
@@ -42,12 +41,12 @@ internal class Auto : ElementoDinamico {
         
         TimerInmune+=dTime;
         Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
-        this.DisplayEstado.Update(this.World(), Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
+        this.DisplayEstado?.Update(this.World(), Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
         
         if(!this.Body().Awake) return;
 
-        if(keyboard.IsKeyDown(Keys.L)) DisplayEstado.BulletAmmo.PullingTrigger(dTime);
-        if(keyboard.IsKeyUp(Keys.L)) DisplayEstado.BulletAmmo.ReleasingTrigger();
+        if(keyboard.IsKeyDown(Keys.L)) DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
+        if(keyboard.IsKeyUp(Keys.L)) DisplayEstado?.BulletAmmo.ReleasingTrigger();
 
         //  ESTADO ACTUAL
         //

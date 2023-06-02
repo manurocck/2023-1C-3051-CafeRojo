@@ -21,6 +21,7 @@ public class PistonDerby : Game
     public const float S_METRO = 250f;
     private const bool DEBUG_GIZMOS = true;
     private const bool FULL_SCREEN = false;
+    private const bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
@@ -31,7 +32,8 @@ public class PistonDerby : Game
     private AudioPlayer Reproductor;
     private Camera Camera; 
     private Casa Casa;
-    private Auto Auto;
+    private Auto Auto; 
+    private AutoIA AutoIA;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
     public PistonDerby() {
@@ -80,8 +82,11 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
+        AutoIA   = new AutoIA (Casa.PuntoCentro(0));
+
+        Auto   = new Auto (Casa.PuntoCentro(0));
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-        Auto   = new Auto (Casa.PuntoCentro(0), CarHUD);
+        Auto.AsociarHUD(CarHUD);
     }
     protected override void Update(GameTime gameTime)
     {
@@ -92,16 +97,19 @@ public class PistonDerby : Game
         if (Keyboard.GetState().IsKeyDown(Keys.G)) Gizmos.Enabled = !Gizmos.Enabled;
         if(DEBUG_GIZMOS) Gizmos.UpdateViewProjection(Camera.View, Camera.Projection);
 
-        // if(GameMenu.isRunning()) {
-        //     GameMenu.Update(gameTime, keyboardState, Mouse.GetState());
-        //     return;
-        // }
+        if(GameMenu.isRunning() && INITIAL_ANIMATION) {
+            GameMenu.Update(gameTime, keyboardState, Mouse.GetState());
+            return;
+        }
 
         Reproductor.Update(Keyboard.GetState());                      
 
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
+        // AutoIA.Update(dTime);
+
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
+
         Camera.Mover(keyboardState);
         Camera.Update(Auto.World());
 
@@ -112,10 +120,10 @@ public class PistonDerby : Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        // if(GameMenu.isRunning()) {
-        //     GameMenu.Draw(gameTime);
-        //     return;
-        // }
+        if(GameMenu.isRunning() && INITIAL_ANIMATION) {
+            GameMenu.Draw(gameTime);
+            return;
+        }
 
         foreach (var e in GameContent.Efectos){
             e.Parameters["View"].SetValue(Camera.View);
@@ -124,7 +132,9 @@ public class PistonDerby : Game
         foreach (ElementoDinamico elementoDinamico in ElementosDinamicos)
             elementoDinamico.Draw();
 
-        Auto.Draw();          
+        Auto.Draw(); 
+        AutoIA.Draw();
+                 
         Casa.Draw();
         Gizmos.Draw();
 

@@ -2,16 +2,23 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PistonDerby.Autos;
 
 namespace PistonDerby.Navigation;
 
 internal class MainMenu : IMenuItem
 {
     private bool Transition = false;
+    private Piso Piso = new Piso(15,15,new Vector3(-PistonDerby.S_METRO * 3f ,0,-PistonDerby.S_METRO * 3f ));
+    private Pared Pared1, Pared2;
+    private AutoIA AutoIA;
+
     private (float X, float Y ) Window;
     public MainMenu(int width, int heigth) : base(width, heigth) {
         Window.X = width;
         Window.Y = heigth;
+        Pared1 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoIzquierdo());
+        Pared2 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoDerecho());
     }
 
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState)
@@ -39,17 +46,21 @@ internal class MainMenu : IMenuItem
         PistonDerby.GameContent.G_Quad.Draw(efecto);
         efecto.Parameters["Time"].SetValue(1);
     }
-    private void DrawSpinningCar(float secondsElapsed){
+    private void DrawSpinningCar(float secondsElapsed, Matrix isometricView)
+    {
         Effect effect = PistonDerby.GameContent.E_SpiralShader;
-        var isometricView = Matrix.CreateLookAt(Vector3.One *500f, Vector3.Zero, new Vector3(-1,1,-1));
+        // var isometricView = Matrix.CreateLookAt(Vector3.One *500f, Vector3.Zero, new Vector3(-1,1,-1));
 
         effect.Parameters["View"].SetValue(isometricView);
 
         Model model = PistonDerby.GameContent.M_Auto;
         Matrix world;
+        float transitionFactor = secondsElapsed*2/MathHelper.TwoPi;
+        Vector3 transition = new Vector3(PistonDerby.S_METRO*4 * MathF.Sin(transitionFactor * 2) , 0 , PistonDerby.S_METRO*2 * MathF.Cos(transitionFactor));
+        transition+= Piso.PuntoCentro()/2;
 
         foreach(ModelBone bone in model.Bones){
-            world = bone.ModelTransform * Matrix.CreateScale(20) * Matrix.CreateRotationY(secondsElapsed);
+            world = bone.ModelTransform * Matrix.CreateRotationY(MathHelper.Pi + transitionFactor * 2) * Matrix.CreateScale(30) * Matrix.CreateTranslation(transition);
             // effect.Parameters["World"].SetValue(world*AjusteFinal(40));
             effect.Parameters["World"].SetValue(world);
             foreach(ModelMesh mesh in bone.Meshes){
@@ -59,21 +70,19 @@ internal class MainMenu : IMenuItem
             }
         }
     }
-    internal void DrawEmptyHouse(){
+    internal void DrawEmptyHouse(float secondsElapsed)
+    {
 
-        var Piso = new Piso(15,15,new Vector3(-PistonDerby.S_METRO * 3f ,0,-PistonDerby.S_METRO * 3f ));
         Piso.ConTextura(PistonDerby.GameContent.T_Concreto,2,4);
 
-        var Pared1 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoIzquierdo());
-        var Pared2 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoDerecho());
-
-
         Effect effect = PistonDerby.GameContent.E_TextureTiles;
-        var isometricView = Matrix.CreateLookAt(Piso.PuntoCentro() + Vector3.UnitY * 1 * PistonDerby.S_METRO, 
-                                                Piso.PosicionInicial + Vector3.UnitX * 1 * PistonDerby.S_METRO, 
-                                                new Vector3(-0.33f,1,-0.33f));
+        Matrix isometricView = Matrix.CreateLookAt( Piso.PuntoCentro() + Vector3.UnitY * 1 * PistonDerby.S_METRO, 
+                                                    Piso.PosicionInicial + Vector3.UnitX * 1 * PistonDerby.S_METRO, 
+                                                    new Vector3(-0.33f,1,-0.33f));
         effect.Parameters["View"].SetValue(isometricView);
 
+
+        this.DrawSpinningCar(secondsElapsed, isometricView);
         Piso.Draw();
         Pared1.Draw(PistonDerby.GameContent.T_Ladrillos);
         Pared2.Draw(PistonDerby.GameContent.T_Ladrillos);
@@ -82,8 +91,7 @@ internal class MainMenu : IMenuItem
     internal override bool Draw(float secondsElapsed) { 
         
 
-        this.DrawEmptyHouse();
-        this.DrawSpinningCar(secondsElapsed);
+        this.DrawEmptyHouse(secondsElapsed);
                
         this.DrawTitle();
         this.DrawPlay(secondsElapsed);
