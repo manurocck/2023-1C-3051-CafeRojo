@@ -27,6 +27,7 @@ internal class Auto : ElementoDinamico {
     private float Turbo = 1;
     //private int MunicionMetralleta = 50;
     private bool PuedeSaltar = true;
+    private float TimerVolcado = 0;
     private float TimerInmune = 3;
     internal float WheelTurning = 0f;
     internal float WheelRotation = 0f;
@@ -92,7 +93,7 @@ internal class Auto : ElementoDinamico {
         //                          Si no está en el piso, va a ser con la que venía. 
         //                          El sentido lo determinan las teclas W y S con AccelerationSense().
         //
-        Vector3 horizontalImpulse = (PuedeSaltar)? this.Rotation().Forward() : velocidadActual.XZFoward();
+        Vector3 horizontalImpulse = (PuedeSaltar)? this.Rotation().Forward() : Vector3.Zero /* velocidadActual.XZFoward() */;
         horizontalImpulse *= keyboard.AccelerationSense() * LINEAR_SPEED ;
         float offsetAmount = 2f; //habría que generalizarlo para ubicar exáctamente en donde están las ruedas o un poquito más adelante
         this.ApplyLinearImpulse(horizontalImpulse, offsetAmount);
@@ -101,11 +102,37 @@ internal class Auto : ElementoDinamico {
         //
         if(PuedeSaltar && keyboard.Jumped())
         {
+            TimerVolcado = 0;
             Vector3 verticalImpulse = Vector3.UnitY * JUMP_POWER ;
             this.ApplyLinearImpulse(verticalImpulse);
+
             PuedeSaltar = false;
-        } 
+        }else if(!PuedeSaltar){
+            TimerVolcado += dTime;
+            if(TimerVolcado > 2){
+                this.Awake();
+                TimerVolcado = 0;
+                if(this.Body().Pose.Orientation.Up().Y>0){
+                    Vector3 offsetDirection;
+                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.75f;
+                    if(this.Body().Pose.Orientation.Left().Y < 0){
+                        offsetDirection = -Body().Pose.Orientation.Left();
+                    }else{
+                        offsetDirection = Body().Pose.Orientation.Left();
+                    }
+                    this.ApplyImpulse(correctiveImpulse, offsetDirection * this.Scale());
+                }else{
+                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.75f;
+                    this.ApplyImpulse(correctiveImpulse, Body().Pose.Orientation.Left() * this.Scale());
+                }
+            }
+        }
     }
+
+    private bool DeCostado() => (this.Body().Pose.Orientation.Left().X < 0 && this.Body().Pose.Orientation.Left().Y < 0 && this.Body().Pose.Orientation.Left().Z < 0 
+                                || (-this.Body().Pose.Orientation.Left()).X < 0 && (-this.Body().Pose.Orientation.Left()).Y < 0 && (-this.Body().Pose.Orientation.Left()).Z < 0);  
+
+    private bool RuedasParriba() => (this.Body().Pose.Orientation.Up().X < 0 && this.Body().Pose.Orientation.Up().Y < 0 && this.Body().Pose.Orientation.Up().Z < 0);  
     internal override bool OnCollision(Elemento other)
     {
         if(other is AutoEnemigo enemigo){
@@ -148,6 +175,6 @@ internal class Auto : ElementoDinamico {
         // if(sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()))
         //     Console.WriteLine("Toqué el piso");
                     
-        return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox());
+        return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()) && this.Body().Pose.Orientation.Up().Y>0;
     }
 }
