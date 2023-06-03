@@ -30,15 +30,15 @@ public class ElementoEstatico : Elemento {
         this.AddToSimulation(Position, Quaternion.CreateFromRotationMatrix(rotacion));
     }
 
-    private StaticReference Body() => PistonDerby.Simulation.GetStaticReference(StaticHandle);
+    internal StaticReference Static() => PistonDerby.Simulation.GetStaticReference(StaticHandle);
 
     protected override void DebugGizmos()
     {
-        BoundingBox aabb = this.Body().BoundingBox.ToBoundingBox(); 
+        BoundingBox aabb = this.Static().BoundingBox.ToBoundingBox(); 
         PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
         
 
-        BoundingBox sombraAcual = new BoundingBox(this.Body().BoundingBox.Min, this.Body().BoundingBox.Max);    
+        BoundingBox sombraAcual = new BoundingBox(this.Static().BoundingBox.Min, this.Static().BoundingBox.Max);    
     }
 
     internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 

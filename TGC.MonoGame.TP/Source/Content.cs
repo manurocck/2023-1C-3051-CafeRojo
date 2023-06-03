@@ -42,7 +42,7 @@ public class Content
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
                         T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto;
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
-    internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption;
+    internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     #endregion
     
@@ -115,6 +115,7 @@ public class Content
         TM_Pointer          = LoadTexture("Menu/Pointer");
         TM_PlayOption       = LoadTexture("Menu/PlayOption");
         TM_SettingsOption   = LoadTexture("Menu/SettingsOption");
+        TM_Controles        = LoadTexture("Menu/Controles");
 
 
         // Sonidos

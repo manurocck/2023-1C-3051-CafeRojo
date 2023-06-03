@@ -33,7 +33,7 @@ internal class Auto : ElementoDinamico {
     internal float WheelRotation = 0f;
 
     internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
-        Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, PistonDerby.GameContent.M_Auto, this.Scale());
+        Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, this.Model, this.Scale());
         this.AddToSimulation(posicionInicial + new Vector3(200,PistonDerby.S_METRO,200), Quaternion.Identity);
     }
     internal void AsociarHUD(CarHUD EstadoInicial) => this.DisplayEstado = EstadoInicial;
@@ -46,10 +46,11 @@ internal class Auto : ElementoDinamico {
         Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
         this.DisplayEstado?.Update(this.World, Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
         
+        if(TimerVolcado>2) this.Awake();
         if(!this.Body().Awake) return;
 
-        if(keyboard.IsKeyDown(Keys.L)) DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
-        if(keyboard.IsKeyUp(Keys.L)) DisplayEstado?.BulletAmmo.ReleasingTrigger();
+        if(keyboard.IsKeyDown(Keys.LeftShift)) DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
+        if(keyboard.IsKeyUp(Keys.LeftShift)) DisplayEstado?.BulletAmmo.ReleasingTrigger();
 
         //  ESTADO ACTUAL
         //
@@ -110,7 +111,7 @@ internal class Auto : ElementoDinamico {
         }else if(!PuedeSaltar){
             TimerVolcado += dTime;
             if(TimerVolcado > 2){
-                this.Awake();
+                this.Awake(); // no llega nunca por el return del principio
                 TimerVolcado = 0;
                 if(this.Body().Pose.Orientation.Up().Y>0){
                     Vector3 offsetDirection;
@@ -129,10 +130,6 @@ internal class Auto : ElementoDinamico {
         }
     }
 
-    private bool DeCostado() => (this.Body().Pose.Orientation.Left().X < 0 && this.Body().Pose.Orientation.Left().Y < 0 && this.Body().Pose.Orientation.Left().Z < 0 
-                                || (-this.Body().Pose.Orientation.Left()).X < 0 && (-this.Body().Pose.Orientation.Left()).Y < 0 && (-this.Body().Pose.Orientation.Left()).Z < 0);  
-
-    private bool RuedasParriba() => (this.Body().Pose.Orientation.Up().X < 0 && this.Body().Pose.Orientation.Up().Y < 0 && this.Body().Pose.Orientation.Up().Z < 0);  
     internal override bool OnCollision(Elemento other)
     {
         if(other is AutoEnemigo enemigo){
@@ -170,10 +167,6 @@ internal class Auto : ElementoDinamico {
         
         sombraAcual.Min.Y = -alturaBoxSombra*0.5f;
         sombraAcual.Max.Y = -alturaBoxSombra*0.5f;
-            
-        // // DEBUG
-        // if(sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()))
-        //     Console.WriteLine("Toqué el piso");
                     
         return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()) && this.Body().Pose.Orientation.Up().Y>0;
     }

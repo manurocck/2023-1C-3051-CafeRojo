@@ -9,7 +9,7 @@ internal class MainMenu : IMenuItem
 {
     private float elapsedActionTime = 0;
     private bool Transition = false;
-    private int OptionSelected = 0;
+    private int OptionSelected = 0; // 0: Todavía ninguna, 1: PlayOption , 2: SettingsOption, 3: Controles 
     private Piso Piso = new Piso(15,15,new Vector3(-PistonDerby.S_METRO * 3f ,0,-PistonDerby.S_METRO * 3f ));
     private Pared Pared1, Pared2;
 
@@ -25,18 +25,23 @@ internal class MainMenu : IMenuItem
         int LAST_OPT = 2;
         elapsedActionTime += Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
-        if( OptionSelected == 0 && keyboardState.GetPressedKeyCount()>0 && elapsedActionTime>2f ) {OptionSelected = 1; elapsedActionTime = 0; };
+        if( OptionSelected == 0 && keyboardState.GetPressedKeyCount()>0 && elapsedActionTime>1f ) {OptionSelected = 1; elapsedActionTime = 0; };
 
-        if( (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) && elapsedActionTime > 0.25f){
-                elapsedActionTime = 0;
-                OptionSelected = (OptionSelected>1)? OptionSelected-1 : LAST_OPT;
+        if( (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) && elapsedActionTime > 0.2f && OptionSelected != 3){
+            elapsedActionTime = 0;
+            OptionSelected = (OptionSelected>1)? OptionSelected-1 : LAST_OPT;
         }
-        if( (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down)) && elapsedActionTime > 0.25f){
-                elapsedActionTime = 0;
-                OptionSelected = (OptionSelected==LAST_OPT)? 1 : OptionSelected+1;
+        if( (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down)) && elapsedActionTime > 0.2f && OptionSelected != 3){
+            elapsedActionTime = 0;
+            OptionSelected = (OptionSelected==LAST_OPT)? 1 : OptionSelected+1;
         }
-
-        Transition = (keyboardState.IsKeyDown(Keys.Enter) || keyboardState.IsKeyDown(Keys.Space)) && OptionSelected==1 && elapsedActionTime>0.5f;
+        
+        if((keyboardState.IsKeyDown(Keys.Enter) || keyboardState.IsKeyDown(Keys.Space)) && elapsedActionTime > 0.2f){
+            elapsedActionTime = 0;
+            if(OptionSelected == 1) Transition = true;
+            else if(OptionSelected == 2) OptionSelected = 3;
+            else if(OptionSelected == 3) OptionSelected = 2;
+        }
         return this;
     }
     private void DrawTitle(float secondsElapsed)
@@ -105,14 +110,23 @@ internal class MainMenu : IMenuItem
         
         this.DrawEmptyHouse(secondsElapsed);
         
-        if(OptionSelected==0){
+        if(OptionSelected==0) 
             this.DrawTitle(secondsElapsed);
-        }else
+        else if (OptionSelected == 1 || OptionSelected == 2) 
             this.DrawOptions(secondsElapsed);
-        
+        else 
+            this.DrawControles();
+
         return !Transition;
     }
 
+    private void DrawControles(){
+        var effect = PistonDerby.GameContent.E_TextureShader;
+        effect.Parameters["View"].SetValue(HUDView);
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.75f,0.75f) * AjusteFinal(1));
+        effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Controles);
+        PistonDerby.GameContent.G_Quad.Draw(effect);
+    }
     private void DrawOptions(float secondsElapsed)
     {
         var effect = PistonDerby.GameContent.E_TextureItermitente; 
@@ -145,5 +159,4 @@ internal class MainMenu : IMenuItem
         effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Pointer);
         PistonDerby.GameContent.G_Quad.Draw(effect);
     }
-    internal void Start() => this.elapsedActionTime = 0;
 }

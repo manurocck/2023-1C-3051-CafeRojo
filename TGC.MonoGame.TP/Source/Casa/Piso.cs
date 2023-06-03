@@ -19,6 +19,7 @@ public class Piso : ElementoEstatico
     internal Vector3 PosicionInicial;
     internal StaticHandle Handle;
     private Matrix TempWorld;
+    protected readonly BoundingBox PeliculaContacto;
 
     public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(null, new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
     {
@@ -34,8 +35,10 @@ public class Piso : ElementoEstatico
 
         TypedIndex index = PistonDerby.Simulation.LoadShape<Box>(boxito);
 
-        Vector3 fixedPosition = this.PuntoCentro() - Vector3.UnitY;
+        Vector3 fixedPosition = this.PuntoCentro();
         Handle = PistonDerby.Simulation.CreateStatic(fixedPosition.ToBepu(), Quaternion.Identity.ToBepu(), index);
+
+        // PeliculaContacto = new BoundingBox(this.Static().BoundingBox.Min+Vector3.UnitY, this.Static().BoundingBox.Max+Vector3.UnitY);
     }
     public Vector3 PuntoExtremo() => PosicionInicial + ( new Vector3(MetrosLargo,0f,MetrosAncho) );
     public Vector3 PuntoExtremoIzquierdo() => PosicionInicial + ( new Vector3(0f,0f,MetrosAncho) );

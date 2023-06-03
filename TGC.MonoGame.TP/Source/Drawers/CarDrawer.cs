@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Autos;
 
@@ -23,6 +22,7 @@ internal class CarDrawer : IDrawer
         Matrix world = GeneralWorld;
         Matrix worldAux = Matrix.Identity;
         
+        if(Model.Bones.Count > 0)
         foreach(ModelBone bone in Model.Bones){
             switch(bone.Name){
                 case "Car":
@@ -55,6 +55,14 @@ internal class CarDrawer : IDrawer
                 }
                 mesh.Draw();
             }
+        }
+        else
+        foreach(var mesh in Model.Meshes){  
+                foreach(var meshPart in mesh.MeshParts){
+                    meshPart.Effect = Effect;
+                    meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
+                }
+                mesh.Draw();
         }
     }
 
