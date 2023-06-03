@@ -38,14 +38,7 @@ public class ElementoEstatico : Elemento {
         PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Gold);
         
 
-        BoundingBox sombraAcual = new BoundingBox(this.Body().BoundingBox.Min, this.Body().BoundingBox.Max);
-        float alturaBoxSombra = sombraAcual.Max.Y - sombraAcual.Min.Y;
-        
-        sombraAcual.Min.Y = -alturaBoxSombra*0.5f;
-        sombraAcual.Max.Y = -alturaBoxSombra*0.5f;
-        
-        aabb = sombraAcual; 
-        PistonDerby.Gizmos.DrawCube((aabb.Max + aabb.Min) / 2f, aabb.Max - aabb.Min, Color.Magenta);
+        BoundingBox sombraAcual = new BoundingBox(this.Body().BoundingBox.Min, this.Body().BoundingBox.Max);    
     }
 
     internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 

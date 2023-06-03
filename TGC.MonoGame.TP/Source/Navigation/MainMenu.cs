@@ -2,39 +2,52 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using PistonDerby.Autos;
 
 namespace PistonDerby.Navigation;
 
 internal class MainMenu : IMenuItem
 {
+    private float elapsedActionTime = 0;
     private bool Transition = false;
+    private int OptionSelected = 0;
     private Piso Piso = new Piso(15,15,new Vector3(-PistonDerby.S_METRO * 3f ,0,-PistonDerby.S_METRO * 3f ));
     private Pared Pared1, Pared2;
-    //private AutoDummy AutoIA;
 
-    private (float X, float Y ) Window;
     public MainMenu(int width, int heigth) : base(width, heigth) {
-        Window.X = width;
-        Window.Y = heigth;
-        Pared1 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoIzquierdo());
-        Pared2 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoDerecho());
+        Pared1 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoIzquierdo(), false);
+        Pared2 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoDerecho(), false);
     }
 
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState)
     {
-        Console.WriteLine("Mouse Position ( {0:F},{1:F} ) ", mouseState.Position.X/Window.X, mouseState.Position.Y/Window.Y );
-        Transition = keyboardState.IsKeyDown(Keys.Enter);
+        // Console.WriteLine("Mouse Position ( {0:F},{1:F} ) ", mouseState.Position.X/Window.X, mouseState.Position.Y/Window.Y );
+        
+        int LAST_OPT = 2;
+        elapsedActionTime += Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
+
+        if( OptionSelected == 0 && keyboardState.GetPressedKeyCount()>0 && elapsedActionTime>2f ) {OptionSelected = 1; elapsedActionTime = 0; };
+
+        if( (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) && elapsedActionTime > 0.25f){
+                elapsedActionTime = 0;
+                OptionSelected = (OptionSelected>1)? OptionSelected-1 : LAST_OPT;
+        }
+        if( (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down)) && elapsedActionTime > 0.25f){
+                elapsedActionTime = 0;
+                OptionSelected = (OptionSelected==LAST_OPT)? 1 : OptionSelected+1;
+        }
+
+        Transition = (keyboardState.IsKeyDown(Keys.Enter) || keyboardState.IsKeyDown(Keys.Space)) && OptionSelected==1 && elapsedActionTime>0.5f;
         return this;
     }
-    private void DrawTitle(){
+    private void DrawTitle(float secondsElapsed)
+    {
         var effect = PistonDerby.GameContent.E_TextureShader;
         effect.Parameters["View"].SetValue(HUDView);
         effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.75f,0.75f) * AjusteFinal(1));
         effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Start);
         PistonDerby.GameContent.G_Quad.Draw(effect);
+        this.DrawPlay(secondsElapsed);
     }
-
     private void DrawPlay(float secondsElapsed)
     {
         Effect efecto = PistonDerby.GameContent.E_TextureItermitente;
@@ -90,12 +103,47 @@ internal class MainMenu : IMenuItem
     }
     internal override bool Draw(float secondsElapsed) { 
         
-
         this.DrawEmptyHouse(secondsElapsed);
-               
-        this.DrawTitle();
-        this.DrawPlay(secondsElapsed);
+        
+        if(OptionSelected==0){
+            this.DrawTitle(secondsElapsed);
+        }else
+            this.DrawOptions(secondsElapsed);
         
         return !Transition;
     }
+
+    private void DrawOptions(float secondsElapsed)
+    {
+        var effect = PistonDerby.GameContent.E_TextureItermitente; 
+        effect.Parameters["View"].SetValue(HUDView);
+        var gapOptions = 0.05f;
+
+        
+        effect.Parameters["Time"].SetValue(0.25f); // Menu Background
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(1f,0.3f) * AjusteFinal(0));
+        effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TP_Presentacion0);
+        PistonDerby.GameContent.G_Quad.Draw(effect);
+
+
+        var alphaValue = 0f;
+        alphaValue = (OptionSelected == 2)? 0.5f : 0;
+        effect.Parameters["Time"].SetValue(alphaValue); // Play option
+        effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_PlayOption);
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.35f,0.1f) * Up(gapOptions) * Right(0.05f) * AjusteFinal(0));
+        PistonDerby.GameContent.G_Quad.Draw(effect);
+
+        alphaValue = (OptionSelected == 1)? 0.5f : 0;
+        effect.Parameters["Time"].SetValue(alphaValue); // Settings Option
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.35f,0.1f) * Down(gapOptions) * Right(0.05f) * AjusteFinal(0));
+        effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_SettingsOption);
+        PistonDerby.GameContent.G_Quad.Draw(effect);
+
+        effect.Parameters["Time"].SetValue(0f); // Pointer
+        var alturaSeleccionado = (OptionSelected == 1)? Up(gapOptions) : Down(gapOptions);
+        effect.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.1f) * alturaSeleccionado * Left(0.15f) * AjusteFinal(0));
+        effect.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Pointer);
+        PistonDerby.GameContent.G_Quad.Draw(effect);
+    }
+    internal void Start() => this.elapsedActionTime = 0;
 }

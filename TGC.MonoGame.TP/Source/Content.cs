@@ -42,7 +42,7 @@ public class Content
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
                         T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto;
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
-    internal readonly Texture2D TM_Start, TM_Play;
+    internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     #endregion
     
@@ -93,7 +93,6 @@ public class Content
         T_CubosMadera       = LoadTexture("CubosMadera");
         T_PisoCeramica      = LoadTexture("PisoCeramica");
         T_PisoAlfombrado    = LoadTexture("PisoAlfombra");
-        T_PisoPasto         = LoadTexture("PisoPasto");
         T_AlfombraHabitacion= LoadTexture("AlfombraHabitacion");
         T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
         T_Dragon            = LoadTexture("Muebles/Dragon");
@@ -113,6 +112,9 @@ public class Content
         // Imágenes Presentación
         TM_Start            = LoadTexture("Menu/Start");
         TM_Play             = LoadTexture("Menu/Play");
+        TM_Pointer          = LoadTexture("Menu/Pointer");
+        TM_PlayOption       = LoadTexture("Menu/PlayOption");
+        TM_SettingsOption   = LoadTexture("Menu/SettingsOption");
 
 
         // Sonidos

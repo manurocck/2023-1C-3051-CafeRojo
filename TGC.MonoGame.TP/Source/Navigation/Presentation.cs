@@ -20,16 +20,14 @@ internal class Presentation : IMenuItem{
         World = FullScreenWorld();
 
         MediaPlayer.IsRepeating = false;
-
-        MainMenu = new MainMenu(width, heigth);
         
     }
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState){
         PressedKeys = (keyboardState.GetPressedKeyCount() > 0)? true : PressedKeys;
         
-        if(PressedKeys) return MainMenu;
+        if(PressedKeys) { return new MainMenu(this.Window.width, Window.heigth);}
         
-        return this; // 
+        return this;
     } 
     internal override bool Draw(float secondsElapsed){
         // FONDO PANTALLA COMPLETA

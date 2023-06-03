@@ -15,7 +15,7 @@ public class Pared{
     private (Vector3 Inicio , Vector3 Final) Coordenadas = (Vector3.Zero, Vector3.Zero);
     private Effect Efecto = PistonDerby.GameContent.E_TextureTiles;
     
-    public Pared(Vector3 puntoInicio, Vector3 puntoFinal){
+    public Pared(Vector3 puntoInicio, Vector3 puntoFinal, bool paraSimular = true){
         var esHorizontal = (puntoInicio.X == puntoFinal.X);
         Coordenadas = (puntoInicio, puntoFinal);
 
@@ -28,7 +28,7 @@ public class Pared{
                 * Rotacion 
                 * Matrix.CreateTranslation(Coordenadas.Inicio.X,-PistonDerby.S_METRO*0.1f,Coordenadas.Inicio.Z);
         
-        AddToSimulation();
+        if(paraSimular) AddToSimulation();
     }
 
     private void AddToSimulation(){
