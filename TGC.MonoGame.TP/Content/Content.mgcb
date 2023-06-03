@@ -25,6 +25,18 @@
 /processorParam:DebugMode=Auto
 /build:Effects/BlacksFilter.fx
 
+#begin Effects/DeTextura/TextureMirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/DeTextura/TextureMirror.fx
+
+#begin Effects/DeTextura/TextureMirror.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/DeTextura/TextureMirror.fx
+
 #begin Effects/Gizmos.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -1529,6 +1541,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Muebles/SillaOficina.jpg
+
+#begin Textures/MysteryBox.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/MysteryBox.jpg
 
 #begin Textures/PisoAlfombra.jpg
 /importer:TextureImporter

@@ -8,6 +8,7 @@ using PistonDerby.HUD;
 using PistonDerby.Collisions;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Autos.PowerUps;
+using BepuPhysics.Collidables;
 
 namespace PistonDerby.Autos;
 internal class Auto : ElementoDinamico { 
@@ -15,7 +16,7 @@ internal class Auto : ElementoDinamico {
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ANGULAR_SPEED = 1.8f * PistonDerby.S_METRO;
     private const float LINEAR_SPEED = 0.12f * PistonDerby.S_METRO;
-    private const float JUMP_POWER = 1f * PistonDerby.S_METRO;
+    private const float JUMP_POWER = 2f * PistonDerby.S_METRO;
     private const float WHEEL_ROTATION_FACTOR = 0.000008f; // Factor de ajuste para la rotación (setead para S_METRO = 250f) puede fallar (o no) si se cambia
     #endregion Settings
     internal override Model Model => PistonDerby.GameContent.M_Auto;
@@ -34,6 +35,7 @@ internal class Auto : ElementoDinamico {
     internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
         Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, this.Model, this.Scale());
         this.AddToSimulation(posicionInicial + new Vector3(200,PistonDerby.S_METRO,200), Quaternion.Identity);
+        Body().Collidable.Continuity = ContinuousDetection.Continuous();
     }
     internal void AsociarHUD(CarHUD EstadoInicial) => this.DisplayEstado = EstadoInicial;
 
@@ -110,20 +112,24 @@ internal class Auto : ElementoDinamico {
         }else if(!PuedeSaltar){
             TimerVolcado += dTime;
             if(TimerVolcado > 2){
-                this.Awake(); // no llega nunca por el return del principio
                 TimerVolcado = 0;
-                if(this.Body().Pose.Orientation.Up().Y>0){
+                if(this.Body().Pose.Orientation.Up().Y>0){ // Sobre uno de sus costados
                     Vector3 offsetDirection;
-                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.75f;
+                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.4f;
                     if(this.Body().Pose.Orientation.Left().Y < 0){
                         offsetDirection = -Body().Pose.Orientation.Left();
                     }else{
                         offsetDirection = Body().Pose.Orientation.Left();
                     }
                     this.ApplyImpulse(correctiveImpulse, offsetDirection * this.Scale());
-                }else{
-                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.75f;
+                }else{ // Totalmente dado vuelta
+                    Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.4f;
                     this.ApplyImpulse(correctiveImpulse, Body().Pose.Orientation.Left() * this.Scale());
+                }
+
+                if(TimerVolcado>5){
+                    Vector3 correctiveImpulse = Body().Pose.Orientation.Up() * JUMP_POWER * 1.5f;
+                    this.ApplyImpulse(correctiveImpulse, (Body().Pose.Orientation.Left()+Body().Pose.Orientation.Forward()) * this.Scale());
                 }
             }
         }

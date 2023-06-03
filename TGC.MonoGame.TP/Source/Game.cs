@@ -19,7 +19,7 @@ namespace PistonDerby;
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
-    internal static bool DEVELOPER_MODE = true;
+    internal static bool DEVELOPER_MODE = false;
     internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
     internal static bool FULL_SCREEN = !DEVELOPER_MODE;
     internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
@@ -85,7 +85,7 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
-        AutoDummy   = new AutoDummy (Casa.PuntoCentro(0));
+        AutoDummy   = new AutoDummy (Casa.PuntoCentro(0) * 0.5f);
 
         Auto   = new Auto (Casa.PuntoCentro(0));
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);

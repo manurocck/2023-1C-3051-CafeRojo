@@ -32,7 +32,7 @@ public class Content
     
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
-                        E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente;
+                        E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -40,7 +40,7 @@ public class Content
     internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
-                        T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto;
+                        T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto, T_MysteryBox;
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
@@ -64,14 +64,15 @@ public class Content
         G_Cubo = new CuboPrimitive(GraphicsDevice);
 
         // Efectos
-        Efectos.Add(E_BasicShader   = LoadEffect("BasicShader")         );
-        Efectos.Add(E_TextureShader = LoadEffect("TextureShader")       );
-        Efectos.Add(E_TextureTiles  = LoadEffect("TextureTiles")        );
-        Efectos.Add(E_SpiralShader  = LoadEffect("SpiralShader")        );
-        Efectos.Add(E_BlacksFilter  = LoadEffect("BlacksFilter")        );
-        Efectos.Add(E_Traslucid     = LoadEffect("TextureTraslucida")   );
-        Efectos.Add(E_TwoTextureMix = LoadEffect("TwoTextureMix")       );
-        Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")       );
+        Efectos.Add(E_BasicShader        = LoadEffect("BasicShader")            );
+        Efectos.Add(E_TextureShader      = LoadEffect("TextureShader")          );
+        Efectos.Add(E_TextureTiles       = LoadEffect("TextureTiles")           );
+        Efectos.Add(E_SpiralShader       = LoadEffect("SpiralShader")           );
+        Efectos.Add(E_BlacksFilter       = LoadEffect("BlacksFilter")           );
+        Efectos.Add(E_Traslucid          = LoadEffect("TextureTraslucida")      );
+        Efectos.Add(E_TwoTextureMix      = LoadEffect("TwoTextureMix")          );
+        Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")     );
+        Efectos.Add(E_TextureMirror      = LoadEffect("DeTextura/TextureMirror"));
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
@@ -94,6 +95,7 @@ public class Content
         T_PisoCeramica      = LoadTexture("PisoCeramica");
         T_PisoAlfombrado    = LoadTexture("PisoAlfombra");
         T_AlfombraHabitacion= LoadTexture("AlfombraHabitacion");
+        T_MysteryBox        = LoadTexture("MysteryBox");
         T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
