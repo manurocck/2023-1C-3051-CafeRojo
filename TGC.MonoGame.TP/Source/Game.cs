@@ -19,9 +19,10 @@ namespace PistonDerby;
 public class PistonDerby : Game 
 {
     public const float S_METRO = 250f;
-    internal static bool DEBUG_GIZMOS = false;
-    private const bool FULL_SCREEN = true;
-    private const bool INITIAL_ANIMATION = true;
+    internal static bool DEVELOPER_MODE = true;
+    internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
+    internal static bool FULL_SCREEN = !DEVELOPER_MODE;
+    internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
@@ -48,10 +49,12 @@ public class PistonDerby : Game
         GraphicsDevice.RasterizerState = rasterizerState; // CullCounterClockwise; para activar el Culling
         GraphicsDevice.BlendState = BlendState.AlphaBlend;     
 
-        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
-        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        Graphics.PreferredBackBufferHeight = (DEVELOPER_MODE)?
+                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height*3/4 : 
+                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        Graphics.PreferredBackBufferWidth  = (DEVELOPER_MODE)?
+                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width*3/4 :
+                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         Graphics.IsFullScreen = FULL_SCREEN;
 
         

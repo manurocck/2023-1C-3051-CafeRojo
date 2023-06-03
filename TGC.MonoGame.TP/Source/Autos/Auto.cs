@@ -1,13 +1,13 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using BepuPhysics.Collidables;
 using PistonDerby.Utils;
 using PistonDerby.Elementos;
 using PistonDerby.Drawers;
 using PistonDerby.HUD;
 using PistonDerby.Collisions;
 using Microsoft.Xna.Framework.Graphics;
+using PistonDerby.Autos.PowerUps;
 
 namespace PistonDerby.Autos;
 internal class Auto : ElementoDinamico { 
@@ -25,7 +25,6 @@ internal class Auto : ElementoDinamico {
     private CarHUD DisplayEstado;
     private float Vida = 1;
     private float Turbo = 1;
-    //private int MunicionMetralleta = 50;
     private bool PuedeSaltar = true;
     private float TimerVolcado = 0;
     private float TimerInmune = 3;
@@ -132,9 +131,9 @@ internal class Auto : ElementoDinamico {
 
     internal override bool OnCollision(Elemento other)
     {
-        if(other is AutoEnemigo enemigo){
+        if(other is PowerUp enemigo){
             if(enemigo.Dirty){
-                Console.WriteLine("Toqué un enemy car");
+                Console.WriteLine("Toqué un Power-Up");
                 Turbo = 1;
             }
 

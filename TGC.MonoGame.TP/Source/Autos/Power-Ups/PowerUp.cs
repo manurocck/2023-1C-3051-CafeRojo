@@ -8,8 +8,8 @@ using PistonDerby.Drawers;
 using PistonDerby.Elementos;
 using Microsoft.Xna.Framework.Input;
 
-namespace PistonDerby.Autos;
-internal class AutoEnemigo : ElementoDinamico {
+namespace PistonDerby.Autos.PowerUps;
+internal class PowerUp : ElementoDinamico {
     internal override float Mass() => 0.0001f; //Es indistinto
     internal override float Scale() => 1.4f;
     internal override IDrawer Drawer => this.StateDrawer;
@@ -18,7 +18,7 @@ internal class AutoEnemigo : ElementoDinamico {
     public bool Dirty = false;
     private float StateTimer = 0;
 
-    internal AutoEnemigo(float posX, float posY, float posZ, Vector3 rotacion) 
+    internal PowerUp(float posX, float posY, float posZ, Vector3 rotacion) 
     {
         var PosicionInicial = new Vector3(posX, posY, posZ) * PistonDerby.S_METRO;
         PosicionInicial.Y = 2f; // Hard-code de la altura

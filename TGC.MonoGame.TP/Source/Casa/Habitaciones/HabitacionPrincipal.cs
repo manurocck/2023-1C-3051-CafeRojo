@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using PistonDerby.Autos;
+using PistonDerby.Autos.PowerUps;
 using PistonDerby.Elementos;
 
 namespace PistonDerby.Mapa;
@@ -120,8 +120,8 @@ public class HabitacionPrincipal : IHabitacion{
         #region Autos Enemigos
 
             for(int i=1; i<6; i++){
-                PistonDerby.ElementosDinamicos.Add(new AutoEnemigo(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
-                PistonDerby.ElementosDinamicos.Add(new AutoEnemigo(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
+                PistonDerby.ElementosDinamicos.Add(new PowerUp(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
+                PistonDerby.ElementosDinamicos.Add(new PowerUp(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
             }
         
         #endregion            
