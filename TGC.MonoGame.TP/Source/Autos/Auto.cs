@@ -167,8 +167,10 @@ internal class Auto : ElementoDinamico {
     {
         if(other is PowerUp enemigo){
             if(enemigo.Dirty){
+                TimerInmune = 0;
                 Console.WriteLine("Toqué un Power-Up");
                 Turbo = 1;
+                
             }            
         }
         if(other is Piso _){
@@ -179,7 +181,7 @@ internal class Auto : ElementoDinamico {
             Console.WriteLine("Toqué un elemento estático");
         }
         if(other is Bala _){
-            if(TimerInmune > 3){
+            if(!Inmune()){
                 var hitDamage = 0.1f;
                 TimerInmune = 0;
                 Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
