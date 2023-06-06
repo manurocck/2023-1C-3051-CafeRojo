@@ -8,10 +8,10 @@ using PistonDerby.Utils;
 
 namespace PistonDerby.Elementos;
 public class ElementoEstatico : Elemento {
-    internal override Model Model => SettedModel;
-    internal readonly Model SettedModel;
     protected StaticHandle StaticHandle { get; private set; }
     internal TypedIndex Shape { get; set; }
+    internal override Model Model => SettedModel;
+    internal readonly Model SettedModel;
     private IDrawer SavedDrawer;
     private Matrix WorldMatrix;
 

@@ -142,8 +142,6 @@ public class Content
         M_Mesita            = LoadModel("Muebles/", "Mesita"      );
         M_Sofa              = LoadModel("Muebles/", "Sofa"        );
         M_Aparador          = LoadModel("Muebles/", "Aparador"    );
-       // M_Hombrepiedra      = LoadModel("Muebles/", "Hombrepiedra");
-       // M_Libro             = LoadModel("Muebles/", "Libro"       );
         M_Piano             = LoadModel("Muebles/", "Piano"       );
 
         //Oficina
@@ -166,8 +164,6 @@ public class Content
         M_Juego             = LoadModel("Muebles/", "Juego"       );
         M_Puff              = LoadModel("Muebles/", "Puff"        );
         M_Armario1          = LoadModel("Muebles/", "Armario1"    );
-       // M_Robot             = LoadModel("Muebles/", "Robot"       );
-        M_Lamparamesita     = LoadModel("Muebles/", "Lamparamesita");
 
         //Baño
         M_Baniera           = LoadModel("Muebles/", "Baniera"     );
@@ -193,11 +189,8 @@ public class Content
         M_PlatoGrande       = LoadModel("Muebles/SetCocina/", "PlatoGrande");
         M_PlatosApilados    = LoadModel("Muebles/SetCocina/", "PlatosApilados");
         M_Heladera          = LoadModel("Muebles/SetCocina/", "Heladera");
-       // M_Lena              = LoadModel("Muebles/", "Lena"       );
-       // M_Lobo              = LoadModel("Muebles/", "Lobo"       );
 
         //Pasillo
-       // M_Gato              = LoadModel("Muebles/", "Gato"      );
         #endregion
     }
 

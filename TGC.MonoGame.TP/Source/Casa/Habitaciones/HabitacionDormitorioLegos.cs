@@ -106,7 +106,7 @@ public class HabitacionDormitorioLegos : IHabitacion{
                 .ConRotacion(randomRotation.X,randomRotation.Y,randomRotation.Z)
                 .ConColor(randomColor)
                 .ConEscala(1f);
-                AddElemento(carpintero.BuildMueble());
+                AddElemento(carpintero.BuildMuebleDinamico());
         }
         #endregion LEGOS CHIQUITOS
 

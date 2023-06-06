@@ -13,6 +13,7 @@ public abstract class IHabitacion
     internal Vector3 PosicionInicial;
     internal Piso Piso;
     internal List<ElementoEstatico> Muebles;
+    internal List<ElementoDinamicoIndependiente> MueblesDinamicos;
 
     // Ancho y Alto en Cantidad de Baldosas
     public IHabitacion(int metrosAncho, int metrosLargo, Vector3 traslacionEnMetros)
@@ -21,17 +22,20 @@ public abstract class IHabitacion
         MetrosAncho = metrosAncho;
         MetrosLargo = metrosLargo;
         Muebles = new List<ElementoEstatico>();
+        MueblesDinamicos = new List<ElementoDinamicoIndependiente>();
         Piso = new Piso(metrosAncho, metrosLargo, PosicionInicial);
     }
     public void AddElemento( ElementoEstatico e ){
         Muebles.Add(e);
+    }
+    public void AddElemento( ElementoDinamicoIndependiente e ){
+        MueblesDinamicos.Add(e);
     }
     public int cantidadElementos(){
         // Para debuggear
         return this.Muebles.Count;
     }
     public void Update(float dTime, KeyboardState keyboardState){
-        // Es necesaria ??
         return;
     }
 
@@ -39,6 +43,7 @@ public abstract class IHabitacion
     {
         Piso.Draw();
         foreach(var e in Muebles) e.Draw();
+        foreach(var e in MueblesDinamicos) e.Draw();
     }
 
     public void DebugGizmos() => this.Piso.DebugGizmos();
