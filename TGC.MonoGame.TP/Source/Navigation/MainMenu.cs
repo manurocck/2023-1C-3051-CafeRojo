@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,8 +17,15 @@ internal class MainMenu : IMenuItem
     public MainMenu(int width, int heigth) : base(width, heigth) {
         Pared1 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoIzquierdo(), false);
         Pared2 = new Pared(Piso.PosicionInicial, Piso.PuntoExtremoDerecho(), false);
+        PistonDerby.Reproductor.Play();
     }
 
+    private void StartGame()
+    {
+        Transition = true; 
+        PistonDerby.Reproductor.Stop(); 
+        PistonDerby.Reproductor.EngineCar();        
+    }
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState)
     {
         // Console.WriteLine("Mouse Position ( {0:F},{1:F} ) ", mouseState.Position.X/Window.X, mouseState.Position.Y/Window.Y );
@@ -38,7 +46,7 @@ internal class MainMenu : IMenuItem
         
         if((keyboardState.IsKeyDown(Keys.Enter) || keyboardState.IsKeyDown(Keys.Space)) && elapsedActionTime > 0.2f){
             elapsedActionTime = 0;
-            if(OptionSelected == 1) Transition = true;
+            if(OptionSelected == 1) this.StartGame(); // EMPIEZA EL JUEGO
             else if(OptionSelected == 2) OptionSelected = 3;
             else if(OptionSelected == 3) OptionSelected = 2;
         }

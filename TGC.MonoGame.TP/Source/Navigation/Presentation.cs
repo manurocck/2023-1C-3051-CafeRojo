@@ -25,8 +25,10 @@ internal class Presentation : IMenuItem{
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState){
         PressedKeys = (keyboardState.GetPressedKeyCount() > 0)? true : PressedKeys;
         Console.WriteLine("Ancho y largo de pantalla : ({0:F}:{1:F})",Window.Heigth, Window.Width);
-        if(PressedKeys) { return new MainMenu(this.Window.Width, Window.Heigth);}
-        
+        if(PressedKeys) { 
+            MediaPlayer.Stop();
+            return new MainMenu(this.Window.Width, Window.Heigth);
+        }
         return this;
     } 
     internal override bool Draw(float secondsElapsed){

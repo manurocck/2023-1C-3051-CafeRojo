@@ -1285,6 +1285,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Torre/Torre.obj
 
+#begin Music/ItsAFight.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/ItsAFight.mp3
+
 #begin Music/MeiHuaSen.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -1302,6 +1308,24 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Metralleta.wav
+
+#begin Sounds/MotorAcelerando.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorAcelerando.wav
+
+#begin Sounds/MotorEncendido.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorEncendido.wav
+
+#begin Sounds/MotorRegulando.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorRegulando.wav
 
 #begin Textures/Alfombra.jpg
 /importer:TextureImporter
