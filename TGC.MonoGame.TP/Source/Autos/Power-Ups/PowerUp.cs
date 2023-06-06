@@ -50,7 +50,10 @@ internal class PowerUp : ElementoDinamico {
 
     internal override bool OnCollision(Elemento other)
     {
-        if(other is Auto _){
+        if(other is Auto auto){
+            if(!auto.Inmune()){
+                PistonDerby.GameContent.S_Pickup.Play(0.35f,1,0);
+            }
             if(!Dirty) Dirty = !Dirty;
             return false;
         }

@@ -47,7 +47,7 @@ public class Content
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     #endregion
     
-    internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando;
+    internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando, S_Bling, S_Pickup;
     internal readonly Song S_SynthWars, S_MeiHuaSan, S_ItsAFight;
     
     internal readonly List<Effect> Efectos = new List<Effect>();
@@ -130,6 +130,8 @@ public class Content
         S_MotorEncendido    = LoadSound("MotorEncendido");
         S_MotorRegulando    = LoadSound("MotorRegulando");
         S_MotorAcelerando   = LoadSound("MotorAcelerando");
+        S_Bling             = LoadSound("Bling");
+        S_Pickup            = LoadSound("PickUp");
         
         #region Modelos ( Shader , CarpetaUbicacion, Etiqueta )
         M_Auto              = LoadModel("Autos/", "RacingCar"     );

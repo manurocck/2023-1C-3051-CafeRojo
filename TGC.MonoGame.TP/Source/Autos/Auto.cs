@@ -143,7 +143,7 @@ internal class Auto : ElementoDinamico {
                 Turbo = 1;
             }
 
-            if(TimerInmune > 3){
+            if(!Inmune()){
                 var hitDamage = 0.1f;
                 TimerInmune = 0;
                 Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
@@ -175,4 +175,5 @@ internal class Auto : ElementoDinamico {
                     
         return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()) && this.Body().Pose.Orientation.Up().Y>0;
     }
+    public bool Inmune() => TimerInmune < 3;
 }

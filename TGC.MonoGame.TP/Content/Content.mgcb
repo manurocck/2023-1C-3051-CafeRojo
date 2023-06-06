@@ -1303,6 +1303,12 @@
 /processorParam:Quality=Best
 /build:Music/SynthWars.mp3
 
+#begin Sounds/Bling.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Bling.wav
+
 #begin Sounds/Metralleta.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1326,6 +1332,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/MotorRegulando.wav
+
+#begin Sounds/PickUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PickUp.wav
 
 #begin Textures/Alfombra.jpg
 /importer:TextureImporter

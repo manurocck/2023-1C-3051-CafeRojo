@@ -38,10 +38,12 @@ internal class MainMenu : IMenuItem
         if( (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) && elapsedActionTime > 0.2f && OptionSelected != 3){
             elapsedActionTime = 0;
             OptionSelected = (OptionSelected>1)? OptionSelected-1 : LAST_OPT;
+            PistonDerby.GameContent.S_Bling.Play();
         }
         if( (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down)) && elapsedActionTime > 0.2f && OptionSelected != 3){
             elapsedActionTime = 0;
             OptionSelected = (OptionSelected==LAST_OPT)? 1 : OptionSelected+1;
+            PistonDerby.GameContent.S_Bling.Play();
         }
         
         if((keyboardState.IsKeyDown(Keys.Enter) || keyboardState.IsKeyDown(Keys.Space)) && elapsedActionTime > 0.2f){
@@ -49,6 +51,7 @@ internal class MainMenu : IMenuItem
             if(OptionSelected == 1) this.StartGame(); // EMPIEZA EL JUEGO
             else if(OptionSelected == 2) OptionSelected = 3;
             else if(OptionSelected == 3) OptionSelected = 2;
+            PistonDerby.GameContent.S_Bling.Play();
         }
         return this;
     }

@@ -19,7 +19,8 @@ internal class Presentation : IMenuItem{
     public Presentation(int width, int heigth) : base(width, heigth){
         World = FullScreenWorld();
 
-        MediaPlayer.IsRepeating = false;
+        MediaPlayer.IsRepeating = true;
+        MediaPlayer.Volume = 0.5f;
         
     }
     internal override IMenuItem Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState){
