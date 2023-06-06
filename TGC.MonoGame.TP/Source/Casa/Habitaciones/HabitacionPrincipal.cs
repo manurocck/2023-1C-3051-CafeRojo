@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using PistonDerby.Autos.PowerUps;
 using PistonDerby.Elementos;
@@ -132,6 +134,41 @@ public class HabitacionPrincipal : IHabitacion{
                 PistonDerby.ElementosDinamicos.Add(new PowerUp(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
             }
         
-        #endregion            
+        #endregion
+
+        #region LEGOS CHIQUITOS
+        carpintero.Modelo(PistonDerby.GameContent.M_Lego);
+        Vector2 desplazamientoRandom = new Vector2(LARGO*0.75f, ANCHO*0.25f); // donde arranca el bardo
+        Vector3 randomRotation;
+        float random1, random2, random3; // Entropía
+        Color randomColor;
+        List<Color> legoPallette = new List<Color>();
+        legoPallette.Add(Color.DarkRed);
+        legoPallette.Add(Color.DarkBlue);
+        legoPallette.Add(Color.Gold);
+        legoPallette.Add(Color.DarkGreen);
+        legoPallette.Add(Color.AntiqueWhite);
+
+        const float ESPARCIMIENTO = 1f;
+
+        for(int i=0; i<100; i++){
+            random1 = (Random.Shared.NextSingle());
+            random2 = (Random.Shared.NextSingle()-0.5f);
+            random3 = (Random.Shared.NextSingle()-0.5f);
+
+            randomRotation = new Vector3(0f,MathHelper.Pi*random3, 0f);
+            randomColor = legoPallette[i%legoPallette.Count];
+            
+            desplazamientoRandom += new Vector2((ESPARCIMIENTO*MathF.Cos(random1*MathHelper.TwoPi))*random2,ESPARCIMIENTO*(MathF.Sin(random1*MathHelper.TwoPi)*random2));
+            
+            
+            carpintero
+                .ConPosicion(desplazamientoRandom.X,desplazamientoRandom.Y)
+                .ConRotacion(randomRotation.X,randomRotation.Y,randomRotation.Z)
+                .ConColor(randomColor)
+                .ConEscala(1f);
+                AddElemento(carpintero.BuildMuebleDinamico());
+        }
+        #endregion LEGOS CHIQUITOS            
     }
 }    

@@ -204,4 +204,5 @@ internal class Auto : ElementoDinamico {
                     
         return sombraAcual.Intersects(this.Body().BoundingBox.ToBoundingBox()) && this.Body().Pose.Orientation.Up().Y>0;
     }
+    public bool Inmune() => TimerInmune < 3;
 }

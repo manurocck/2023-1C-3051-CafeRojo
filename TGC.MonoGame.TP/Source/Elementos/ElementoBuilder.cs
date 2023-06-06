@@ -66,6 +66,12 @@ public class ElementoBuilder{
 
         return elemento;
     }
+    public ElementoDinamicoIndependiente BuildMuebleDinamico(){
+        Corrimiento += PosicionRelativa;
+        ElementoDinamicoIndependiente elemento = new ElementoDinamicoIndependiente(Model, Drawer, Corrimiento, Rotacion, Escala);
+
+        return elemento;
+    }
     // public ElementoEstatico BuildDinamico(){
     //     Corrimiento += PosicionRelativa;
     //     return new ElementoDinamico(Drawer, Corrimiento, Rotacion, Escala);

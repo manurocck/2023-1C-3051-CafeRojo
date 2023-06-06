@@ -21,7 +21,8 @@ public class PistonDerby : Game
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
     internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
-    internal static bool FULL_SCREEN = !DEVELOPER_MODE;
+    // internal static bool FULL_SCREEN = !DEVELOPER_MODE;
+    internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
@@ -30,11 +31,11 @@ public class PistonDerby : Game
     internal static GameMenu GameMenu;
     internal static Gizmos Gizmos;
     private CarHUD CarHUD;
-    private AudioPlayer Reproductor;
+    internal static AudioPlayer Reproductor;
     private Camera Camera; 
     private Casa Casa;
     private Auto Auto; 
-    private AutoDummy AutoDummy;
+    private List<AutoDummy> AutosDummy;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
     public PistonDerby() {
@@ -50,10 +51,10 @@ public class PistonDerby : Game
         GraphicsDevice.BlendState = BlendState.AlphaBlend;     
 
         Graphics.PreferredBackBufferHeight = (DEVELOPER_MODE)?
-                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height*3/4 : 
+                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height : 
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         Graphics.PreferredBackBufferWidth  = (DEVELOPER_MODE)?
-                                             GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width*3/4 :
+                                             Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         Graphics.IsFullScreen = FULL_SCREEN;
 
@@ -67,6 +68,7 @@ public class PistonDerby : Game
         Gizmos.Enabled = DEBUG_GIZMOS;
         Casa = new Casa();
 
+        AutosDummy = new List<AutoDummy>();
         base.Initialize();
     }
     protected override void LoadContent() 
@@ -85,7 +87,9 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
-        AutoDummy   = new AutoDummy (Casa.PuntoCentro(0) * 0.5f);
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.5f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
 
         Auto   = new Auto (Casa.PuntoCentro(0));
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -105,11 +109,12 @@ public class PistonDerby : Game
             return;
         }
 
-        Reproductor.Update(Keyboard.GetState());                      
+        Reproductor.Update(dTime, Keyboard.GetState());                      
 
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
-        AutoDummy.Update(dTime);
+        foreach(AutoDummy a in AutosDummy)
+            a.Update(dTime);
 
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
 
@@ -136,7 +141,7 @@ public class PistonDerby : Game
             elementoDinamico.Draw();
 
         Auto.Draw(); 
-        AutoDummy.Draw();
+        foreach(AutoDummy a in AutosDummy) a.Draw();
                  
         Casa.Draw();
         Gizmos.Draw();

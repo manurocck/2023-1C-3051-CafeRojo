@@ -31,12 +31,6 @@
 /processorParam:DebugMode=Auto
 /build:Effects/DeTextura/TextureMirror.fx
 
-#begin Effects/DeTextura/TextureMirror.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/DeTextura/TextureMirror.fx
-
 #begin Effects/Gizmos.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -604,44 +598,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Gabinete/Gabinete.obj
 
-#begin Models/Muebles/Gato/Gato.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Gato/Gato.obj
-
-#begin Models/Muebles/Hombrepiedra/Hombrepiedra.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Hombrepiedra/Hombrepiedra.obj
-
 #begin Models/Muebles/inodoro/inodoro.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -680,25 +636,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Juego/Juego.fbx
 
-#begin Models/Muebles/Lamparamesita/Lamparamesita.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Lamparamesita/Lamparamesita.fbx
-
 #begin Models/Muebles/Lego/Lego.obj
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -717,63 +654,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Lego/Lego.obj
-
-#begin Models/Muebles/Lena/Wood.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Lena/Wood.obj
-
-#begin Models/Muebles/Libro/Book1 obj.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Libro/Book1 obj.obj
-
-#begin Models/Muebles/Lobo/Wolf_obj.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Lobo/Wolf_obj.obj
 
 #begin Models/Muebles/Mesa/Mesa.fbx
 /importer:FbxImporter
@@ -945,25 +825,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Puff/Puff.fbx
-
-#begin Models/Muebles/Robot/Robot.obj
-/importer:OpenAssetImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Robot/Robot.obj
 
 #begin Models/Muebles/SetCocina/Alacena/Alacena.obj
 /importer:FbxImporter
@@ -1405,25 +1266,6 @@
 /processorParam:TextureFormat=Color
 /build:Models/Muebles/Televisor/Texture.jpg
 
-#begin Models/Muebles/Tetera/Tetera.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Tetera/Tetera.fbx
-
 #begin Models/Muebles/Torre/Torre.obj
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1443,6 +1285,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Torre/Torre.obj
 
+#begin Music/ItsAFight.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/ItsAFight.mp3
+
 #begin Music/MeiHuaSen.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -1455,11 +1303,41 @@
 /processorParam:Quality=Best
 /build:Music/SynthWars.mp3
 
+#begin Sounds/Bling.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Bling.wav
+
 #begin Sounds/Metralleta.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Metralleta.wav
+
+#begin Sounds/MotorAcelerando.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorAcelerando.wav
+
+#begin Sounds/MotorEncendido.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorEncendido.wav
+
+#begin Sounds/MotorRegulando.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MotorRegulando.wav
+
+#begin Sounds/PickUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PickUp.wav
 
 #begin Textures/Alfombra.jpg
 /importer:TextureImporter

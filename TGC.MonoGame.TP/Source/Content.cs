@@ -47,8 +47,8 @@ public class Content
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     #endregion
     
-    internal readonly SoundEffect S_Metralleta;
-    internal readonly Song S_SynthWars, S_MeiHuaSan;
+    internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando, S_Bling, S_Pickup;
+    internal readonly Song S_SynthWars, S_MeiHuaSan, S_ItsAFight;
     
     internal readonly List<Effect> Efectos = new List<Effect>();
     internal readonly List<Effect> EfectosHUD = new List<Effect>();
@@ -124,7 +124,14 @@ public class Content
         // Sonidos
         S_SynthWars         = LoadSong("SynthWars");
         S_MeiHuaSan         = LoadSong("MeiHuaSen");
+        S_ItsAFight         = LoadSong("ItsAFight");
+
         S_Metralleta        = LoadSound("Metralleta");
+        S_MotorEncendido    = LoadSound("MotorEncendido");
+        S_MotorRegulando    = LoadSound("MotorRegulando");
+        S_MotorAcelerando   = LoadSound("MotorAcelerando");
+        S_Bling             = LoadSound("Bling");
+        S_Pickup            = LoadSound("PickUp");
         
         #region Modelos ( Shader , CarpetaUbicacion, Etiqueta )
         M_Auto              = LoadModel("Autos/", "RacingCar"     );
@@ -142,8 +149,6 @@ public class Content
         M_Mesita            = LoadModel("Muebles/", "Mesita"      );
         M_Sofa              = LoadModel("Muebles/", "Sofa"        );
         M_Aparador          = LoadModel("Muebles/", "Aparador"    );
-       // M_Hombrepiedra      = LoadModel("Muebles/", "Hombrepiedra");
-       // M_Libro             = LoadModel("Muebles/", "Libro"       );
         M_Piano             = LoadModel("Muebles/", "Piano"       );
 
         //Oficina
@@ -166,8 +171,6 @@ public class Content
         M_Juego             = LoadModel("Muebles/", "Juego"       );
         M_Puff              = LoadModel("Muebles/", "Puff"        );
         M_Armario1          = LoadModel("Muebles/", "Armario1"    );
-       // M_Robot             = LoadModel("Muebles/", "Robot"       );
-        M_Lamparamesita     = LoadModel("Muebles/", "Lamparamesita");
 
         //Baño
         M_Baniera           = LoadModel("Muebles/", "Baniera"     );
@@ -193,11 +196,8 @@ public class Content
         M_PlatoGrande       = LoadModel("Muebles/SetCocina/", "PlatoGrande");
         M_PlatosApilados    = LoadModel("Muebles/SetCocina/", "PlatosApilados");
         M_Heladera          = LoadModel("Muebles/SetCocina/", "Heladera");
-       // M_Lena              = LoadModel("Muebles/", "Lena"       );
-       // M_Lobo              = LoadModel("Muebles/", "Lobo"       );
 
         //Pasillo
-       // M_Gato              = LoadModel("Muebles/", "Gato"      );
         #endregion
     }
 

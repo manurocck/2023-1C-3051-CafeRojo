@@ -35,12 +35,14 @@ public class Pared{
         var esHorizontal = (this.Coordenadas.Inicio.X == this.Coordenadas.Final.X);
         var esteNumerito = Math.Abs(-Coordenadas.Inicio.X + Coordenadas.Final.X);
         var otroNumerito = Math.Abs(-Coordenadas.Inicio.Z + Coordenadas.Final.Z);
+        
+        float coordenadaAlturaInicio = -20f; // FIX PARA QUE ESTE A LA ALTURA DEL PISO
 
         Box boxito = (!esHorizontal)? new Box(esteNumerito+GROSOR, ALTURA, GROSOR) 
                                     : new Box(GROSOR, ALTURA, otroNumerito);
 
         Vector3 fixedPosition = (!esHorizontal)? 
-                                new Vector3((Coordenadas.Inicio.X+Coordenadas.Final.X)*0.5f-GROSOR*0.5f, ALTURA*0.5f, Coordenadas.Inicio.Z+GROSOR*0.5f):
+                                new Vector3((Coordenadas.Inicio.X+Coordenadas.Final.X)*0.5f-GROSOR*0.5f, ALTURA*0.5f + coordenadaAlturaInicio, Coordenadas.Inicio.Z+GROSOR*0.5f):
                                 new Vector3(Coordenadas.Inicio.X-GROSOR*0.5f, ALTURA*0.5f, (Coordenadas.Inicio.Z+Coordenadas.Final.Z)*0.5f);
 
         

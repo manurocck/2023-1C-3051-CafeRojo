@@ -4,8 +4,8 @@ using PistonDerby.Elementos;
 namespace PistonDerby.Mapa;
 
 public class HabitacionToilette : IHabitacion{
-       public const int ANCHO = 4;
-       public const int LARGO = 4;
+       public const int ANCHO = 5;
+       public const int LARGO = 6;
       public HabitacionToilette(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
  
             Piso.ConTextura(PistonDerby.GameContent.T_MarmolNegro, ANCHO, LARGO);
