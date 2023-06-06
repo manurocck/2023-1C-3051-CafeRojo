@@ -1,17 +1,49 @@
-// using Microsoft.Xna.Framework;
-// using PistonDerby.Elementos;
+using Microsoft.Xna.Framework;
+using PistonDerby.Elementos;
 
-// namespace PistonDerby
-// {
-//     public class HabitacionToilette : IHabitacion{
-//         public const int ANCHO = 4;
-//         public const int LARGO = 4;
-//         public HabitacionToilette(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
+namespace PistonDerby.Mapa;
+
+public class HabitacionToilette : IHabitacion{
+       public const int ANCHO = 4;
+       public const int LARGO = 4;
+      public HabitacionToilette(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){
  
-//             var posicionInicial = new Vector3(posicionX,0f,posicionZ);
+            Piso.ConTextura(PistonDerby.GameContent.T_MarmolNegro, ANCHO, LARGO);
                        
-//             Amueblar();
-//         }
+            Amueblar();
+      }
+
+
+      private void Amueblar(){
+            var carpintero = new ElementoBuilder(this.PuntoInicio());
+
+            carpintero.Modelo(PistonDerby.GameContent.M_Inodoro)
+                .ConPosicion(1f, 0.5f)
+                .ConRotacion(-MathHelper.PiOver2,0,0)
+                .ConColor(Color.White)
+                .ConAltura(0.5f)
+                .ConEscala(4f);
+            AddElemento(carpintero.BuildMueble());
+                    
+
+            carpintero.Modelo(PistonDerby.GameContent.M_Baniera)
+                .ConPosicion(1.5f, 3.5f)
+                .ConTextura(PistonDerby.GameContent.T_Marmol)
+                //.ConRotacion(0f, MathHelper.PiOver2, 0f)
+                .ConEscala(16f);
+            AddElemento(carpintero.BuildMueble());
+                    
+
+            carpintero.Modelo(PistonDerby.GameContent.M_Bacha)
+                .ConPosicion(2.5f, 0.1f)
+                .ConRotacion(-MathHelper.PiOver2, 0f, 0f)
+                .ConColor(Color.White)
+                .ConAltura(1f)
+                .ConEscala(0.5f);
+            AddElemento(carpintero.BuildMueble());
+      }
+
+ }
 
         
 //         public override void DrawElementos(){
@@ -33,32 +65,4 @@
 //                 e.Draw();
 //             }
 //         }
-        
-//         private void Amueblar(){
-//             var carpintero = new ElementoBuilder(this.PuntoInicio());
-
-//             carpintero.Modelo(PistonDerby.GameContent.M_Inodoro)
-//                 .ConPosicion(1500f, 500f)
-//                 .ConRotacion(-MathHelper.PiOver2,0,0)
-//                 .ConEscala(15f);
-//                 AddElemento(carpintero.BuildMueble());
-            
-
-//             carpintero.Modelo(PistonDerby.GameContent.M_Baniera)
-//                 .ConPosicion(1500f, 3000)
-//                 .ConShader(mShader)
-//                 .ConRotacion(0f, MathHelper.Pi, 0f)
-//                 .ConEscala(60f);
-//                 AddElemento(carpintero.BuildMueble());
-            
-
-//             carpintero.Modelo(PistonDerby.GameContent.M_Bacha)
-//                 .ConPosicion(3000f, -100f)
-//                 .ConRotacion(-MathHelper.PiOver2, 0f, 0f)
-//                 .ConAltura(1000f)
-//                 .ConEscala(18f);
-//                 AddElemento(carpintero.BuildMueble());
-            
-//         }
 //     }    
-// }

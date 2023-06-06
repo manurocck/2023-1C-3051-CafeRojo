@@ -117,6 +117,14 @@ public class HabitacionPrincipal : IHabitacion{
             
             AddElemento( carpintero.BuildMueble() );
 
+        carpintero.Modelo(PistonDerby.GameContent.M_Piano)
+            .ConEscala(1.75f)
+            .ConColor(Color.Gray)
+            .ConRotacion(0f,MathHelper.PiOver2,0f)
+            .ConPosicion(1.5f, ANCHO-0.7f)
+            .ConAltura(0.15f);
+            AddElemento( carpintero.BuildMueble() ); 
+
         #region Autos Enemigos
 
             for(int i=1; i<6; i++){

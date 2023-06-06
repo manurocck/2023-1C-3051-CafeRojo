@@ -38,8 +38,15 @@ public class HabitacionDormitorioLegos : IHabitacion{
             .ConRotacion(0f,MathHelper.Pi,0f)
             .ConEscala(2f);
             AddElemento(carpintero.BuildMueble());
+        
+        /*carpintero.Modelo(PistonDerby.GameContent.M_Lamparamesita)
+            .ConPosicion(1f,1.5f)
+            .ConColor(Color.Yellow) 
+            .ConRotacion(-MathHelper.PiOver2, 0f, 0f)
+            .ConEscala(100f);
+            AddElemento( carpintero.BuildMueble() ); 
 
-        carpintero.Modelo(PistonDerby.GameContent.M_Lego);
+        carpintero.Modelo(PistonDerby.GameContent.M_Lego);*/
 
 
         #region LEGOS GRANDES

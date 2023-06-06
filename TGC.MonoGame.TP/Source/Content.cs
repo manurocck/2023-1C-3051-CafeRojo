@@ -27,7 +27,8 @@ public class Content
             M_Televisor , M_MuebleTV, M_Planta , M_Escritorio, M_Cocine, M_Plantis, M_Lego, M_Baniera,M_Sofa, M_Mesita, M_Aparador, 
             M_Bacha, M_Organizador, M_Cajonera, M_CamaMarinera , M_MesadaCentral, M_MesadaLateral, M_MesadaLateral2, M_Alacena, 
             M_Botella, M_Maceta, M_Maceta2, M_Maceta3, M_Maceta4, M_Olla, M_ParedCocina, M_Plato, M_PlatoGrande, M_PlatosApilados,
-            M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1;
+            M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1, M_Gato, M_Hombrepiedra, M_Lena, 
+            M_Lamparamesita, M_Lobo, M_Libro, M_Piano, M_Robot;
     #endregion
     
     #region efectos
@@ -141,6 +142,9 @@ public class Content
         M_Mesita            = LoadModel("Muebles/", "Mesita"      );
         M_Sofa              = LoadModel("Muebles/", "Sofa"        );
         M_Aparador          = LoadModel("Muebles/", "Aparador"    );
+       // M_Hombrepiedra      = LoadModel("Muebles/", "Hombrepiedra");
+       // M_Libro             = LoadModel("Muebles/", "Libro"       );
+        M_Piano             = LoadModel("Muebles/", "Piano"       );
 
         //Oficina
         M_SillaOficina      = LoadModel("Muebles/", "SillaOficina");
@@ -162,6 +166,8 @@ public class Content
         M_Juego             = LoadModel("Muebles/", "Juego"       );
         M_Puff              = LoadModel("Muebles/", "Puff"        );
         M_Armario1          = LoadModel("Muebles/", "Armario1"    );
+       // M_Robot             = LoadModel("Muebles/", "Robot"       );
+        M_Lamparamesita     = LoadModel("Muebles/", "Lamparamesita");
 
         //Baño
         M_Baniera           = LoadModel("Muebles/", "Baniera"     );
@@ -187,6 +193,11 @@ public class Content
         M_PlatoGrande       = LoadModel("Muebles/SetCocina/", "PlatoGrande");
         M_PlatosApilados    = LoadModel("Muebles/SetCocina/", "PlatosApilados");
         M_Heladera          = LoadModel("Muebles/SetCocina/", "Heladera");
+       // M_Lena              = LoadModel("Muebles/", "Lena"       );
+       // M_Lobo              = LoadModel("Muebles/", "Lobo"       );
+
+        //Pasillo
+       // M_Gato              = LoadModel("Muebles/", "Gato"      );
         #endregion
     }
 

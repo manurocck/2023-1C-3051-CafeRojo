@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using PistonDerby.Elementos;
 
 namespace PistonDerby;
 public class HabitacionPasillo : IHabitacion{
@@ -10,6 +11,20 @@ public class HabitacionPasillo : IHabitacion{
 
         var posicionInicial = new Vector3(posicionX,0f,posicionZ);
 
+       // Amueblar();
+
     }
+/*
+     private void Amueblar(){
+        var carpintero = new ElementoBuilder(this.PuntoInicio());
+        
+        carpintero.Modelo(PistonDerby.GameContent.M_Gato)
+            .ConPosicion(2.25f,0.4f)
+            .ConAltura(0.45f)
+            .ConColor(Color.White)
+            .ConEscala(0.45f);
+            AddElemento(carpintero.BuildMueble());
+
+    }*/
 
 }
