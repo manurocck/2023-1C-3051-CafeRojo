@@ -15,6 +15,7 @@ public class BulletAmmo : IAmmoHUD {
 
     private int TotalAmmo = 30;
     private float ShootedAmmo = 0;
+    public float Ammo = 0;
 
     private SoundEffect Sound = PistonDerby.GameContent.S_Metralleta;
     private SoundEffectInstance Instance;
@@ -30,15 +31,18 @@ public class BulletAmmo : IAmmoHUD {
     }
 
     public void PullingTrigger(float dt){
+        if(Ammo>0){
         if (Instance.State != SoundState.Playing){
             Instance.IsLooped = true;
             Instance.Play();
         }
         ShootedAmmo += 2*dt;
-
+        }
+        else Instance.Stop();
     }
     public void ReleasingTrigger() => Instance.Stop();
     public void Update(Vector3 followedPosition){
+            Ammo = TotalAmmo - ShootedAmmo;
             QuadWorld = AjusteQuad() 
                         * Matrix.CreateScale(QuadSize().Ancho,QuadSize().Alto,0)
                         * Matrix.CreateTranslation(followedPosition);
@@ -52,7 +56,7 @@ public class BulletAmmo : IAmmoHUD {
 
         int j = 0;
         for(int i = TotalAmmo; i>0; i--){
-            TexturaVariable = (i<TotalAmmo-ShootedAmmo)? 
+            TexturaVariable = (i<Ammo)? 
                             PistonDerby.GameContent.TH_Bullet :     // primero dibuja las no vacias 
                             PistonDerby.GameContent.TH_EmptyBullet;            
             if(i==TotalAmmo*0.5f) {

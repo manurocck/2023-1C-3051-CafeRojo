@@ -24,13 +24,14 @@ internal class Auto : ElementoDinamico {
     internal override float Scale() => 0.08f * PistonDerby.S_METRO;
     internal override float Mass() => 1f;
     private CarHUD DisplayEstado;
-    private float Vida = 1;
+    public float Vida = 1;
     private float Turbo = 1;
     private bool PuedeSaltar = true;
     private float TimerVolcado = 0;
     private float TimerInmune = 3;
     internal float WheelTurning = 0f;
     internal float WheelRotation = 0f;
+    private int retardo = 0;
 
     internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
         Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, this.Model, this.Scale());
@@ -44,14 +45,28 @@ internal class Auto : ElementoDinamico {
         if(keyboard.GetPressedKeyCount()>0) this.Awake();
         
         TimerInmune+=dTime;
-        Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
+        //Turbo = Math.Max(Turbo - 0.5f*dTime, 0);
         this.DisplayEstado?.Update(this.World, Vida, Turbo); // la vida y el turbo están en coeficientes entre 0 y 1
         
         if(TimerVolcado>2) this.Awake();
         if(!this.Body().Awake) return;
 
-        if(keyboard.IsKeyDown(Keys.LeftShift)) DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
-        if(keyboard.IsKeyUp(Keys.LeftShift)) DisplayEstado?.BulletAmmo.ReleasingTrigger();
+        if(keyboard.MGTrigger() && DisplayEstado?.BulletAmmo.Ammo > 0){
+
+
+            DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
+
+            if(retardo == 10){
+            var bala = new Bala(this.Position() + this.Rotation().Forward() * 100, this.Rotation().Forward());
+            PistonDerby.ElementosDinamicos.Add(bala);
+            retardo = 0;
+            }
+                
+        }
+        else{
+            DisplayEstado?.BulletAmmo.ReleasingTrigger();
+        }
+        retardo = Math.Min(10, retardo+1);
 
         //  ESTADO ACTUAL
         //
@@ -90,13 +105,26 @@ internal class Auto : ElementoDinamico {
         Vector3 angularImpulse = this.Rotation().Up() * (ANGULAR_SPEED * 2) * WheelTurning; /* (* Math.Min(porcentajeVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
         this.ApplyAngularImpulse(angularImpulse);
         //
+        // Turbo: Alt Izq
+        
+        float linear_speed;
+
+        if(PuedeSaltar && keyboard.Turbo() && Turbo > 0){
+            linear_speed = LINEAR_SPEED * 2f;
+            Turbo -= 0.01f;
+        }
+        else{
+            linear_speed = LINEAR_SPEED;
+        }       
+        
+        
         //      HorizontalImpulse : El impulso se aplica desde la "trompa" del auto (offsetAmount).
         //                          Si está en el piso, la dirección será la de la rotación actual.
         //                          Si no está en el piso, va a ser con la que venía. 
         //                          El sentido lo determinan las teclas W y S con AccelerationSense().
         //
         Vector3 horizontalImpulse = (PuedeSaltar)? this.Rotation().Forward() : Vector3.Zero /* velocidadActual.XZFoward() */;
-        horizontalImpulse *= keyboard.AccelerationSense() * LINEAR_SPEED ;
+        horizontalImpulse *= keyboard.AccelerationSense() * linear_speed;
         float offsetAmount = 2f; //habría que generalizarlo para ubicar exáctamente en donde están las ruedas o un poquito más adelante
         this.ApplyLinearImpulse(horizontalImpulse, offsetAmount);
         //
@@ -105,7 +133,7 @@ internal class Auto : ElementoDinamico {
         if(PuedeSaltar && keyboard.Jumped())
         {
             TimerVolcado = 0;
-            Vector3 verticalImpulse = Vector3.UnitY * JUMP_POWER ;
+            Vector3 verticalImpulse = this.Rotation().Up() * JUMP_POWER ;
             this.ApplyLinearImpulse(verticalImpulse);
 
             PuedeSaltar = false;
@@ -141,19 +169,7 @@ internal class Auto : ElementoDinamico {
             if(enemigo.Dirty){
                 Console.WriteLine("Toqué un Power-Up");
                 Turbo = 1;
-            }
-
-            if(TimerInmune > 3){
-                var hitDamage = 0.1f;
-                TimerInmune = 0;
-                Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
-                Console.WriteLine("> > > > > > > > > > > > >");
-                Console.WriteLine(">");
-                Console.WriteLine("> > Recibí daño un enemy car");
-                Console.WriteLine("> > Vida actual : {0:F}", Vida*100);
-                Console.WriteLine(">");
-                Console.WriteLine("> > > > > > > > > > > > >");
-            }
+            }            
         }
         if(other is Piso _){
             Console.WriteLine("Toqué el piso");
@@ -161,6 +177,19 @@ internal class Auto : ElementoDinamico {
         }
         if(other is ElementoEstatico _){
             Console.WriteLine("Toqué un elemento estático");
+        }
+        if(other is Bala _){
+            if(TimerInmune > 3){
+                var hitDamage = 0.1f;
+                TimerInmune = 0;
+                Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
+                Console.WriteLine("> > > > > > > > > > > > >");
+                Console.WriteLine(">");
+                Console.WriteLine("> > Recibí daño de una bala");
+                Console.WriteLine("> > Vida actual : {0:F}", Vida*100);
+                Console.WriteLine(">");
+                Console.WriteLine("> > > > > > > > > > > > >");
+            }
         }
 
         return true;
