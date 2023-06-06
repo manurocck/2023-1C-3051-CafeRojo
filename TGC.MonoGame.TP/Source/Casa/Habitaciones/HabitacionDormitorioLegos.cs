@@ -5,7 +5,7 @@ using PistonDerby.Elementos;
 
 namespace PistonDerby.Mapa;
 public class HabitacionDormitorioLegos : IHabitacion{
-    public const int ANCHO = 6;
+    public const int ANCHO = 8;
     public const int LARGO = 7;
 
     public HabitacionDormitorioLegos(float posicionX, float posicionZ):base(ANCHO,LARGO,new Vector3(posicionX,0f,posicionZ)){

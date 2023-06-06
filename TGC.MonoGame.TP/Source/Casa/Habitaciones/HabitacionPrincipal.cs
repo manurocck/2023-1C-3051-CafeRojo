@@ -138,7 +138,7 @@ public class HabitacionPrincipal : IHabitacion{
 
         #region LEGOS CHIQUITOS
         carpintero.Modelo(PistonDerby.GameContent.M_Lego);
-        Vector2 desplazamientoRandom = new Vector2(LARGO*0.5f, ANCHO*0.5f); // donde arranca el bardo
+        Vector2 desplazamientoRandom = new Vector2(LARGO*0.75f, ANCHO*0.25f); // donde arranca el bardo
         Vector3 randomRotation;
         float random1, random2, random3; // Entropía
         Color randomColor;

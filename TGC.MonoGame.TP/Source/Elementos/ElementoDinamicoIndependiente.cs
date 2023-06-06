@@ -20,7 +20,7 @@ public class ElementoDinamicoIndependiente : ElementoDinamico {
         this.SettedModel = model;
         this.SavedDrawer = drawer;
         this.SettedScale = scale;
-        this.SettedMass = scale/20;
+        this.SettedMass = scale/40;
         Matrix rotacion =  Matrix.CreateRotationX(rotation.X) * Matrix.CreateRotationY(rotation.Y) * Matrix.CreateRotationZ(rotation.Z); 
         WorldMatrix  =  rotacion * Matrix.CreateScale(scale) * Matrix.CreateTranslation(position);
 

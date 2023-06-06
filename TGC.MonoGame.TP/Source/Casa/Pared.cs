@@ -36,7 +36,7 @@ public class Pared{
         var esteNumerito = Math.Abs(-Coordenadas.Inicio.X + Coordenadas.Final.X);
         var otroNumerito = Math.Abs(-Coordenadas.Inicio.Z + Coordenadas.Final.Z);
         
-        float coordenadaAlturaInicio = -PistonDerby.S_METRO*0.01f; // FIX PARA QUE ESTE A LA ALTURA DEL PISO
+        float coordenadaAlturaInicio = -20f; // FIX PARA QUE ESTE A LA ALTURA DEL PISO
 
         Box boxito = (!esHorizontal)? new Box(esteNumerito+GROSOR, ALTURA, GROSOR) 
                                     : new Box(GROSOR, ALTURA, otroNumerito);
