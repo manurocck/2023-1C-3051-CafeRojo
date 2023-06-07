@@ -40,7 +40,6 @@ internal class Misil : ElementoDinamico {
 
     internal override bool OnCollision(Elemento other)
     {
-
         impacto = true;
         this.Body().Velocity = Vector3.Zero.ToBepu();
         this.Body().SetShape(new TypedIndex()); //Esto habria que cambiarlo por una eliminacion de la instancia

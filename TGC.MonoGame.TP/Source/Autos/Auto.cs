@@ -54,9 +54,7 @@ internal class Auto : ElementoDinamico {
 
         if(keyboard.MGTrigger() && DisplayEstado?.BulletAmmo.Ammo > 0){
 
-
             DisplayEstado?.BulletAmmo.PullingTrigger(dTime);
-
             if(retardo == 10){
             var bala = new Bala(this.Position() + this.Rotation().Forward() * 100, this.Rotation().Forward());
             PistonDerby.ElementosDinamicos.Add(bala);
