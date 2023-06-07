@@ -108,16 +108,21 @@ public struct NarrowPhaseCallbacks : INarrowPhaseCallbacks
     public bool ConfigureContactManifold<TManifold>(int workerIndex, CollidablePair pair, ref TManifold manifold,
         out PairMaterialProperties pairMaterial) where TManifold : unmanaged, IContactManifold<TManifold>
     {
-
         pairMaterial.FrictionCoefficient = FrictionCoefficient;
         pairMaterial.MaximumRecoveryVelocity = MaximumRecoveryVelocity;
         pairMaterial.SpringSettings = ContactSpringiness;
 
         Elemento elementoA = GetCollitionHandler(pair.A);
         Elemento elementoB = GetCollitionHandler(pair.B);
-         
         bool handler = elementoA.OnCollision(elementoB);
-        elementoB?.OnCollision(elementoA);
+        elementoB?.OnCollision(elementoA,  manifold.GetNormal(ref manifold, 1), manifold.GetDepth(ref manifold, 1));
+
+
+        // for(int i = 0 ; i<manifold.Count ; i++){
+        //     float prof = manifold.GetDepth(ref manifold, i);
+        //     Console.WriteLine("Profundidad del choque : {0:F}", prof);
+        // }
+        // TManifold mani = manifold;
 
         /* 
             IContactManifold incluye funciones para acceder a los datos de contactos sin importar qué tipo de Manifold es.

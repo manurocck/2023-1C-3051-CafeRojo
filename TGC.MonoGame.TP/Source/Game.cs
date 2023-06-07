@@ -21,7 +21,7 @@ public class PistonDerby : Game
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
     internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
-    internal static bool FULL_SCREEN = !DEVELOPER_MODE;
+    internal static bool FULL_SCREEN = false;
     //internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
     private GraphicsDeviceManager Graphics;

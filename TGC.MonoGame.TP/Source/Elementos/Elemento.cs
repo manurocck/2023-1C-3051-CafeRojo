@@ -16,6 +16,6 @@ public abstract class Elemento {
     }
 
     internal virtual bool OnCollision(Elemento other) => true;
-
+    internal virtual bool OnCollision(Elemento other, Vector3 normal, float depth) => true;
     protected abstract void DebugGizmos();
 }

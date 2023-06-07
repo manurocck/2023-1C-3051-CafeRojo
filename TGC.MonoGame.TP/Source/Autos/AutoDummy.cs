@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PistonDerby.Autos.PowerUps;
+using PistonDerby.Elementos;
 
 namespace PistonDerby.Autos;
 internal class AutoDummy : Auto
@@ -26,4 +28,15 @@ internal class AutoDummy : Auto
         
         base.Update(dTime, keyboard);
     }
+    internal override bool OnCollision(Elemento other, Vector3 normal, float profundidad)
+    {
+        if(other is Bala bala){
+            if(!Inmune()){
+                this.ApplyLinearImpulse(-normal * profundidad);
+            }
+        }
+
+        return true;
+    }
+    
 }

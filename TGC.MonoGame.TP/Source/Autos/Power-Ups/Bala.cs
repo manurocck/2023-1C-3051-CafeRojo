@@ -35,9 +35,10 @@ internal class Bala : ElementoDinamico {
 
     internal override bool OnCollision(Elemento other)
     {
-
         impacto = true;
         this.Body().Velocity = Vector3.Zero.ToBepu();
+        this.Body().MotionState.Velocity.Angular = Vector3.Zero.ToBepu();
+        this.Body().MotionState.Velocity.Linear = Vector3.Zero.ToBepu();
         this.Body().SetShape(new TypedIndex()); //Esto habria que cambiarlo por una eliminacion de la instancia
         this.Body().BecomeKinematic();
 
