@@ -30,8 +30,7 @@ internal class Bala : ElementoDinamico {
 
     internal override void Update(float dTime, KeyboardState _)
     {
-        this.Body().Velocity = (Forward * 200000 * dTime).ToBepu();
-        Clock += dTime;
+        if(!impacto)this.Body().Velocity = (Forward * 200000 * dTime).ToBepu();
     }
 
     internal override bool OnCollision(Elemento other)
