@@ -11,12 +11,17 @@
 _Un divertido Battle Royale offline desarrollado por alumnos de la UTN FRBA._
 
 # ¿ Cómo jugar ?
-
-- **"W"** para _Acelerar_
-- **"S"** para _Frenar_ o ir _Marcha atrás_
-- **"A"** y **"D"** para _Mover el volante_
-- **"Espacio"** para _Saltar_
-- **"E"** o **"Click"** para _Tirar tu Power-Up_
+<p align="center">
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/8b8bb8ee-70ef-4d82-8d70-3fc1b714c879" width=5% height=5%> <br> para <i>Acelerar</i><br><br>
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/e89a6a5b-1f8e-4ec6-9088-f882467c926f" width=5% height=5%> <br> para <i>Frenar</i> o ir <i>Marcha atrás</i> <br><br>
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/24e53e23-8e85-46c4-82d7-5ae69cce928b" width=5% height=5%> 
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/df387f70-7145-46ce-8d2f-936051156a6e" width=5% height=5%> <br> para <i>Mover el volante</i><br><br>
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/4234bb91-0b51-4dfd-93f3-cbf4dab36dee" width=7% height=5%> <br>
+para <i>Tirar tu Power-Up</i>
+<br><br>
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/e51b8423-3575-47bf-b217-d6d14f3fa5e9" width=20% height=5%><br>
+para <i>Saltar</i>
+</p>
 
 ## Capturas
 <img src="https://user-images.githubusercontent.com/22857096/234354687-ebb92530-eb2f-48e0-a533-9f2be9a9c426.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354699-d0fe534b-6b23-4df4-9602-cfa3ed667776.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354706-96bb71d1-d945-4ecd-8014-4fe43a5ee2fe.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354724-0fe0fc1c-c063-4d63-b5ac-f44a0c510924.png" width=50% height=50%>
