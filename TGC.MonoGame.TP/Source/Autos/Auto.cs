@@ -32,6 +32,7 @@ internal class Auto : ElementoDinamico {
     internal float WheelTurning = 0f;
     internal float WheelRotation = 0f;
     private int retardo = 0;
+    private bool MisilCargado = true;
 
     internal Auto(Vector3 posicionInicial) { // Auto(Vector3 posicionInicial, CarHUD EstadoInicial ) 
         Shape = PistonDerby.Simulation.LoadShape(ShapeType.BOX, this.Model, this.Scale());
@@ -60,14 +61,18 @@ internal class Auto : ElementoDinamico {
             var bala = new Bala(this.Position() + this.Rotation().Forward() * 100, this.Rotation().Forward());
             PistonDerby.ElementosDinamicos.Add(bala);
             retardo = 0;
-            }
-                
+            }                
         }
         else{
             DisplayEstado?.BulletAmmo.ReleasingTrigger();
         }
         retardo = Math.Min(10, retardo+1);
 
+        if(MisilCargado && keyboard.MSLTrigger()){
+            var misil = new Misil(this.Position() + this.Rotation().Forward() * 120, this.Rotation());
+            PistonDerby.ElementosDinamicos.Add(misil);
+            MisilCargado = false;
+        }
         //  ESTADO ACTUAL
         //
         //      velocidadActual  :  Vector velocidad real (con sentido y magnitud)
@@ -167,10 +172,26 @@ internal class Auto : ElementoDinamico {
     {
         if(other is PowerUp enemigo){
             if(enemigo.Dirty){
+                if(!Inmune()){
                 TimerInmune = 0;
                 Console.WriteLine("Toqué un Power-Up");
-                Turbo = 1;
-                
+                int numeroAleatorio = new Random().Next(0, 3);
+                switch(numeroAleatorio){
+                    case 0:
+                        Turbo = 1;
+                        Console.WriteLine("Me dio turbo");
+                        break;
+                    case 1:
+                        DisplayEstado?.BulletAmmo.Recargar();
+                        Console.WriteLine("Me dio municion");
+                        break;
+                    case 2:
+                        MisilCargado = true;
+                        Console.WriteLine("Me dio un misil");
+                        break;
+                    default: break;
+                    }
+                }
             }            
         }
         if(other is Piso _){

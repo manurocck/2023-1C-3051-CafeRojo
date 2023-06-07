@@ -21,8 +21,8 @@ public class PistonDerby : Game
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
     internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
-    // internal static bool FULL_SCREEN = !DEVELOPER_MODE;
-    internal static bool FULL_SCREEN = false;
+    internal static bool FULL_SCREEN = !DEVELOPER_MODE;
+    //internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
@@ -63,7 +63,7 @@ public class PistonDerby : Game
     
         Camera = new Camera(GraphicsDevice.Viewport.AspectRatio);
         Simulation = new GameSimulation();
-        Reproductor = new AudioPlayer();
+        if(!DEVELOPER_MODE) Reproductor = new AudioPlayer();
         Gizmos = new Gizmos();
         Gizmos.Enabled = DEBUG_GIZMOS;
         Casa = new Casa();
@@ -81,7 +81,7 @@ public class PistonDerby : Game
         GameMenu = new GameMenu(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         
         Gizmos.LoadContent(GraphicsDevice, new ContentManager(Content.ServiceProvider, "Content"));
-        Reproductor.LoadContent();
+        Reproductor?.LoadContent();
         Casa.LoadContent();
 
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
@@ -109,7 +109,7 @@ public class PistonDerby : Game
             return;
         }
 
-        Reproductor.Update(dTime, Keyboard.GetState());                      
+        Reproductor?.Update(dTime, Keyboard.GetState());                      
 
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());

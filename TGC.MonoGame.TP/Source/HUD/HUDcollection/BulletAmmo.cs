@@ -14,7 +14,7 @@ public class BulletAmmo : IAmmoHUD {
     private (float X, float Y) scaleFactor => (250/(Window.Width) , 250/(Window.Heigth) /* * aspectRatio */);
 
     private int TotalAmmo = 30;
-    private float ShootedAmmo = 0;
+    public float ShootedAmmo = 0;
     public float Ammo = 0;
 
     private SoundEffect Sound = PistonDerby.GameContent.S_Metralleta;
@@ -47,6 +47,9 @@ public class BulletAmmo : IAmmoHUD {
                         * Matrix.CreateScale(QuadSize().Ancho,QuadSize().Alto,0)
                         * Matrix.CreateTranslation(followedPosition);
     }
+    public void Recargar(){
+        ShootedAmmo = 0;
+    }
     public void Draw(){
         (float Width, float Heigth) delta = (25,6); // Separacion entre balas
         float variableHeight = this.Ubicacion().Y;  
@@ -55,7 +58,7 @@ public class BulletAmmo : IAmmoHUD {
         delta.Heigth *= scaleFactor.Y;
 
         int j = 0;
-        for(int i = TotalAmmo; i>0; i--){
+        for(int i = TotalAmmo; i>=0; i--){
             TexturaVariable = (i<Ammo)? 
                             PistonDerby.GameContent.TH_Bullet :     // primero dibuja las no vacias 
                             PistonDerby.GameContent.TH_EmptyBullet;            

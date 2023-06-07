@@ -28,7 +28,7 @@ public class Content
             M_Bacha, M_Organizador, M_Cajonera, M_CamaMarinera , M_MesadaCentral, M_MesadaLateral, M_MesadaLateral2, M_Alacena, 
             M_Botella, M_Maceta, M_Maceta2, M_Maceta3, M_Maceta4, M_Olla, M_ParedCocina, M_Plato, M_PlatoGrande, M_PlatosApilados,
             M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1, M_Gato, M_Hombrepiedra, M_Lena, 
-            M_Lamparamesita, M_Lobo, M_Libro, M_Piano, M_Robot;
+            M_Lamparamesita, M_Lobo, M_Libro, M_Piano, M_Robot, M_BrMisil;
     #endregion
     
     #region efectos
@@ -41,7 +41,7 @@ public class Content
     internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
                         T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
-                        T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto, T_MysteryBox;
+                        T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto, T_MysteryBox, T_MisilLanzado;
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
@@ -101,6 +101,7 @@ public class Content
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
         T_RacingCar         = LoadTexture("Autos/RacingCarMetalic");
+        T_MisilLanzado      = LoadTexture("Autos/MisilLanzado");
 
         // Imágenes del HUD
         TH_Bullet           = LoadTexture("HUD/BulletAmmo");
@@ -139,6 +140,7 @@ public class Content
         M_AutoEnemigo       = LoadModel("Autos/", "CombatVehicle" );
         
         M_Misil             = LoadModel("Autos/", "Misil"         );
+        //M_BrMisil           = LoadModel("Autos/", "BrMisil"       );
         
         //Living
         M_Silla             = LoadModel("Muebles/", "Chair"       );

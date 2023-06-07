@@ -14,5 +14,6 @@ public static class KeyboardExtensions {
     internal static bool Jumped(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Space);
     internal static bool Turbo(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.LeftAlt);
     internal static bool MGTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.LeftShift);
+    internal static bool MSLTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Z);
 }
 
