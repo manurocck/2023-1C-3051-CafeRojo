@@ -55,23 +55,27 @@ internal class CarDrawer : IDrawer
                 break;
             }
 
+            Effect.Parameters["World"]?.SetValue(worldAux);
+            Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
+        
+            Effect.Parameters["DiffuseColor"].SetValue(new Vector3(255f, 0.5f, 255f));
             foreach(var mesh in bone.Meshes){  
                 foreach(var meshPart in mesh.MeshParts){
                     meshPart.Effect = Effect;
-                    meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
-                    meshPart.Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
                 }
                 mesh.Draw();
             }
         }
-        else
-        foreach(var mesh in Model.Meshes){  
+        else{
+            Effect.Parameters["World"]?.SetValue(worldAux);
+            Effect.Parameters["matInverseTransposeWorld"].SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
+            Effect.Parameters["DiffuseColor"].SetValue(new Vector3(0.5f, 0.5f, 0.5f));
+            foreach(var mesh in Model.Meshes){  
                 foreach(var meshPart in mesh.MeshParts){
                     meshPart.Effect = Effect;
-                    meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
-                    meshPart.Effect.Parameters["matInverseTransposeWorld"].SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
                 }
                 mesh.Draw();
+            }
         }
     }
 

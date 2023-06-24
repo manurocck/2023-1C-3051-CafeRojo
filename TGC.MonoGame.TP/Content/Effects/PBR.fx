@@ -7,6 +7,7 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
+float3 DiffuseColor;
 float4x4 World; //Matriz World
 float4x4 View; //Matriz View 
 float4x4 Projection; //Matriz Projection
@@ -186,10 +187,28 @@ float3 fresnelSchlick(float cosTheta, float3 F0)
 	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
+// Modificamos el color base en funcion de los umbrales de luminancia de oscuro y claro 
+// si la luminancia esta entre los umbrales, no se modifica el color base por el color seleccionado
+float3 ModifyAlbedo(float3 albedo, float thresholdDark, float thresholdLight, float3 selectedColor)
+{
+    float luminance = dot(albedo, float3(0.2126, 0.7152, 0.0722));
+    if (luminance < thresholdDark || luminance > thresholdLight)
+    {
+        return albedo;
+    }
+    else
+    {
+        float t = saturate((luminance - thresholdDark) / (thresholdLight - thresholdDark));
+        return lerp(albedo, selectedColor, t);
+    }
+}
+
+
 //Pixel Shader
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float3 albedo = pow(tex2D(albedoSampler, input.TextureCoordinates).rgb, float3(2.2, 2.2, 2.2));
+	albedo = ModifyAlbedo(albedo, 0.05, 0.8, DiffuseColor);
 	float metallic = tex2D(metallicSampler, input.TextureCoordinates).r;
 	float roughness = tex2D(roughnessSampler, input.TextureCoordinates).r;
 	float ao = tex2D(aoSampler, input.TextureCoordinates).r;
@@ -239,7 +258,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		Lo += (kD * NdotL * albedo / PI + specular) * radiance;
 	}
 
-	float3 ambient = float3(0.03, 0.03, 0.03) * albedo * ao;
+	float3 ambient = float3(0.3, 0.3, 0.3) * albedo * ao;
 
     float3 color = ambient + Lo;
 
