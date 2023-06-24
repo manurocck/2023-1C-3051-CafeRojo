@@ -12,7 +12,6 @@ using PistonDerby.Utils;
 using PistonDerby.Gizmo;
 using PistonDerby.HUD;
 using PistonDerby.Autos;
-using PistonDerby.Navigation;
 
 namespace PistonDerby;
 
@@ -20,10 +19,9 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
-    internal static bool DEBUG_GIZMOS = DEVELOPER_MODE;
+    internal static bool DEBUG_GIZMOS = false;
     internal static bool FULL_SCREEN = false;
-    //internal static bool FULL_SCREEN = false;
-    internal static bool INITIAL_ANIMATION = !DEVELOPER_MODE;
+    internal static bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
     internal static GameSimulation Simulation;
@@ -108,6 +106,9 @@ public class PistonDerby : Game
             GameMenu.Update(gameTime, keyboardState, Mouse.GetState());
             return;
         }
+
+        // Actualizo la posición de la cámara en el shader de PBR
+        PistonDerby.GameContent.E_PBRShader.Parameters["eyePosition"]?.SetValue(Camera.CameraPosition);
 
         Reproductor?.Update(dTime, Keyboard.GetState());                      
 

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Autos;
@@ -8,7 +9,7 @@ internal class CarDrawer : IDrawer
     private const float AUTO_SCALE = 0.056f * PistonDerby.S_METRO;
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ERROR_TRASLACION_RUEDAS = AUTO_SCALE*0.01f;
-    private Effect Effect = PistonDerby.GameContent.E_SpiralShader;
+    private Effect Effect = PistonDerby.GameContent.E_PBRShader;
 
     //UPDATE
     internal Vector3 CarPosition { private get; set; } = Vector3.Zero;
@@ -16,11 +17,17 @@ internal class CarDrawer : IDrawer
     internal float WheelTurning() => Auto.WheelTurning;
     internal Auto Auto;
 
-    internal CarDrawer(Auto auto) => Auto = auto;
-    internal CarDrawer(Auto auto, Effect shader) {Auto = auto; Effect = shader;}
+    internal CarDrawer(Auto auto){
+        Auto = auto;
+         
+    }
+
+    // internal CarDrawer(Auto auto, Effect shader) {Auto = auto; Effect = shader;}
     void IDrawer.Draw(Model Model, Matrix GeneralWorld){
         Matrix world = GeneralWorld;
         Matrix worldAux = Matrix.Identity;
+        this.Effect.Parameters["Texture"]?.SetValue(PistonDerby.GameContent.TA_MetalMap);
+        SetearTexturas();
         
         if(Model.Bones.Count > 0)
         foreach(ModelBone bone in Model.Bones){
@@ -52,6 +59,7 @@ internal class CarDrawer : IDrawer
                 foreach(var meshPart in mesh.MeshParts){
                     meshPart.Effect = Effect;
                     meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
+                    meshPart.Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
                 }
                 mesh.Draw();
             }
@@ -61,11 +69,20 @@ internal class CarDrawer : IDrawer
                 foreach(var meshPart in mesh.MeshParts){
                     meshPart.Effect = Effect;
                     meshPart.Effect.Parameters["World"]?.SetValue(worldAux);
+                    meshPart.Effect.Parameters["matInverseTransposeWorld"].SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
                 }
                 mesh.Draw();
         }
     }
 
+    private void SetearTexturas()
+    {
+        Effect.Parameters["albedoTexture"]?.SetValue(PistonDerby.GameContent.TA_BaseColor);
+        Effect.Parameters["normalTexture"]?.SetValue(PistonDerby.GameContent.TA_NormalMap);
+        Effect.Parameters["metallicTexture"]?.SetValue(PistonDerby.GameContent.TA_MetalMap);
+        Effect.Parameters["roughnessTexture"]?.SetValue(PistonDerby.GameContent.TA_RoughnessMap);
+        Effect.Parameters["aoTexture"]?.SetValue(PistonDerby.GameContent.TA_CavityMap);
+    }
 }
 
 

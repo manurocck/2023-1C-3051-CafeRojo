@@ -6,7 +6,7 @@ namespace PistonDerby;
 class Camera
 {
     private float DISTANCIA_AL_AUTO = 4f * PistonDerby.S_METRO;
-    private Vector3 CameraPosition = Vector3.Zero;
+    internal Vector3 CameraPosition = Vector3.Zero;
     private Vector3 FollowedPosition = Vector3.Zero;
     public Matrix Projection { get; private set; }
     public Matrix View { get; private set; }

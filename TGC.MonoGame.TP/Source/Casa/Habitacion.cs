@@ -1,8 +1,10 @@
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PistonDerby.Elementos;
+using PistonDerby.Utils.Iluminacion;
 
 namespace PistonDerby;
 public abstract class IHabitacion
@@ -14,6 +16,7 @@ public abstract class IHabitacion
     internal Piso Piso;
     internal List<ElementoEstatico> Muebles;
     internal List<ElementoDinamicoIndependiente> MueblesDinamicos;
+    internal List<Light> Luces;
 
     // Ancho y Alto en Cantidad de Baldosas
     public IHabitacion(int metrosAncho, int metrosLargo, Vector3 traslacionEnMetros)
@@ -24,6 +27,13 @@ public abstract class IHabitacion
         Muebles = new List<ElementoEstatico>();
         MueblesDinamicos = new List<ElementoDinamicoIndependiente>();
         Piso = new Piso(metrosAncho, metrosLargo, PosicionInicial);
+        Luces = new List<Light>();
+        
+        // Agrego una luz en el centro de la habitación casi a la altura máxima de la pared
+        var luzCentral = new Light();
+        luzCentral.Position = this.PuntoCentro() + new Vector3(0, 0, PistonDerby.S_METRO * 1.5f);
+        luzCentral.Color = new Vector3(200,200,200);
+        Luces.Add(luzCentral);
     }
     public void AddElemento( ElementoEstatico e ){
         Muebles.Add(e);

@@ -33,7 +33,8 @@ public class Content
     
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
-                        E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror;
+                        E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
+                        E_PBRShader;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -45,6 +46,7 @@ public class Content
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
+    internal readonly Texture2D TA_MetalMap, TA_BaseColor, TA_RoughnessMap, TA_NormalMap, TA_CavityMap, TA_LightEmissionMap;
     #endregion
     
     internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando, S_Bling, S_Pickup;
@@ -74,6 +76,7 @@ public class Content
         Efectos.Add(E_TwoTextureMix      = LoadEffect("TwoTextureMix")          );
         Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")     );
         Efectos.Add(E_TextureMirror      = LoadEffect("DeTextura/TextureMirror"));
+        Efectos.Add(E_PBRShader          = LoadEffect("PBR")                    );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
@@ -100,8 +103,15 @@ public class Content
         T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
-        T_RacingCar         = LoadTexture("Autos/RacingCarMetalic");
-        T_MisilLanzado      = LoadTexture("Autos/MisilLanzado");
+
+        // Texturas del auto RacingCar
+        TA_BaseColor       = LoadTexture("Autos/RacingCar/BaseColor");
+        TA_MetalMap        = LoadTexture("Autos/RacingCar/Metalizado");
+        TA_RoughnessMap    = LoadTexture("Autos/RacingCar/Rugosidad");
+        TA_CavityMap       = LoadTexture("Autos/RacingCar/Cavidad");
+        TA_LightEmissionMap= LoadTexture("Autos/RacingCar/EmisionLuz");
+        TA_NormalMap       = LoadTexture("Autos/RacingCar/NormalMap");
+
 
         // Imágenes del HUD
         TH_Bullet           = LoadTexture("HUD/BulletAmmo");

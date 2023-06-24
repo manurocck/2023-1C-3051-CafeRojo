@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PistonDerby.Mapa;
+using PistonDerby.Utils.Iluminacion;
 
 namespace PistonDerby;
 public class Casa {
@@ -11,6 +12,7 @@ public class Casa {
     private List<IHabitacion> Habitaciones;
     private List<Pared> Esqueleto;
     private List<Puerta> Puertas;
+    private List<Light> Luces;
     private int indexInicioExteriores;
     private int indexInicioPuertasExteriores;
     public Casa(){
@@ -19,14 +21,44 @@ public class Casa {
         this.Puertas = new List<Puerta>();
     }
     public void LoadContent(){
-        disponerHabitaciones();
-        construirParedes();
+        DisponerHabitaciones();
+        ConstruirParedes();
+        InstalarLuces();
 
         for(int i=indexInicioExteriores ; i<Esqueleto.Count; i++) // paredes traslúcidas
             Esqueleto[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
         for(int i=indexInicioPuertasExteriores ; i<Puertas.Count; i++) // puertas traslúcidas
             Puertas[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
     }
+
+    private void InstalarLuces()
+    {
+        Luces = new List<Light>();
+
+        foreach(var h in Habitaciones)
+            Luces.AddRange(h.Luces);
+
+        Luces = Luces.ConvertAll(l => l.GenerateShowColor());
+        // Mostrar en consola la cantidad de luces
+        Console.WriteLine("Cantidad de Luces: " + Luces.Count);
+        InicializarShaderPBR();
+    }
+    private void InicializarShaderPBR()
+    {
+        var Effect = PistonDerby.GameContent.E_PBRShader;
+        Effect.CurrentTechnique = Effect.Techniques["PBR"];
+
+        var posiciones = Effect.Parameters["lightPositions"].Elements;
+        var colores = Effect.Parameters["lightColors"].Elements;
+
+        for (var index = 0; index < Luces.Count; index++)
+        {
+            var light = Luces[index];
+            posiciones[index].SetValue(light.Position);
+            colores[index].SetValue(light.Color);
+        }
+    }
+
     public void Update(float dTime, KeyboardState keyboardState){
         foreach(var h in Habitaciones)
             h.Update(dTime, keyboardState);
@@ -44,7 +76,7 @@ public class Casa {
         else
             return Habitaciones[0].PuntoCentro();
     }
-    private void disponerHabitaciones(){
+    private void DisponerHabitaciones(){
         /*  
         Ejemplo :
             >>> new HabitacionX ( traslacionVertical, traslacionHorizontal ) 
@@ -65,7 +97,7 @@ public class Casa {
             Console.WriteLine("Habitacion cargada con {0:D}"+ " modelos.", h.cantidadElementos());
     }
 
-    private void construirParedes(){
+    private void ConstruirParedes(){
         var hPrincipal = Habitaciones[0];
         var hCocina    = Habitaciones[1];
         var hPasillo   = Habitaciones[2];
