@@ -120,18 +120,18 @@ public class HabitacionPrincipal : IHabitacion{
             AddElemento( carpintero.BuildMueble() );
 
         carpintero.Modelo(PistonDerby.GameContent.M_Piano)
-            .ConEscala(1.75f)
-            .ConColor(Color.Gray)
-            .ConRotacion(0f,MathHelper.PiOver2,0f)
-            .ConPosicion(1.5f, ANCHO-0.7f)
-            .ConAltura(0.15f);
+            .ConEscala(150f)
+            .ConTextura(PistonDerby.GameContent.T_PisoMaderaElegante)
+            .ConRotacion(-MathHelper.PiOver2,MathHelper.PiOver2,0f)
+            .ConPosicion(1.5f, ANCHO-1f)
+            .ConAltura(0.4f);
             AddElemento( carpintero.BuildMueble() ); 
 
         #region Autos Enemigos
 
             for(int i=1; i<6; i++){
-                PistonDerby.ElementosDinamicos.Add(new PowerUp(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
-                PistonDerby.ElementosDinamicos.Add(new PowerUp(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
+                PistonDerby.ElementosDinamicos.Add(new PowerUpBox(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
+                PistonDerby.ElementosDinamicos.Add(new PowerUpBox(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
             }
         
         #endregion

@@ -32,12 +32,12 @@ public class BulletAmmo : IAmmoHUD {
 
     public void PullingTrigger(float dt){
         if(Ammo>0){
-        if (Instance.State != SoundState.Playing){
-            Instance.IsLooped = true;
-            Instance.Play();
-        }
-        ShootedAmmo += 2*dt;
-        }
+            if (Instance.State != SoundState.Playing){
+                Instance.IsLooped = true;
+                Instance.Play();
+            }
+            ShootedAmmo += 2*dt;
+            }
         else Instance.Stop();
     }
     public void ReleasingTrigger() => Instance.Stop();
@@ -48,11 +48,12 @@ public class BulletAmmo : IAmmoHUD {
                         * Matrix.CreateTranslation(followedPosition);
     }
     public void Recargar(){
+        Console.WriteLine("Recargando");
         ShootedAmmo = 0;
     }
     public void Draw(){
         (float Width, float Heigth) delta = (25,6); // Separacion entre balas
-        float variableHeight = this.Ubicacion().Y;  
+        float variableHeight = this.Ubicacion().Y;
 
         delta.Width  *= scaleFactor.X;
         delta.Heigth *= scaleFactor.Y;

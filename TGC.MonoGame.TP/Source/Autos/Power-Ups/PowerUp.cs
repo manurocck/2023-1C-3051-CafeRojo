@@ -10,7 +10,7 @@ using PistonDerby.Elementos;
 using Microsoft.Xna.Framework.Input;
 
 namespace PistonDerby.Autos.PowerUps;
-internal class PowerUp : ElementoDinamico {
+internal class PowerUpBox : ElementoDinamico {
     private const float ANGULAR_SPEED = 0.5f * PistonDerby.S_METRO;
     internal override float Mass() => 1f; // Es indistinto
     // internal override float Scale() => 1.4f; // Scale vieja
@@ -22,7 +22,7 @@ internal class PowerUp : ElementoDinamico {
     private float StateTimer = 0;
     private float Clock = 0;
 
-    internal PowerUp(float posX, float posY, float posZ, Vector3 rotacion) 
+    internal PowerUpBox(float posX, float posY, float posZ, Vector3 rotacion) 
     {
         var PosicionInicial = new Vector3(posX, posY, posZ) * PistonDerby.S_METRO;
         PosicionInicial.Y = PistonDerby.S_METRO * 0.2f; // Hard-code de la altura
@@ -54,7 +54,11 @@ internal class PowerUp : ElementoDinamico {
             if(!Dirty){
                 Dirty = !Dirty;
                 PistonDerby.GameContent.S_Pickup.Play(0.35f,1,0);
-            } 
+            }
+            auto.PickPowerUp();
+            return false;
+        }
+        if(other is MachineGun){
             return false;
         }
 

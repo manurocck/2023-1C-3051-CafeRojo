@@ -21,8 +21,8 @@ public abstract class ElementoDinamico : Elemento {
 
     internal void ApplyAngularImpulse(Vector3 impulse) => Body().ApplyAngularImpulse(impulse.ToBepu());
     internal void ApplyImpulse(Vector3 impulse, Vector3 offset) => Body().ApplyImpulse(impulse.ToBepu(), offset.ToBepu());
-    internal void ApplyLinearImpulse(Vector3 impulse, float fowardOffset = 0) => 
-        Body().ApplyImpulse(impulse.ToBepu(), QuaternionExtensions.Forward((this.Body().Pose.Orientation.ToQuaternion())*fowardOffset).ToBepu());
+    internal void ApplyLinearImpulse(Vector3 impulse, float forwardOffset = 0) => 
+        Body().ApplyImpulse(impulse.ToBepu(), QuaternionExtensions.Forward((this.Body().Pose.Orientation.ToQuaternion())*forwardOffset).ToBepu());
     internal void Awake() => PistonDerby.Simulation.Awake(BodyHandle);
     internal Vector3 AngularVelocity() => Body().Velocity.Angular;
     internal Vector3 LinearVelocity() => Body().Velocity.Linear;

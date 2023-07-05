@@ -34,7 +34,7 @@ public class Content
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
-                        E_PBRShader;
+                        E_PBRShader, E_BulletShader;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -56,6 +56,7 @@ public class Content
     internal readonly List<Effect> EfectosHUD = new List<Effect>();
     internal readonly QuadPrimitive G_Quad;
     internal readonly CuboPrimitive G_Cubo;
+    internal readonly CylinderPrimitive G_Cilindro;
     
     internal Content(ContentManager Content, GraphicsDevice GraphicsDevice)
     {
@@ -65,6 +66,7 @@ public class Content
         // Geometrias
         G_Quad = new QuadPrimitive(GraphicsDevice);
         G_Cubo = new CuboPrimitive(GraphicsDevice);
+        G_Cilindro = new CylinderPrimitive(GraphicsDevice);
 
         // Efectos
         Efectos.Add(E_BasicShader        = LoadEffect("BasicShader")            );
@@ -77,6 +79,7 @@ public class Content
         Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")     );
         Efectos.Add(E_TextureMirror      = LoadEffect("DeTextura/TextureMirror"));
         Efectos.Add(E_PBRShader          = LoadEffect("PBR")                    );
+        Efectos.Add(E_BulletShader       = LoadEffect("BulletShader")           );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));

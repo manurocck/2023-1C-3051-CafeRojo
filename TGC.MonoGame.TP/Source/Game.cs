@@ -34,6 +34,7 @@ public class PistonDerby : Game
     private Casa Casa;
     private Auto Auto; 
     private List<AutoDummy> AutosDummy;
+    private List<AutoAI> AutosAI;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
 
     public PistonDerby() {
@@ -67,6 +68,7 @@ public class PistonDerby : Game
         Casa = new Casa();
 
         AutosDummy = new List<AutoDummy>();
+        AutosAI = new List<AutoAI>();
         base.Initialize();
     }
     protected override void LoadContent() 
@@ -90,6 +92,9 @@ public class PistonDerby : Game
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
 
         Auto   = new Auto (Casa.PuntoCentro(0));
+        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)));
+        
+        
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         Auto.AsociarHUD(CarHUD);
     }
@@ -115,6 +120,8 @@ public class PistonDerby : Game
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
         foreach(AutoDummy a in AutosDummy)
+            a.Update(dTime);
+        foreach(AutoAI a in AutosAI)
             a.Update(dTime);
 
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
@@ -143,6 +150,7 @@ public class PistonDerby : Game
 
         Auto.Draw(); 
         foreach(AutoDummy a in AutosDummy) a.Draw();
+        foreach(AutoAI a in AutosAI) a.Draw();
                  
         Casa.Draw();
         Gizmos.Draw();

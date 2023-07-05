@@ -1,6 +1,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PistonDerby.Autos.PowerUps;
 using PistonDerby.Drawers;
 
 namespace PistonDerby.Elementos;
@@ -15,7 +16,17 @@ public abstract class Elemento {
         if (PistonDerby.DEBUG_GIZMOS) this.DebugGizmos();
     }
 
-    internal virtual bool OnCollision(Elemento other) => true;
-    internal virtual bool OnCollision(Elemento other, Vector3 normal, float depth) => true;
+    internal virtual bool OnCollision(Elemento other) {
+        if(other is MachineGun){
+            return false;
+        }
+        return true;
+    }
+    internal virtual bool OnCollision(Elemento other, Vector3 normal, float depth) {
+        if(other is MachineGun){
+            return false;
+        }
+        return true;
+    }
     protected abstract void DebugGizmos();
 }

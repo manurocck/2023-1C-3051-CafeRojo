@@ -6,6 +6,7 @@ using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuPhysics.CollisionDetection;
 using BepuPhysics.Constraints;
+using PistonDerby.Autos.PowerUps;
 using PistonDerby.Elementos;
 
 namespace PistonDerby.Collisions;
@@ -114,9 +115,9 @@ public struct NarrowPhaseCallbacks : INarrowPhaseCallbacks
 
         Elemento elementoA = GetCollitionHandler(pair.A);
         Elemento elementoB = GetCollitionHandler(pair.B);
+        
         bool handler = elementoA.OnCollision(elementoB);
         elementoB?.OnCollision(elementoA,  manifold.GetNormal(ref manifold, 1), manifold.GetDepth(ref manifold, 1));
-
 
         // for(int i = 0 ; i<manifold.Count ; i++){
         //     float prof = manifold.GetDepth(ref manifold, i);

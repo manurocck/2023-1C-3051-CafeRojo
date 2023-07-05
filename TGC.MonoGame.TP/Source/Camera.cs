@@ -20,7 +20,7 @@ class Camera
     public void Mover(KeyboardState keyboardState){
         var multiplicador = 0.025f*PistonDerby.S_METRO;
         if(keyboardState.IsKeyDown(Keys.LeftShift)){
-            multiplicador = 1f;
+            multiplicador = 10f;
         }   
         if(keyboardState.IsKeyDown(Keys.Down)){
             DISTANCIA_AL_AUTO += 2f*multiplicador;

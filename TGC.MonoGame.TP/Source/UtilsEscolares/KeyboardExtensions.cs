@@ -9,11 +9,12 @@ public static class KeyboardExtensions {
         return positive - negative;
     }
 
+    /// <summary> Devuelve: 1 si esta acelerando; -1 si está yendo marcha atrás; 0 si no está haciendo nada </summary>
     internal static float AccelerationSense(this KeyboardState keyboard) => keyboard.GetAxis(Keys.W, Keys.S);
     internal static float TurningAxis(this KeyboardState keyboard) => keyboard.GetAxis(Keys.A, Keys.D);
     internal static bool Jumped(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Space);
     internal static bool Turbo(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.LeftShift);
-    internal static bool MGTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Q);
-    internal static bool MSLTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.E);
+    internal static bool MachineGunTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.Q);
+    internal static bool MissileTrigger(this KeyboardState keyboard) => keyboard.IsKeyDown(Keys.E);
 }
 

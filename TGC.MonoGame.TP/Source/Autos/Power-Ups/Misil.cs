@@ -44,6 +44,9 @@ internal class Misil : ElementoDinamico {
         this.Body().Velocity = Vector3.Zero.ToBepu();
         this.Body().SetShape(new TypedIndex()); //Esto habria que cambiarlo por una eliminacion de la instancia
 
+        if(other is MachineGun){
+            return false;
+        }
         return true;
     }
     internal override void Draw()

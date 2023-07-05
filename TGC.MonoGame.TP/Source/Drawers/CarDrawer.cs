@@ -1,7 +1,7 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Autos;
+using PistonDerby.Geometries;
 
 namespace PistonDerby.Drawers;
 internal class CarDrawer : IDrawer
@@ -10,16 +10,17 @@ internal class CarDrawer : IDrawer
     private const float WHEEL_TURNING_LIMIT = 0.5f;
     private const float ERROR_TRASLACION_RUEDAS = AUTO_SCALE*0.01f;
     private Effect Effect = PistonDerby.GameContent.E_PBRShader;
+    private CylinderPrimitive BulletCylinder = PistonDerby.GameContent.G_Cilindro;
 
     //UPDATE
     internal Vector3 CarPosition { private get; set; } = Vector3.Zero;
     internal float WheelRotation() => Auto.WheelRotation;
     internal float WheelTurning() => Auto.WheelTurning;
+    internal float WheelFloorRotation() => Auto.WheelFloorRotation;
     internal Auto Auto;
 
     internal CarDrawer(Auto auto){
-        Auto = auto;
-         
+        Auto = auto;  
     }
 
     // internal CarDrawer(Auto auto, Effect shader) {Auto = auto; Effect = shader;}
@@ -28,6 +29,8 @@ internal class CarDrawer : IDrawer
         Matrix worldAux = Matrix.Identity;
         this.Effect.Parameters["Texture"]?.SetValue(PistonDerby.GameContent.TA_MetalMap);
         SetearTexturas();
+        
+
         
         if(Model.Bones.Count > 0)
         foreach(ModelBone bone in Model.Bones){
@@ -38,6 +41,7 @@ internal class CarDrawer : IDrawer
                 case "WheelA": // FRONT RIGHT
                 case "WheelB": // FRONT LEFT
                     worldAux =  Matrix.CreateScale(1.5f)
+                                * Matrix.CreateRotationX(WheelFloorRotation())              // giro con el piso (funcará?)
                                 * Matrix.CreateRotationY(WheelTurning())                      // giro del volante
                                 * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
                                 * Matrix.CreateRotationY(WheelRotation())                     // giro con el auto
@@ -48,6 +52,7 @@ internal class CarDrawer : IDrawer
                 case "WheelD": // BACK RIGHT
                     worldAux = 
                                 Matrix.CreateScale(2f)
+                                * Matrix.CreateRotationX(WheelFloorRotation())              // giro con el piso (funcará?)
                                 * Matrix.CreateTranslation(bone.ModelTransform.Translation) // error inicial de traslación de ruedas
                                 * Matrix.CreateRotationY(WheelRotation())                   // giro con el auto
                                 * world 
@@ -77,8 +82,36 @@ internal class CarDrawer : IDrawer
                 mesh.Draw();
             }
         }
+        
+        // DrawBulletCyllinder(world);
+
     }
 
+    // BulletCyllinder drawer function : 
+    //                          Draws a cyllinder using the car world matrix for the translation 
+    //                          and the function WheelRotation() for the rotation.
+    //                          It  goes from the roof of the car and ends at the floor 
+    //                          at a certain distance away from the car.
+    //                          It is used to draw the bullet trajectory so its radius is very small.
+    //                          The bullets are going to be drawn inside the cyllinder using a shader
+    //                          that will make them look like they are inside the cyllinder.
+    private void DrawBulletCyllinder(Matrix carWorld){
+        Effect bulletEffect = this.Auto.isShooting()?
+                             PistonDerby.GameContent.E_BulletShader : 
+                             PistonDerby.GameContent.E_BasicShader;
+
+        Matrix world = 
+                          Matrix.CreateScale(0.1f, 10f, 0.1f)
+                        * Matrix.CreateRotationX(MathHelper.PiOver2+MathHelper.PiOver4*0.25f)
+                        * Matrix.CreateRotationY(WheelRotation())
+                        * Matrix.CreateTranslation(new Vector3(0, 1f, 6f))
+                        * carWorld
+                        ;
+        bulletEffect.Parameters["World"]?.SetValue(world);
+        bulletEffect.Parameters["DiffuseColor"]?.SetValue(Color.DarkRed.ToVector3());
+        BulletCylinder.Draw(bulletEffect);
+    }
+    
     private void SetearTexturas()
     {
         Effect.Parameters["albedoTexture"]?.SetValue(PistonDerby.GameContent.TA_BaseColor);
