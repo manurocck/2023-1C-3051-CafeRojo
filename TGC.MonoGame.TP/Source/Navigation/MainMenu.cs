@@ -101,8 +101,8 @@ internal class MainMenu : IMenuItem
     }
     internal void DrawEmptyHouse(float secondsElapsed)
     {
-
         Piso.ConTextura(PistonDerby.GameContent.T_Concreto,2,4);
+        Piso.TextureShaderHUD();
 
         Effect effect = PistonDerby.GameContent.E_TextureTiles;
         Matrix isometricView = Matrix.CreateLookAt( Piso.PuntoCentro() + Vector3.UnitY * 1 * PistonDerby.S_METRO, 

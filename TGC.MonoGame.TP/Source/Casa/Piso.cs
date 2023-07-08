@@ -12,6 +12,7 @@ namespace PistonDerby;
 public class Piso : ElementoEstatico
 {
     private Texture2D TexturaBaldosa = PistonDerby.GameContent.T_PisoMadera;
+    private Effect Effect;
     private float TextureTilesLargo;
     private float TextureTilesAncho;
     private readonly float MetrosAncho;
@@ -23,6 +24,7 @@ public class Piso : ElementoEstatico
 
     public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(null, new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
     {
+        Effect = PistonDerby.GameContent.E_BlinnPhongTiles;
         PosicionInicial = posicionInicial;
         PosicionInicial.Y += -15; // Hard-codeada para que el auto esté exáctamente sobre el piso, debería depender de S_METRO
         MetrosAncho = metrosAncho * PistonDerby.S_METRO;
@@ -50,14 +52,16 @@ public class Piso : ElementoEstatico
         TexturaBaldosa = texturaPiso;
         return this;
     }
+    public void TextureShaderHUD() => this.Effect = PistonDerby.GameContent.E_TextureTiles;
     internal override void Draw()
     {
-        Effect Effect = PistonDerby.GameContent.E_TextureTiles;
+        //Effect = PistonDerby.GameContent.E_TextureTiles;
 
-        Effect.Parameters["Texture"]?.SetValue(TexturaBaldosa);
+        Effect.Parameters["Texture"]?.SetValue(TexturaBaldosa); 
         Effect.Parameters["TilesWide"]?.SetValue(TextureTilesAncho);
         Effect.Parameters["TilesBroad"]?.SetValue(TextureTilesLargo);
         Effect.Parameters["World"].SetValue(TempWorld);
+        Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(World)));;
 
         PistonDerby.GameContent.G_Quad.Draw(Effect);
     }

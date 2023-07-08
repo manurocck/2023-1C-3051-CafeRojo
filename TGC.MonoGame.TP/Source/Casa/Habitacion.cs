@@ -31,8 +31,9 @@ public abstract class IHabitacion
         
         // Agrego una luz en el centro de la habitación casi a la altura máxima de la pared
         var luzCentral = new Light();
-        luzCentral.Position = this.PuntoCentro() + new Vector3(0, 0, PistonDerby.S_METRO * 1.5f);
+        luzCentral.Position = this.PuntoCentro() + Vector3.UnitY * S_METRO;
         luzCentral.Color = new Vector3(200,200,200);
+
         Luces.Add(luzCentral);
     }
     public void AddElemento( ElementoEstatico e ){

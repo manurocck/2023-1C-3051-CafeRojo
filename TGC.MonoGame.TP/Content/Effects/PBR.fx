@@ -82,8 +82,8 @@ struct Light
 
 #define LIGHT_COUNT 6
 
-float3 lightPositions[6];
-float3 lightColors[6];
+float3 lightPositions[LIGHT_COUNT];
+float3 lightColors[LIGHT_COUNT];
 
 float3 eyePosition; //Posicion de la camara
 

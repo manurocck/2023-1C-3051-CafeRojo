@@ -42,7 +42,21 @@ public class Casa {
         // Mostrar en consola la cantidad de luces
         Console.WriteLine("Cantidad de Luces: " + Luces.Count);
         InicializarShaderPBR();
+        InicializarBlinnPhong();
     }
+
+    private void InicializarBlinnPhong()
+    {
+        var Effect = PistonDerby.GameContent.E_BlinnPhong;
+        var posiciones = Effect.Parameters["lightPositions"].Elements;
+        
+        for (var index = 0; index < Luces.Count; index++)
+        {
+            var light = Luces[index];
+            posiciones[index].SetValue(light.Position);
+        }
+    }
+
     private void InicializarShaderPBR()
     {
         var Effect = PistonDerby.GameContent.E_PBRShader;

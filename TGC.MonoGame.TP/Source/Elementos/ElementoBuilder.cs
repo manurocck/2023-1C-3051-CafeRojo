@@ -57,7 +57,8 @@ public class ElementoBuilder{
         return this;
     }
     public ElementoBuilder ConTextura(Texture2D textura){
-        Drawer = new TextureDrawer(textura);
+        // Drawer = new TextureDrawer(textura);
+        Drawer = new BlinnPhongDrawer(textura);
         return this;
     }
     internal ElementoBuilder ConColor(Color color){

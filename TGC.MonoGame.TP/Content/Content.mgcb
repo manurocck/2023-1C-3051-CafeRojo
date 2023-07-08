@@ -25,6 +25,18 @@
 /processorParam:DebugMode=Auto
 /build:Effects/BlacksFilter.fx
 
+#begin Effects/BlinnPhong.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/BlinnPhong.fx
+
+#begin Effects/BlinnPhongTiles.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/BlinnPhongTiles.fx
+
 #begin Effects/BulletShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor

@@ -87,6 +87,9 @@ public class PistonDerby : Game
         foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
         foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
 
+        ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhong);
+        ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhongTiles);
+
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.5f));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
@@ -98,6 +101,7 @@ public class PistonDerby : Game
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         Auto.AsociarHUD(CarHUD);
     }
+
     protected override void Update(GameTime gameTime)
     {
         KeyboardState keyboardState = Keyboard.GetState();
@@ -113,7 +117,8 @@ public class PistonDerby : Game
         }
 
         // Actualizo la posición de la cámara en el shader de PBR
-        PistonDerby.GameContent.E_PBRShader.Parameters["eyePosition"]?.SetValue(Camera.CameraPosition);
+        foreach(Effect e in PistonDerby.GameContent.Efectos)
+            e.Parameters["eyePosition"]?.SetValue(Camera.CameraPosition);
 
         Reproductor?.Update(dTime, Keyboard.GetState());                      
 
@@ -172,5 +177,18 @@ public class PistonDerby : Game
     {
         Simulation.Dispose();
         base.UnloadContent();
+    }
+    private void ConfiguracionBlinnPhong(Effect e)
+    {
+        e.Parameters["ambientColor"].SetValue(new Vector3(255, 255, 255) / 255f);
+        e.Parameters["diffuseColor"].SetValue(new Vector3(255, 255, 255) / 255f); // Adjusted the blue component to reduce yellow tint
+        e.Parameters["specularColor"].SetValue(new Vector3(0, 148, 148) / 255f);
+
+        e.Parameters["KAmbient"].SetValue(0.15f);
+        e.Parameters["KDiffuse"].SetValue(0.3f);
+        e.Parameters["KSpecular"].SetValue(0.3f);
+
+        e.Parameters["shininess"].SetValue(60); // No shininess, as there are no specular highlights
+
     }
 }
