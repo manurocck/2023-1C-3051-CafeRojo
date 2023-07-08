@@ -34,7 +34,7 @@ public class Content
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
-                        E_PBRShader, E_BulletShader;
+                        E_PBRShader, E_BulletShader, E_PBRpackedShader;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -47,6 +47,7 @@ public class Content
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     internal readonly Texture2D TA_MetalMap, TA_BaseColor, TA_RoughnessMap, TA_NormalMap, TA_CavityMap, TA_LightEmissionMap;
+    internal readonly Texture2D T_Planta_BaseColorMap, T_Planta_NormalMap, T_Planta_RoughnessMetallicOpacityMap;
     #endregion
     
     internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando, S_Bling, S_Pickup;
@@ -57,7 +58,7 @@ public class Content
     internal readonly QuadPrimitive G_Quad;
     internal readonly CuboPrimitive G_Cubo;
     internal readonly CylinderPrimitive G_Cilindro;
-    
+
     internal Content(ContentManager Content, GraphicsDevice GraphicsDevice)
     {
         ContentManager = Content;
@@ -79,6 +80,7 @@ public class Content
         Efectos.Add(E_TextureItermitente = LoadEffect("TextureItermitente")     );
         Efectos.Add(E_TextureMirror      = LoadEffect("DeTextura/TextureMirror"));
         Efectos.Add(E_PBRShader          = LoadEffect("PBR")                    );
+        Efectos.Add(E_PBRpackedShader    = LoadEffect("PBRpacked")              );
         Efectos.Add(E_BulletShader       = LoadEffect("BulletShader")           );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
@@ -107,7 +109,7 @@ public class Content
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
 
-        // Texturas del auto RacingCar
+        // Texturas del auto RacingCar (PBR)
         TA_BaseColor       = LoadTexture("Autos/RacingCar/BaseColor");
         TA_MetalMap        = LoadTexture("Autos/RacingCar/Metalizado");
         TA_RoughnessMap    = LoadTexture("Autos/RacingCar/Rugosidad");
@@ -115,6 +117,10 @@ public class Content
         TA_LightEmissionMap= LoadTexture("Autos/RacingCar/EmisionLuz");
         TA_NormalMap       = LoadTexture("Autos/RacingCar/NormalMap");
 
+        // Texturas de la planta (PBR)
+        T_Planta_BaseColorMap                = LoadTexture("Muebles/Planta/BaseColorMap");
+        T_Planta_NormalMap                   = LoadTexture("Muebles/Planta/NormalMap");
+        T_Planta_RoughnessMetallicOpacityMap = LoadTexture("Muebles/Planta/RoughnessMetallicOpacityMap");
 
         // Imágenes del HUD
         TH_Bullet           = LoadTexture("HUD/BulletAmmo");

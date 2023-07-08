@@ -32,6 +32,7 @@ public class HabitacionOficina : IHabitacion{
         AddElemento(carpintero.BuildMueble());
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Planta)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
             .ConPosicion(3.5f, 4f)
             .ConEscala(4f);
         AddElemento(carpintero.BuildMueble());

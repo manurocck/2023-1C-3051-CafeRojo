@@ -55,6 +55,12 @@
 /processorParam:DebugMode=Auto
 /build:Effects/PBR.fx
 
+#begin Effects/PBRpacked.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/PBRpacked.fx
+
 #begin Effects/SpiralShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -1609,6 +1615,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Muebles/Dragon.jpg
+
+#begin Textures/Muebles/Planta/BaseColorMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Planta/BaseColorMap.tga
+
+#begin Textures/Muebles/Planta/NormalMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Planta/NormalMap.tga
+
+#begin Textures/Muebles/Planta/RoughnessMetallicOpacityMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Planta/RoughnessMetallicOpacityMap.tga
 
 #begin Textures/Muebles/SillaOficina.jpg
 /importer:TextureImporter

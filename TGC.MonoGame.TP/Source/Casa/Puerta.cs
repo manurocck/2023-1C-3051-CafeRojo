@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,18 +16,22 @@ public class Puerta{
 
         var esHorizontal = (puntoInicio.X == puntoFinal.X);
 
-        if(!esHorizontal && puntoFinal.X > 0)
+        // Si la puerta está al revés, se invierten los puntos
+        // (para que el punto inicial siempre sea el más cercano al origen)
+        // (y el punto final siempre sea el más lejano al origen)
+
+        if(!esHorizontal && Math.Abs(puntoFinal.X) > 0)
         {
             var temp = puntoInicio;
                 puntoInicio = puntoFinal;
                 puntoFinal = temp;
         }
-        else if(puntoFinal.Z < 0)
-        {
-            var temp = puntoInicio;
-                puntoInicio = puntoFinal;
-                puntoFinal = temp;
-        }
+        // else if(esHorizontal && puntoFinal.Z > 0)
+        // {
+        //     var temp = puntoInicio;
+        //         puntoInicio = puntoFinal;
+        //         puntoFinal = temp;
+        // }
         
         Vector3 finPrimerSegmento = (!esHorizontal) ? 
                                     new Vector3(puntoInicio.X * ubicacionPuerta, puntoInicio.Y, puntoInicio.Z):

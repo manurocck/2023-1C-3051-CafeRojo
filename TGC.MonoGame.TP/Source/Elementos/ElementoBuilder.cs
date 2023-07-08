@@ -52,6 +52,10 @@ public class ElementoBuilder{
         Drawer = new PlainEffectDrawer(shaderSinParametros);
         return this;
     }
+    public ElementoBuilder ConPBRempaquetado(Texture2D texturaPBRempaquetada, Texture2D texturaBaseColor, Texture2D texturaNormalMap){
+        Drawer = new PBRDrawer(texturaPBRempaquetada, texturaBaseColor, texturaNormalMap);
+        return this;
+    }
     public ElementoBuilder ConTextura(Texture2D textura){
         Drawer = new TextureDrawer(textura);
         return this;

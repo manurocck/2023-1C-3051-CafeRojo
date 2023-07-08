@@ -8,7 +8,7 @@ using PistonDerby.Utils;
 namespace PistonDerby;
 public class Pared{
     public const float GROSOR = PistonDerby.S_METRO * 0.2f;
-    public const float ALTURA = PistonDerby.S_METRO * 0.5f;
+    private float ALTURA = PistonDerby.S_METRO * 0.5f;
     protected float LARGO;
     private Matrix World;    
     internal StaticHandle Handle;
@@ -22,6 +22,8 @@ public class Pared{
         LARGO = (esHorizontal)? Coordenadas.Final.Z - Coordenadas.Inicio.Z : Coordenadas.Final.X - Coordenadas.Inicio.X - GROSOR;
 
         Matrix Rotacion = esHorizontal ? Matrix.CreateRotationY(0) : Matrix.CreateRotationY(MathHelper.PiOver2);
+
+        if(!paraSimular) ALTURA = PistonDerby.S_METRO * 2f;
 
         World = Matrix.CreateScale(ALTURA,GROSOR,LARGO) 
                 * Matrix.CreateRotationZ(MathHelper.PiOver2) 
