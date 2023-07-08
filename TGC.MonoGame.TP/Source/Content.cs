@@ -47,7 +47,8 @@ public class Content
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
     internal readonly Texture2D TP_Presentacion1, TP_Presentacion2, TP_Presentacion3, TP_Presentacion0;  
     internal readonly Texture2D TA_MetalMap, TA_BaseColor, TA_RoughnessMap, TA_NormalMap, TA_CavityMap, TA_LightEmissionMap;
-    internal readonly Texture2D T_Planta_BaseColorMap, T_Planta_NormalMap, T_Planta_RoughnessMetallicOpacityMap;
+    internal readonly Texture2D T_Planta_BaseColorMap, T_Planta_NormalMap, T_Planta_RoughnessMetallicOpacityMap,
+                                T_Plantis_BaseColorMap, T_Plantis_NormalMap, T_Plantis_RoughnessMetallicOpacityMap;
     #endregion
     
     internal readonly SoundEffect S_Metralleta, S_MotorEncendido, S_MotorRegulando, S_MotorAcelerando, S_Bling, S_Pickup;
@@ -121,6 +122,11 @@ public class Content
         T_Planta_BaseColorMap                = LoadTexture("Muebles/Planta/BaseColorMap");
         T_Planta_NormalMap                   = LoadTexture("Muebles/Planta/NormalMap");
         T_Planta_RoughnessMetallicOpacityMap = LoadTexture("Muebles/Planta/RoughnessMetallicOpacityMap");
+
+        // Texturas de la plantis (PBR)
+        T_Plantis_BaseColorMap                = LoadTexture("Muebles/Plantis/BaseColorMap");
+        T_Plantis_NormalMap                   = LoadTexture("Muebles/Plantis/NormalMap");
+        T_Plantis_RoughnessMetallicOpacityMap = LoadTexture("Muebles/Plantis/RoughnessMetallicOpacityMap");
 
         // Imágenes del HUD
         TH_Bullet           = LoadTexture("HUD/BulletAmmo");

@@ -16,6 +16,8 @@ public class CarHUD
     //      Los Effects de los Drawables no se pueden usar para los HUDS porque modifican la View.
     //
     // private List<IDrawableHUD> ElementosHUD = new List<IDrawable>();
+    // has ammo?
+    public bool HasAmmo() => BulletAmmo.HasAmmo();
 
     public CarHUD(int width, int heigth)
     {

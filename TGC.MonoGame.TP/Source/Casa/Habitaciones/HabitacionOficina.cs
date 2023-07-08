@@ -31,11 +31,6 @@ public class HabitacionOficina : IHabitacion{
             .ConAltura(0.7f);
         AddElemento(carpintero.BuildMueble());
                 
-        carpintero.Modelo(PistonDerby.GameContent.M_Planta)
-            .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
-            .ConPosicion(3.5f, 4f)
-            .ConEscala(4f);
-        AddElemento(carpintero.BuildMueble());
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Escritorio)
             .ConPosicion(3.5f, 3f)
@@ -44,9 +39,16 @@ public class HabitacionOficina : IHabitacion{
             .ConEscala(40f);
             //.ConAltura(5f);
         AddElemento(carpintero.BuildMueble());
+        
+        carpintero.Modelo(PistonDerby.GameContent.M_Planta)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
+            .ConPosicion(3.5f, 4f)
+            .ConEscala(4f);
+        AddElemento(carpintero.BuildMueble());
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Plantis)
-            .ConPosicion(0.5f, 2f)
+            .ConPosicion(0.5f, LARGO-0.5f)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Plantis_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Plantis_BaseColorMap, PistonDerby.GameContent.T_Plantis_NormalMap)
             .ConEscala(5f);
         AddElemento(carpintero.BuildMueble());
     }

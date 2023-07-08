@@ -246,6 +246,8 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	// Gamma correct
 	color = pow(color, float3(exponent, exponent, exponent));
 
+	if(length(color.rgb)<0.1) discard;
+
     return float4(color, 1.0);
 }
 

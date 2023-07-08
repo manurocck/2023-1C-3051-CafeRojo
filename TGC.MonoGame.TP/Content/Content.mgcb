@@ -1652,6 +1652,42 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Muebles/Planta/RoughnessMetallicOpacityMap.tga
 
+#begin Textures/Muebles/Plantis/BaseColorMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Plantis/BaseColorMap.tga
+
+#begin Textures/Muebles/Plantis/NormalMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Plantis/NormalMap.tga
+
+#begin Textures/Muebles/Plantis/RoughnessMetallicOpacityMap.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Muebles/Plantis/RoughnessMetallicOpacityMap.tga
+
 #begin Textures/Muebles/SillaOficina.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

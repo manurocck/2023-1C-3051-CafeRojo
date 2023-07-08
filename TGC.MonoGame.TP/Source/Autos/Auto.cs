@@ -262,7 +262,9 @@ internal class Auto : ElementoDinamico {
 
     internal override void Draw()
     {
-        MachineGun.Draw();
+        if(DisplayEstado != null)
+            if(DisplayEstado.HasAmmo())
+                MachineGun.Draw();
         base.Draw();
     }
 

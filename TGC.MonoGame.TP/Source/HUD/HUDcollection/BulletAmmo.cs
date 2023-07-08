@@ -41,6 +41,7 @@ public class BulletAmmo : IAmmoHUD {
         else Instance.Stop();
     }
     public void ReleasingTrigger() => Instance.Stop();
+    public bool HasAmmo() => Ammo>0;
     public void Update(Vector3 followedPosition){
             Ammo = TotalAmmo - ShootedAmmo;
             QuadWorld = AjusteQuad() 
