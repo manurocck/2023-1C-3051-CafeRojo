@@ -21,7 +21,8 @@ internal class Auto : ElementoDinamico {
     private const float WHEEL_FLOOR_ROTATION_FACTOR = 0.01f;
     #endregion Settings
     internal override Model Model => PistonDerby.GameContent.M_Auto;
-    internal override IDrawer Drawer => new CarDrawer(this);
+    internal override IDrawer Drawer => StateDrawer;
+    internal virtual IDrawer StateDrawer => new CarDrawer(this);
     internal override float Scale() => 0.08f * PistonDerby.S_METRO;
     internal override float Mass() => 1f;
     internal bool isShooting() => shootingState;

@@ -8,7 +8,7 @@ using PistonDerby.Utils;
 namespace PistonDerby;
 public class Pared{
     public const float GROSOR = PistonDerby.S_METRO * 0.2f;
-    public const float ALTURA = PistonDerby.S_METRO * 2f;
+    public const float ALTURA = PistonDerby.S_METRO * 0.5f;
     protected float LARGO;
     private Matrix World;    
     internal StaticHandle Handle;

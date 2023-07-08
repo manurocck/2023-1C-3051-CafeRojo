@@ -7,13 +7,10 @@ namespace PistonDerby.Drawers;
 internal class CarDrawer : IDrawer
 {
     private const float AUTO_SCALE = 0.056f * PistonDerby.S_METRO;
-    private const float WHEEL_TURNING_LIMIT = 0.5f;
-    private const float ERROR_TRASLACION_RUEDAS = AUTO_SCALE*0.01f;
     private Effect Effect = PistonDerby.GameContent.E_PBRShader;
     private CylinderPrimitive BulletCylinder = PistonDerby.GameContent.G_Cilindro;
 
     //UPDATE
-    internal Vector3 CarPosition { private get; set; } = Vector3.Zero;
     internal float WheelRotation() => Auto.WheelRotation;
     internal float WheelTurning() => Auto.WheelTurning;
     internal float WheelFloorRotation() => Auto.WheelFloorRotation;
@@ -23,7 +20,6 @@ internal class CarDrawer : IDrawer
         Auto = auto;  
     }
 
-    // internal CarDrawer(Auto auto, Effect shader) {Auto = auto; Effect = shader;}
     void IDrawer.Draw(Model Model, Matrix GeneralWorld){
         Matrix world = GeneralWorld;
         Matrix worldAux = Matrix.Identity;

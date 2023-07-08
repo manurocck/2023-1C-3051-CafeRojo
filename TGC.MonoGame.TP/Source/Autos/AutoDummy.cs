@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PistonDerby.Autos.PowerUps;
+using PistonDerby.Drawers;
 using PistonDerby.Elementos;
+using PistonDerby.Utils;
 
 namespace PistonDerby.Autos;
 internal class AutoDummy : Auto
 {
     private float Contador = 0;
+    private bool isDead = false;
+    private IDrawer[] DrawerStates;
+    internal override IDrawer StateDrawer => CarDrawerState();
+    internal AutoDummy(Vector3 posicionInicial) : base(posicionInicial){
+        DrawerStates = new IDrawer[]{
+                    new CarDrawer(this),
+                    new DeadCarDrawer(this)}; 
+    }
     private Random miRandom = new Random();
-    internal AutoDummy(Vector3 posicionInicial) : base(posicionInicial){}
 
     private KeyboardState DerrapeEnElLugar(){
         List<Keys> listOfKeys = new List<Keys>();
@@ -23,7 +32,22 @@ internal class AutoDummy : Auto
         }
         return new KeyboardState(listOfKeys.ToArray());
     }
+    private IDrawer CarDrawerState()
+    {
+        if(isDead) return DrawerStates[1];
+        else return DrawerStates[0];
+    }
+    private void Die(){
+        isDead = true;
+        this.Body().Velocity.Angular = Vector3.Zero.ToBepu();
+        this.Body().Velocity.Linear = Vector3.Zero.ToBepu();
+        this.Body().BecomeKinematic();
+    }
     public void Update(float dTime){
+        if(Vida==0){
+            if(!isDead) Die();
+            return;
+        } 
         Contador+=dTime;
         KeyboardState keyboard = DerrapeEnElLugar();
         

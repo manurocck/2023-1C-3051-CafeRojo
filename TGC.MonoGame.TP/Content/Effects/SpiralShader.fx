@@ -13,7 +13,7 @@
 // Reference for HLSL - https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-reference
 // HLSL Semantics - https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics
 
-float Time = 0.0;
+float Time;
 
 float4x4 World;
 float4x4 View;
