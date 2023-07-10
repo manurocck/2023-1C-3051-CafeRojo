@@ -19,7 +19,7 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
-    internal static bool DEBUG_GIZMOS = false;
+    internal static bool DEBUG_GIZMOS = true;
     internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
@@ -55,6 +55,10 @@ public class PistonDerby : Game
         Graphics.PreferredBackBufferWidth  = (DEVELOPER_MODE)?
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        
+        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+
         Graphics.IsFullScreen = FULL_SCREEN;
 
         
@@ -117,8 +121,10 @@ public class PistonDerby : Game
         }
 
         // Actualizo la posición de la cámara en el shader de PBR
-        foreach(Effect e in PistonDerby.GameContent.Efectos)
+        foreach(Effect e in PistonDerby.GameContent.Efectos){
             e.Parameters["eyePosition"]?.SetValue(Camera.CameraPosition);
+            e.Parameters["Time"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+        }
 
         Reproductor?.Update(dTime, Keyboard.GetState());                      
 

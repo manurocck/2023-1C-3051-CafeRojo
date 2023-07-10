@@ -18,7 +18,7 @@ public class ElementoEstatico : Elemento {
     internal override IDrawer Drawer => SavedDrawer;
     internal override Matrix World => WorldMatrix;
 
-    internal ElementoEstatico(Model Model, IDrawer Drawer, Vector3 Position, Vector3 Rotation, float Scale = 1, Collisions.ShapeType shapeType = Collisions.ShapeType.BOX) {
+    internal ElementoEstatico(Vector3 CorrimientoCaja, Box Caja, Model Model, IDrawer Drawer, Vector3 Position, Vector3 Rotation, float Scale = 1, Collisions.ShapeType shapeType = Collisions.ShapeType.BOX) {
         this.SettedModel = Model;
         this.SavedDrawer = Drawer;
         Matrix rotacion =  Matrix.CreateRotationX(Rotation.X) * Matrix.CreateRotationY(Rotation.Y) * Matrix.CreateRotationZ(Rotation.Z); 
@@ -26,8 +26,12 @@ public class ElementoEstatico : Elemento {
 
         if(Model is null) return; // Fixea Elementos Estaticos Hechos con Geometria, hay que adaptar eso.
 
-        Shape = PistonDerby.Simulation.LoadShape(Collisions.ShapeType.BOX, Model, Scale);
-        this.AddToSimulation(Position, Quaternion.CreateFromRotationMatrix(rotacion));
+        // Shape = PistonDerby.Simulation.LoadShape(Collisions.ShapeType.BOX, Model, Scale);
+        // CajaElemento = Caja;
+
+        Shape = PistonDerby.Simulation.LoadShape<Box>(Caja);
+
+        this.AddToSimulation(Position+CorrimientoCaja, Quaternion.CreateFromRotationMatrix(rotacion));
     }
 
     internal StaticReference Static() => PistonDerby.Simulation.GetStaticReference(StaticHandle);

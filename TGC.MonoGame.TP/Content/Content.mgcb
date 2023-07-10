@@ -43,6 +43,12 @@
 /processorParam:DebugMode=Auto
 /build:Effects/BulletShader.fx
 
+#begin Effects/DeadEnemyShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/DeadEnemyShader.fx
+
 #begin Effects/DeTextura/TextureMirror.fx
 /importer:EffectImporter
 /processor:EffectProcessor

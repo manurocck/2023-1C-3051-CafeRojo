@@ -6,7 +6,7 @@ using PistonDerby.Geometries;
 namespace PistonDerby.Drawers;
 internal class DeadCarDrawer : IDrawer
 {
-    private Effect Effect = PistonDerby.GameContent.E_SpiralShader;
+    private Effect Effect = PistonDerby.GameContent.E_DeadEnemyShader;
 
     //UPDATE
     internal float WheelRotation() => Auto.WheelRotation;

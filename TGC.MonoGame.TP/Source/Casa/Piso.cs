@@ -22,7 +22,7 @@ public class Piso : ElementoEstatico
     private Matrix TempWorld;
     protected readonly BoundingBox PeliculaContacto;
 
-    public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(null, new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
+    public Piso(int metrosAncho, int metrosLargo, Vector3 posicionInicial) : base(Vector3.Zero, new Box(0.001f,0.001f,0.001f), null, new GeometryTextureDrawer(PistonDerby.GameContent.G_Quad, PistonDerby.GameContent.T_PisoMadera), Vector3.Zero, Vector3.Zero)
     {
         Effect = PistonDerby.GameContent.E_BlinnPhongTiles;
         PosicionInicial = posicionInicial;

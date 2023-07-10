@@ -7,6 +7,8 @@ using PistonDerby.Utils;
 namespace PistonDerby.Elementos;
 public class ElementoBuilder{
     private Model Model;
+    private Box Caja;
+    private Vector3 CorrimientoCaja;
     private Vector3 PosicionRelativa;
     private Vector3 Corrimiento = Vector3.Zero;
     private Vector3 Rotacion = Vector3.Zero;
@@ -21,6 +23,8 @@ public class ElementoBuilder{
         Rotacion = Vector3.Zero;
         Escala = 1f;
         Drawer = new ColorDrawer(Color.Magenta);
+        Caja = new Box(0.001f,0.001f,0.001f);
+        CorrimientoCaja = Vector3.Zero;
     }
     public ElementoBuilder Modelo(Model modelo3d){
         Model = modelo3d;
@@ -52,6 +56,15 @@ public class ElementoBuilder{
         Drawer = new PlainEffectDrawer(shaderSinParametros);
         return this;
     }
+
+    public ElementoBuilder ConCaja(float X, float Y, float Z){
+        Caja = new Box(X, Y, Z);
+        return this;
+    }
+    public ElementoBuilder ConCorrimientoCaja(float X, float Y, float Z){
+        CorrimientoCaja = new Vector3(X, Y, Z);
+        return this;
+    }
     public ElementoBuilder ConPBRempaquetado(Texture2D texturaPBRempaquetada, Texture2D texturaBaseColor, Texture2D texturaNormalMap){
         Drawer = new PBRDrawer(texturaPBRempaquetada, texturaBaseColor, texturaNormalMap);
         return this;
@@ -67,7 +80,7 @@ public class ElementoBuilder{
     }
     public ElementoEstatico BuildMueble(){
         Corrimiento += PosicionRelativa;
-        ElementoEstatico elemento = new ElementoEstatico(Model, Drawer, Corrimiento, Rotacion, Escala);
+        ElementoEstatico elemento = new ElementoEstatico(CorrimientoCaja, Caja, Model, Drawer, Corrimiento, Rotacion, Escala);
 
         return elemento;
     }

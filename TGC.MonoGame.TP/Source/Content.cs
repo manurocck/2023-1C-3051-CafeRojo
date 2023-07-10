@@ -34,7 +34,8 @@ public class Content
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
-                        E_PBRShader, E_BulletShader, E_PBRpackedShader, E_BlinnPhong, E_BlinnPhongTiles;
+                        E_PBRShader, E_BulletShader, E_PBRpackedShader, E_BlinnPhong, E_BlinnPhongTiles
+                        , E_DeadEnemyShader;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -84,7 +85,8 @@ public class Content
         Efectos.Add(E_PBRpackedShader    = LoadEffect("PBRpacked")              );
         Efectos.Add(E_BulletShader       = LoadEffect("BulletShader")           );
         Efectos.Add(E_BlinnPhong         = LoadEffect("BlinnPhong")             );
-        Efectos.Add(E_BlinnPhongTiles    = LoadEffect("BlinnPhongTiles")             );
+        Efectos.Add(E_BlinnPhongTiles    = LoadEffect("BlinnPhongTiles")        );
+        Efectos.Add(E_DeadEnemyShader    = LoadEffect("DeadEnemyShader")        );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
