@@ -190,7 +190,7 @@ public class Content
         M_Plantis           = LoadModel("Muebles/", "Plantis"     );
 
         //Dormitorios
-        M_CamaMarinera      = LoadModel("Muebles/", "DoubleBed"   );
+        M_CamaMarinera      = LoadModel("Muebles/", "CamaMarinera");
         M_Cajonera          = LoadModel("Muebles/", "Cajonera"    );
         M_Organizador       = LoadModel("Muebles/", "Organizador" );
         M_Lego              = LoadModel("Muebles/", "Lego"        );
@@ -198,7 +198,7 @@ public class Content
         M_Torre             = LoadModel("Muebles/", "Torre"       );
         M_Dragon            = LoadModel("Muebles/", "Dragon"      );
         M_Dragona           = LoadModel("Muebles/", "Dragona"     );
-        M_Cama              = LoadModel("Muebles/", "SingleBed"   );
+        M_Cama              = LoadModel("Muebles/", "Cama"        );
         M_Juego             = LoadModel("Muebles/", "Juego"       );
         M_Puff              = LoadModel("Muebles/", "Puff"        );
         M_Armario1          = LoadModel("Muebles/", "Armario1"    );
