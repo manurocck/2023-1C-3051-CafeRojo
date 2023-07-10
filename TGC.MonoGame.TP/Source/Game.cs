@@ -61,8 +61,8 @@ public class PistonDerby : Game
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         
-        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
 
         Graphics.IsFullScreen = FULL_SCREEN;
 
@@ -105,12 +105,14 @@ public class PistonDerby : Game
         ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhong);
         ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhongTiles);
 
-        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.5f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.75f));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
 
         Auto   = new Auto (Casa.PuntoCentro(0));
-        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)));
+        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(0)*0.5f));
+        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(1)*0.5f));
+        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)*0.5f));
         
         
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -184,7 +186,7 @@ public class PistonDerby : Game
         
         // Use the default blend and depth configuration
         GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-        GraphicsDevice.BlendState = BlendState.Opaque;
+        GraphicsDevice.BlendState = BlendState.AlphaBlend;
         
         ////// DIBUJAMOS LA ESCENA PRINCIPAL
 
