@@ -125,9 +125,9 @@ public class HabitacionCocina : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_Cocine)
             .ConPosicion(2.25f,0.4f)
-            .ConAltura(0.45f)
-            .ConCaja(250f,150,150f) // Ancho (x), Alto (y), Profundidad (z)
-            .ConCorrimientoCaja(0,-100,0) // Corrimiento de la caja
+            .ConAltura(0.40f)
+            .ConCaja(190f,200,90f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-50,0) // Corrimiento de la caja
             .ConColor(Color.Silver)
             .ConEscala(0.45f);
             AddElemento(carpintero.BuildMueble());

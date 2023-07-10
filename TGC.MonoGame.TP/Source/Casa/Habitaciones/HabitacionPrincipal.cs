@@ -62,6 +62,8 @@ public class HabitacionPrincipal : IHabitacion{
             .ConPosicion(LARGO-1f, 0.5f)
             .ConRotacion(0, MathHelper.Pi, 0)
             .ConTextura(PistonDerby.GameContent.T_Reboque)
+            .ConCaja(500f,100f,100f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(-120f,-10,0)
             .ConEscala(0.25f);
             AddElemento( carpintero.BuildMueble() );
         

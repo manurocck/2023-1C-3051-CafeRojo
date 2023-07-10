@@ -20,7 +20,10 @@ public class HabitacionDormitorioLegos : IHabitacion{
             .ConPosicion(1.5f,0.75f)
             .ConTextura(PistonDerby.GameContent.T_MaderaNikari)
             .ConRotacion(-MathHelper.PiOver2,0f, 0f)
+            .ConCaja(530f,190f,1000f)// Ancho (x), Profundidad (z), Alto (y)
+            .ConCorrimientoCaja(0,-50,0) // Corrimiento de la caja
             .ConEscala(500f);
+     
             AddElemento(carpintero.BuildMueble());
 
         carpintero.Modelo(PistonDerby.GameContent.M_Cajonera)
@@ -28,6 +31,8 @@ public class HabitacionDormitorioLegos : IHabitacion{
             .ConTextura(PistonDerby.GameContent.T_PisoMadera)
             // .ConRotacion(0f,MathHelper.Pi, 0f)
             .ConRotacion(-MathHelper.PiOver2,0f, 0f)
+            .ConCaja(350f,150f,400f) // Ancho (x), Profundidad (z), Alto (y)
+            .ConCorrimientoCaja(0,-10,0) // Corrimiento de la caja
             .ConEscala(400f);
             AddElemento(carpintero.BuildMueble());
             

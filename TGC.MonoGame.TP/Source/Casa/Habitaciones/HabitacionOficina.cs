@@ -43,12 +43,16 @@ public class HabitacionOficina : IHabitacion{
         carpintero.Modelo(PistonDerby.GameContent.M_Planta)
             .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
             .ConPosicion(3.5f, 4f)
+            .ConCaja(25f,150f,25f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-10,0) // Corrimiento de la caja
             .ConEscala(4f);
         AddElemento(carpintero.BuildMueble());
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Plantis)
             .ConPosicion(0.5f, LARGO-0.5f)
             .ConPBRempaquetado(PistonDerby.GameContent.T_Plantis_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Plantis_BaseColorMap, PistonDerby.GameContent.T_Plantis_NormalMap)
+            .ConCaja(65f,200f,65f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-10,0)
             .ConEscala(5f);
         AddElemento(carpintero.BuildMueble());
     }
