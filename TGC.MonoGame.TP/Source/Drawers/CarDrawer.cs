@@ -9,7 +9,8 @@ internal class CarDrawer : IDrawer
     private const float AUTO_SCALE = 0.056f * PistonDerby.S_METRO;
     private Effect Effect = PistonDerby.GameContent.E_PBRShader;
     private CylinderPrimitive BulletCylinder = PistonDerby.GameContent.G_Cilindro;
-
+    private Vector3 DiffuseColor = new Vector3(255f, 0.5f, 255f);
+    
     //UPDATE
     internal float WheelRotation() => Auto.WheelRotation;
     internal float WheelTurning() => Auto.WheelTurning;
@@ -18,6 +19,11 @@ internal class CarDrawer : IDrawer
 
     internal CarDrawer(Auto auto){
         Auto = auto;  
+    }
+
+    internal IDrawer ConColor(Color color){
+        DiffuseColor = color.ToVector3();
+        return this;
     }
 
     void IDrawer.Draw(Model Model, Matrix GeneralWorld){
@@ -59,7 +65,7 @@ internal class CarDrawer : IDrawer
             Effect.Parameters["World"]?.SetValue(worldAux);
             Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(worldAux)));
         
-            Effect.Parameters["DiffuseColor"].SetValue(new Vector3(255f, 0.5f, 255f));
+            Effect.Parameters["DiffuseColor"].SetValue(DiffuseColor);
             foreach(var mesh in bone.Meshes){  
                 foreach(var meshPart in mesh.MeshParts){
                     meshPart.Effect = Effect;

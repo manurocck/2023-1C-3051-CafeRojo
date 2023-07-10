@@ -12,6 +12,7 @@ using PistonDerby.Utils;
 using PistonDerby.Gizmo;
 using PistonDerby.HUD;
 using PistonDerby.Autos;
+using TGC.MonoGame.Samples.Geometries;
 
 namespace PistonDerby;
 
@@ -19,11 +20,12 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
-    internal static bool DEBUG_GIZMOS = true;
+    internal static bool DEBUG_GIZMOS = false;
     internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
+    private FullScreenQuad FullScreenQuad;
     internal static GameSimulation Simulation;
     internal static Content GameContent;
     internal static GameMenu GameMenu;
@@ -36,6 +38,9 @@ public class PistonDerby : Game
     private List<AutoDummy> AutosDummy;
     private List<AutoAI> AutosAI;
     internal static List<ElementoDinamico> ElementosDinamicos = new List<ElementoDinamico>(); //Lista temporal que contiene Elementos Dinamicos de manera Global || Probablemente Casa deba ser Global y contener esta lista
+    private RenderTarget2D MainSceneRenderTarget ;
+    private RenderTarget2D FirstPassBloomRenderTarget ;
+    private RenderTarget2D SecondPassBloomRenderTarget ;
 
     public PistonDerby() {
         Graphics = new GraphicsDeviceManager(this);
@@ -56,8 +61,8 @@ public class PistonDerby : Game
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
 
         Graphics.IsFullScreen = FULL_SCREEN;
 
@@ -80,6 +85,8 @@ public class PistonDerby : Game
         base.LoadContent();
 
         GameContent = new Content(Content, GraphicsDevice);
+        ConfigureRenderTargets();
+        
         SpriteBatch = new SpriteBatch(GraphicsDevice);
 
         GameMenu = new GameMenu(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -88,8 +95,12 @@ public class PistonDerby : Game
         Reproductor?.LoadContent();
         Casa.LoadContent();
 
-        foreach (var e in GameContent.Efectos) e.Parameters["Projection"].SetValue(Camera.Projection);
-        foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"].SetValue(Camera.Projection);
+        foreach (var e in GameContent.Efectos) e.Parameters["Projection"]?.SetValue(Camera.Projection);
+        foreach (var e in GameContent.EfectosHUD) e.Parameters["Projection"]?.SetValue(Camera.Projection);
+        PistonDerby.GameContent.E_BlurEffect.Parameters["screenSize"]
+                .SetValue(new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+
+
 
         ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhong);
         ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhongTiles);
@@ -104,6 +115,26 @@ public class PistonDerby : Game
         
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         Auto.AsociarHUD(CarHUD);
+    }
+
+    private void ConfigureRenderTargets()
+    {
+        // Create a full screen quad to post-process
+        FullScreenQuad = new FullScreenQuad(GraphicsDevice);
+     
+        // Create render targets. 
+        // MainRenderTarget is used to store the scene color
+        // BloomRenderTarget is used to store the bloom color and switches with MultipassBloomRenderTarget
+        // depending on the pass count, to blur the bloom color
+        MainSceneRenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.Viewport.Width,
+            GraphicsDevice.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0,
+            RenderTargetUsage.DiscardContents);
+        FirstPassBloomRenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.Viewport.Width,
+            GraphicsDevice.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0,
+            RenderTargetUsage.DiscardContents);
+        SecondPassBloomRenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.Viewport.Width,
+            GraphicsDevice.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.None, 0,
+            RenderTargetUsage.DiscardContents);
     }
 
     protected override void Update(GameTime gameTime)
@@ -146,29 +177,109 @@ public class PistonDerby : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
-
         if(GameMenu.isRunning() && INITIAL_ANIMATION) {
             GameMenu.Draw(gameTime);
             return;
         }
+        
+        // Use the default blend and depth configuration
+        GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+        GraphicsDevice.BlendState = BlendState.Opaque;
+        
+        ////// DIBUJAMOS LA ESCENA PRINCIPAL
+
+        GraphicsDevice.SetRenderTarget(MainSceneRenderTarget);
+        GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
+
 
         foreach (var e in GameContent.Efectos){
-            e.Parameters["View"].SetValue(Camera.View);
-            e.Parameters["Time"]?.SetValue((float)gameTime.TotalGameTime.TotalSeconds);
+            e.Parameters["View"]?.SetValue(Camera.View);
         }
         foreach (ElementoDinamico elementoDinamico in ElementosDinamicos)
             elementoDinamico.Draw();
 
-        Auto.Draw(); 
+        Auto.Draw();
         foreach(AutoDummy a in AutosDummy) a.Draw();
         foreach(AutoAI a in AutosAI) a.Draw();
                  
         Casa.Draw();
         Gizmos.Draw();
+        CarHUD.Draw();
 
         this.DebugGizmos();
 
-        CarHUD.Draw();
+        //// DRAW BLOOM
+        // Set the render target as our bloomRenderTarget, we are drawing the bloom color into this texture
+        GraphicsDevice.SetRenderTarget(FirstPassBloomRenderTarget);
+        GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
+
+        Effect BloomEffect = PistonDerby.GameContent.E_BloomEffect;
+        BloomEffect.CurrentTechnique = BloomEffect.Techniques["BloomPass"];
+        BloomEffect.Parameters["baseTexture"].SetValue(PistonDerby.GameContent.TA_LightEmissionMap);
+
+        // We get the base transform for each mesh
+        // var modelMeshesBaseTransforms = new Matrix[Auto.Model.Bones.Count];
+        // Auto.Model.CopyAbsoluteBoneTransformsTo(modelMeshesBaseTransforms);
+        // Effect.Parameters["WorldViewProjection"].SetValue(Auto.World * Camera.View * Camera.Projection);
+        foreach (var modelMesh in Auto.Model.Meshes)
+        {
+            foreach (var part in modelMesh.MeshParts)
+                part.Effect = BloomEffect;
+
+            // We set the main matrices for each mesh to draw
+            // var worldMatrix = modelMeshesBaseTransforms[modelMesh.ParentBone.Index];
+
+            // WorldViewProjection is used to transform from model space to clip space
+            BloomEffect.Parameters["WorldViewProjection"].SetValue(Auto.World * Camera.View * Camera.Projection);
+
+            // Once we set these matrices we draw
+            modelMesh.Draw();
+        }
+
+        //// BLUR BLOOM
+
+        
+        #region Multipass Bloom
+        Effect BlurEffect = PistonDerby.GameContent.E_BlurEffect;
+
+        // Now we apply a blur effect to the bloom texture
+        // Note that we apply this a number of times and we switch
+        // the render target with the source texture
+        // Basically, this applies the blur effect N times
+        BlurEffect.CurrentTechnique = BlurEffect.Techniques["Blur"];
+
+        var bloomTexture = FirstPassBloomRenderTarget;
+        var finalBloomRenderTarget = SecondPassBloomRenderTarget;
+
+        
+        // Set the render target as null, we are drawing into the screen now!
+        GraphicsDevice.SetRenderTarget(finalBloomRenderTarget);
+        GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
+
+        BlurEffect.Parameters["baseTexture"].SetValue(bloomTexture);
+        FullScreenQuad.Draw(BlurEffect);
+
+        #endregion
+
+        #region Final Pass
+
+        // Set the depth configuration as none, as we don't use depth in this pass
+        GraphicsDevice.DepthStencilState = DepthStencilState.None;
+
+        // Set the render target as null, we are drawing into the screen now!
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.Black);
+
+        // Set the technique to our blur technique
+        // Then draw a texture into a full-screen quad
+        // using our rendertarget as texture
+        BloomEffect.CurrentTechnique = BloomEffect.Techniques["Integrate"];
+        BloomEffect.Parameters["baseTexture"].SetValue(MainSceneRenderTarget);
+        BloomEffect.Parameters["bloomTexture"].SetValue(finalBloomRenderTarget);
+        FullScreenQuad.Draw(BloomEffect);
+
+        #endregion
+
     }
     private void DebugGizmos()
     {
@@ -183,6 +294,10 @@ public class PistonDerby : Game
     {
         Simulation.Dispose();
         base.UnloadContent();
+        FullScreenQuad.Dispose();
+        FirstPassBloomRenderTarget.Dispose();
+        MainSceneRenderTarget.Dispose();
+        SecondPassBloomRenderTarget.Dispose();
     }
     private void ConfiguracionBlinnPhong(Effect e)
     {

@@ -33,6 +33,17 @@ internal class PowerUpBox : ElementoDinamico {
         // this.Body().Pose.Orientation = Quaternion.CreateFromYawPitchRoll(0,MathHelper.PiOver2,0).ToBepu();
         this.Body().BecomeKinematic();
     }
+    internal PowerUpBox(Vector3 pos, Vector3 rotacion) 
+    {
+        var PosicionInicial = pos * PistonDerby.S_METRO;
+        PosicionInicial.Y = PistonDerby.S_METRO * 0.2f; // Hard-code de la altura
+
+        Box box = new Box(Scale() * 1,Scale() * 1,Scale()* 1);
+        Shape = PistonDerby.Simulation.LoadShape<Box>(box);
+        this.AddToSimulation(PosicionInicial, Quaternion.Identity);
+        // this.Body().Pose.Orientation = Quaternion.CreateFromYawPitchRoll(0,MathHelper.PiOver2,0).ToBepu();
+        this.Body().BecomeKinematic();
+    }
     internal override void Update(float dTime, KeyboardState _)
     {
         StateTimer += dTime;

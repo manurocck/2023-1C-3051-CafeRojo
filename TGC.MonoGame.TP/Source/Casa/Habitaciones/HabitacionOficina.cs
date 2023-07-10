@@ -18,7 +18,7 @@ public class HabitacionOficina : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_SillaOficina)
             .ConPosicion(4f, 3f)
-            .ConColor(Color.Black)
+            .ConTextura(PistonDerby.GameContent.T_SillaOficina)
             .ConRotacion(-MathHelper.PiOver2,-MathHelper.PiOver4,0f)
             .ConEscala(2f);
         AddElemento(carpintero.BuildMueble());
@@ -35,6 +35,7 @@ public class HabitacionOficina : IHabitacion{
         carpintero.Modelo(PistonDerby.GameContent.M_Escritorio)
             .ConPosicion(3.5f, 3f)
             .ConTextura(PistonDerby.GameContent.T_Marmol)
+            .ConPatas(50f, 0, 170f, 20f, false)
             .ConRotacion(0f, MathHelper.Pi, 0f)
             .ConEscala(40f);
             //.ConAltura(5f);
@@ -42,14 +43,14 @@ public class HabitacionOficina : IHabitacion{
         
         carpintero.Modelo(PistonDerby.GameContent.M_Planta)
             .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
-            .ConPosicion(3.5f, 4f)
+            .ConPosicion(0.5f, LARGO-0.5f)
             .ConCaja(25f,150f,25f) // Ancho (x), Alto (y), Profundidad (z)
             .ConCorrimientoCaja(0,-10,0) // Corrimiento de la caja
             .ConEscala(4f);
         AddElemento(carpintero.BuildMueble());
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Plantis)
-            .ConPosicion(0.5f, LARGO-0.5f)
+            .ConPosicion(ANCHO-2, 1)
             .ConPBRempaquetado(PistonDerby.GameContent.T_Plantis_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Plantis_BaseColorMap, PistonDerby.GameContent.T_Plantis_NormalMap)
             .ConCaja(65f,200f,65f) // Ancho (x), Alto (y), Profundidad (z)
             .ConCorrimientoCaja(0,-10,0)
@@ -59,25 +60,3 @@ public class HabitacionOficina : IHabitacion{
 
 
  }
-//         public override void DrawElementos(){
-//             var bShader = PistonDerby.GameContent.E_BasicShader;
-//             var tShader = PistonDerby.GameContent.E_TextureShader;
-//             foreach(var e in Elementos){
-//                 switch(e.GetTag()){
-//                     case "SillaOficina":
-//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_SillaOficina);
-//                     break;
-//                     case "Escritorio":
-//                         tShader.Parameters["Texture"].SetValue(PistonDerby.GameContent.T_PisoMadera);
-//                     break;
-//                     case "Cafe-Rojo":
-//                         bShader.Parameters["DiffuseColor"].SetValue(Color.Red.ToVector3());
-//                     break;
-//                     default:
-//                     break;
-//                 }
-//                 e.Draw();
-//             }
-//         }
-//     }    
-// }

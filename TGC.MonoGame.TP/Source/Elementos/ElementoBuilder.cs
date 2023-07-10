@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +10,8 @@ namespace PistonDerby.Elementos;
 public class ElementoBuilder{
     private Model Model;
     private Box Caja;
+    private List<Box> Patas;
+    private List<Vector3> CorrimientoPatas;
     private Vector3 CorrimientoCaja;
     private Vector3 PosicionRelativa;
     private Vector3 Corrimiento = Vector3.Zero;
@@ -25,6 +29,8 @@ public class ElementoBuilder{
         Drawer = new ColorDrawer(Color.Magenta);
         Caja = new Box(0.001f,0.001f,0.001f);
         CorrimientoCaja = Vector3.Zero;
+        Patas = new List<Box>();
+        CorrimientoPatas = new List<Vector3>();
     }
     public ElementoBuilder Modelo(Model modelo3d){
         Model = modelo3d;
@@ -80,7 +86,10 @@ public class ElementoBuilder{
     }
     public ElementoEstatico BuildMueble(){
         Corrimiento += PosicionRelativa;
-        ElementoEstatico elemento = new ElementoEstatico(CorrimientoCaja, Caja, Model, Drawer, Corrimiento, Rotacion, Escala);
+
+        ElementoEstatico elemento = (Patas.Count == 0)?
+                 new ElementoEstatico(CorrimientoCaja, Caja, Model, Drawer, Corrimiento, Rotacion, Escala) :
+                 new ElementoEstatico(CorrimientoPatas, Patas, Model, Drawer, Corrimiento, Rotacion, Escala);
 
         return elemento;
     }
@@ -90,8 +99,21 @@ public class ElementoBuilder{
 
         return elemento;
     }
-    // public ElementoEstatico BuildDinamico(){
-    //     Corrimiento += PosicionRelativa;
-    //     return new ElementoDinamico(Drawer, Corrimiento, Rotacion, Escala);
-    // }
+
+    internal ElementoBuilder ConPatas(float separacionX, float corrimientoAltura, float separacionZ, float radioPata, bool esVertical=true) 
+    {
+        if(esVertical)
+            for(int i = 0; i < 4; i++) 
+                Patas.Add(new Box(radioPata, radioPata,100));
+        else
+            for(int i = 0; i < 4; i++) 
+                Patas.Add(new Box(100, radioPata, radioPata));
+                
+        CorrimientoPatas.Add(new Vector3(separacionX, corrimientoAltura, separacionZ));
+        CorrimientoPatas.Add(new Vector3(-separacionX, corrimientoAltura, separacionZ));
+        CorrimientoPatas.Add(new Vector3(separacionX, corrimientoAltura, -separacionZ));
+        CorrimientoPatas.Add(new Vector3(-separacionX, corrimientoAltura, -separacionZ));
+
+        return this;
+    }
 }

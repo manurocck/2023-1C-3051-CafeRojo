@@ -17,39 +17,14 @@ float4x4 World;
 float4x4 View;
 float4x4 Projection;
 
-// float MetrosAncho;
-// float MetrosLargo;
-
 texture Texture;
-sampler2D TextureSampler = sampler_state
+sampler2D textureSampler = sampler_state
 {
     Texture = (Texture);
     MagFilter = Linear;
     MinFilter = Linear;
     AddressU = Wrap;
     AddressV = Wrap;
-};
-
-texture Filter;
-sampler2D FilterSampler = sampler_state
-{
-    Texture = (Filter);
-    MagFilter = Linear;
-    MinFilter = Linear;
-    AddressU = Mirror;
-    AddressV = Mirror;
-};
-
-struct VertexShaderInput
-{
-	float4 Position : POSITION0;
-    float2 TextureCoordinate : TEXCOORD0;
-};
-
-struct VertexShaderOutput
-{
-	float4 Position : SV_POSITION;
-    float2 TextureCoordinate : TEXCOORD0;
 };
 float4 rgba_to_hsva(float4 rgba)
 {
@@ -124,31 +99,45 @@ float4 hsva_to_rgba(float4 hsva)
 
     return rgba;
 }
+struct VertexShaderInput
+{
+	float4 Position : POSITION0;
+    float4 TextureCoordinate : TEXCOORD0;
+};
+
+struct VertexShaderOutput
+{
+	float4 Position : SV_POSITION;
+    float4 TextureCoordinate : TEXCOORD0;
+};
+
 VertexShaderOutput MainVS(in VertexShaderInput input)
 {
     // Clear the output
 	VertexShaderOutput output = (VertexShaderOutput)0;
+    // Model space to World space
     float4 worldPosition = mul(input.Position, World);
-    float4 viewPosition = mul(worldPosition, View);
+    // World space to View space
+    float4 viewPosition = mul(worldPosition, View);	
+	// View space to Projection space
     output.Position = mul(viewPosition, Projection);
-
     output.TextureCoordinate = input.TextureCoordinate;
-	
+
     return output;
 }
 
-float4 MainPS(VertexShaderOutput input) : COLOR0
+float4 MainPS(VertexShaderOutput input) : COLOR
 {
-    float4 colorTexture = tex2D(TextureSampler, input.TextureCoordinate);
-    
-    input.TextureCoordinate.x = input.TextureCoordinate.x*0.25;
-    input.TextureCoordinate.y = input.TextureCoordinate.y;
-    float4 colorOverlap = tex2D(FilterSampler, input.TextureCoordinate);
+    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate.xy);
 
-    if(colorOverlap.r<0.2){
-        discard;
-    }
-    return float4(colorTexture.rgb,1);
+    if(textureColor.a<0.01) discard;
+
+    textureColor = rgba_to_hsva(textureColor);
+    textureColor.z -= 0.1;
+    textureColor.a -= 0.4;
+    textureColor = hsva_to_rgba(textureColor);
+
+    return textureColor;
 }
 
 technique BasicColorDrawing

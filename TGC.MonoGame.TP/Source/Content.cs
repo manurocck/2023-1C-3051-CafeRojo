@@ -24,7 +24,7 @@ public class Content
     #region modelos
     internal Model 
             M_Alfil, M_Torre, M_Auto, M_AutoEnemigo, M_Inodoro, M_Misil, M_SillaOficina, M_CafeRojo, M_Silla, M_Mesa, M_Sillon, 
-            M_Televisor , M_MuebleTV, M_Planta , M_Escritorio, M_Cocine, M_Plantis, M_Lego, M_Baniera,M_Sofa, M_Mesita, M_Aparador, 
+            M_Televisor , M_MuebleTV, M_Planta , M_Escritorio, M_Cocine, M_Plantis, M_Lego, M_Baniera,M_Sofa, M_Mesita, 
             M_Bacha, M_Organizador, M_Cajonera, M_CamaMarinera , M_MesadaCentral, M_MesadaLateral, M_MesadaLateral2, M_Alacena, 
             M_Botella, M_Maceta, M_Maceta2, M_Maceta3, M_Maceta4, M_Olla, M_ParedCocina, M_Plato, M_PlatoGrande, M_PlatosApilados,
             M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1, M_Gato, M_Hombrepiedra, M_Lena, 
@@ -35,7 +35,7 @@ public class Content
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
                         E_PBRShader, E_BulletShader, E_PBRpackedShader, E_BlinnPhong, E_BlinnPhongTiles
-                        , E_DeadEnemyShader;
+                        , E_DeadEnemyShader, E_BloomEffect, E_BlurEffect;
     internal readonly Effect HE_HealthHUD, HE_TurboHUD, HE_TextureHUD;
     #endregion
     
@@ -87,6 +87,8 @@ public class Content
         Efectos.Add(E_BlinnPhong         = LoadEffect("BlinnPhong")             );
         Efectos.Add(E_BlinnPhongTiles    = LoadEffect("BlinnPhongTiles")        );
         Efectos.Add(E_DeadEnemyShader    = LoadEffect("DeadEnemyShader")        );
+        Efectos.Add(E_BloomEffect        = LoadEffect("Bloom")        );
+        Efectos.Add(E_BlurEffect         = LoadEffect("GaussianBlur")        );
         
         EfectosHUD.Add(HE_HealthHUD   = LoadEffect("HealthHUD"));
         EfectosHUD.Add(HE_TurboHUD    = LoadEffect("TurboHUD"));
@@ -110,9 +112,9 @@ public class Content
         T_PisoAlfombrado    = LoadTexture("PisoAlfombra");
         T_AlfombraHabitacion= LoadTexture("AlfombraHabitacion");
         T_MysteryBox        = LoadTexture("MysteryBox");
-        T_SillaOficina      = LoadTexture("Muebles/SillaOficina");
         T_Dragon            = LoadTexture("Muebles/Dragon");
         T_CombatVehicle     = LoadTexture("Autos/CombatVehicle");
+        T_SillaOficina      = LoadTexture("Muebles/SillaOficina/SillaOficina");
 
         // Texturas del auto RacingCar (PBR)
         TA_BaseColor       = LoadTexture("Autos/RacingCar/BaseColor");
@@ -179,7 +181,6 @@ public class Content
         M_MuebleTV          = LoadModel("Muebles/", "MuebleTV"    );
         M_Mesita            = LoadModel("Muebles/", "Mesita"      );
         M_Sofa              = LoadModel("Muebles/", "Sofa"        );
-        M_Aparador          = LoadModel("Muebles/", "Aparador"    );
         M_Piano             = LoadModel("Muebles/", "Piano"       );
 
         //Oficina

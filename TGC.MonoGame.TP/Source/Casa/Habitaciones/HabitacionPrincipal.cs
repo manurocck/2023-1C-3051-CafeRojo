@@ -15,45 +15,67 @@ public class HabitacionPrincipal : IHabitacion{
     private void Amueblar(){
         var carpintero = new ElementoBuilder(this.PuntoInicio());
         
+        
+        carpintero.Modelo(PistonDerby.GameContent.M_Planta)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Planta_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Planta_BaseColorMap, PistonDerby.GameContent.T_Planta_NormalMap)
+            .ConPosicion(2f, ANCHO-2f)
+            .ConCaja(25f,150f,25f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-10,0) // Corrimiento de la caja
+            .ConEscala(4f);
+        AddElemento(carpintero.BuildMueble());
+                
+        carpintero.Modelo(PistonDerby.GameContent.M_Plantis)
+            .ConPosicion(0.5f, LARGO-0.5f)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Plantis_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Plantis_BaseColorMap, PistonDerby.GameContent.T_Plantis_NormalMap)
+            .ConCaja(65f,200f,65f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-10,0)
+            .ConEscala(5f);
+        AddElemento(carpintero.BuildMueble());
+
+        ///////////////////// JUEGO DE MESA
+        
+        Vector2 corrimiento = new Vector2(3f, 1f);
+
         carpintero.Modelo(PistonDerby.GameContent.M_Mesa)
-            .ConPosicion(5, 4.2f)
+            .ConPosicion(5+corrimiento.X, 4.2f+corrimiento.Y)
             .ConTextura(PistonDerby.GameContent.T_MarmolNegro)
             .ConEscala(2.4f)
             .ConRotacion(0, MathHelper.PiOver2, 0);
             
             AddElemento( carpintero.BuildMueble() );
         
-        /////////////////////
+
         carpintero.Modelo(PistonDerby.GameContent.M_Silla)
             .ConTextura(PistonDerby.GameContent.T_MaderaNikari)
             .ConAltura(0.3f)
+            .ConPatas(50f, -80f, 50f, 10f)
             .ConEscala(2f)
             .ConRotacion(-MathHelper.PiOver2, 0, 0)
-            .ConPosicion(7, 3); // cabecera
+            .ConPosicion(5+corrimiento.X, 3+corrimiento.Y); // cabecera
             AddElemento( carpintero.BuildMueble() );
 
             carpintero
-            .ConPosicion(5,5.15f) // contra-cabecera
+            .ConPosicion(5+corrimiento.X,5.15f+corrimiento.Y) // contra-cabecera
             .ConRotacion(-MathHelper.PiOver2, MathHelper.Pi, 0);
             AddElemento( carpintero.BuildMueble() );
 
             carpintero
-            .ConPosicion(4.5f,3.75f) // lado superior cerca de cabecera
+            .ConPosicion(4.5f+corrimiento.X,3.75f+corrimiento.Y) // lado superior cerca de cabecera
             .ConRotacion(-MathHelper.PiOver2, MathHelper.PiOver2, 0);
             AddElemento( carpintero.BuildMueble() );
         
             carpintero
-            .ConPosicion(4.5f,4.5f) // lado superior cerca de contra-cabecera
+            .ConPosicion(4.5f+corrimiento.X,4.5f+corrimiento.Y) // lado superior cerca de contra-cabecera
             .ConRotacion(-MathHelper.PiOver2, MathHelper.PiOver2, 0);
             AddElemento( carpintero.BuildMueble() );
 
             carpintero
-            .ConPosicion(5.5f,3.75f) // lado inferior cerca de cabecera
+            .ConPosicion(5.5f+corrimiento.X,3.75f+corrimiento.Y) // lado inferior cerca de cabecera
             .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*0.7f, 0);
             AddElemento( carpintero.BuildMueble() );
 
             carpintero
-            .ConPosicion(5.5f,4.5f) // lado inferior cerca de contra-cabecera
+            .ConPosicion(5.5f+corrimiento.X,4.5f+corrimiento.Y) // lado inferior cerca de contra-cabecera
             .ConRotacion(-MathHelper.PiOver2, -MathHelper.PiOver2*1.3f, 0);
             AddElemento( carpintero.BuildMueble() );
         /////////////////////
@@ -100,7 +122,7 @@ public class HabitacionPrincipal : IHabitacion{
             AddElemento( carpintero.BuildMueble() );
             
             carpintero
-            .ConPosicion(5, 4.2f)
+            .ConPosicion(5+corrimiento.X, 4.2f+corrimiento.Y)
             .ConAltura(0.6f); // el de la mesa
 
             AddElemento( carpintero.BuildMueble() );
@@ -128,15 +150,6 @@ public class HabitacionPrincipal : IHabitacion{
             .ConPosicion(1.5f, ANCHO-1f)
             .ConAltura(0.4f);
             AddElemento( carpintero.BuildMueble() ); 
-
-        #region Autos Enemigos
-
-            for(int i=1; i<6; i++){
-                PistonDerby.ElementosDinamicos.Add(new PowerUpBox(i*1f,1f,6f, Vector3.Zero)); // Fila vertical
-                PistonDerby.ElementosDinamicos.Add(new PowerUpBox(2f,1f,i*1f, Vector3.Zero));  // Fila horizontal
-            }
-        
-        #endregion
 
         #region LEGOS CHIQUITOS
         carpintero.Modelo(PistonDerby.GameContent.M_Lego);

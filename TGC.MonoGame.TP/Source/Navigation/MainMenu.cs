@@ -70,7 +70,7 @@ internal class MainMenu : IMenuItem
         efecto.Parameters["View"].SetValue(HUDView);
         efecto.Parameters["World"].SetValue(AjusteQuad() * QuadSize(0.75f,0.75f) * AjusteFinal(1));
         efecto.Parameters["Texture"].SetValue(PistonDerby.GameContent.TM_Play);
-        efecto.Parameters["Time"].SetValue(secondsElapsed%1);
+        efecto.Parameters["Time"].SetValue(secondsElapsed);
 
         PistonDerby.GameContent.G_Quad.Draw(efecto);
         efecto.Parameters["Time"].SetValue(1);

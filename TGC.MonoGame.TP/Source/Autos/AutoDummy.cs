@@ -16,7 +16,7 @@ internal class AutoDummy : Auto
     internal override IDrawer StateDrawer => CarDrawerState();
     internal AutoDummy(Vector3 posicionInicial) : base(posicionInicial){
         DrawerStates = new IDrawer[]{
-                    new CarDrawer(this),
+                    new CarDrawer(this).ConColor(Color.Orange),
                     new DeadCarDrawer(this)}; 
     }
     private Random miRandom = new Random();
@@ -53,8 +53,10 @@ internal class AutoDummy : Auto
         
         base.Update(dTime, keyboard);
     }
+    internal override bool OnCollision(Elemento other) => !isDead;
     internal override bool OnCollision(Elemento other, Vector3 normal, float profundidad)
     {
+        if(isDead) return false;
         if(other is MachineGun bala){
             if(!Inmune()){
                 this.ApplyLinearImpulse(-normal * profundidad);
@@ -64,5 +66,5 @@ internal class AutoDummy : Auto
 
         return true;
     }
-    
+    public bool IsDead() => isDead;
 }

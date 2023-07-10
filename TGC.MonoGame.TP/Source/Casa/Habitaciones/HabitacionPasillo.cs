@@ -11,20 +11,31 @@ public class HabitacionPasillo : IHabitacion{
 
         var posicionInicial = new Vector3(posicionX,0f,posicionZ);
 
-       // Amueblar();
+       Amueblar();
 
     }
-/*
      private void Amueblar(){
         var carpintero = new ElementoBuilder(this.PuntoInicio());
-        
-        carpintero.Modelo(PistonDerby.GameContent.M_Gato)
-            .ConPosicion(2.25f,0.4f)
-            .ConAltura(0.45f)
-            .ConColor(Color.White)
-            .ConEscala(0.45f);
-            AddElemento(carpintero.BuildMueble());
+    
+        carpintero.Modelo(PistonDerby.GameContent.M_Plantis)
+            .ConPosicion(1, 1)
+            .ConPBRempaquetado(PistonDerby.GameContent.T_Plantis_RoughnessMetallicOpacityMap, PistonDerby.GameContent.T_Plantis_BaseColorMap, PistonDerby.GameContent.T_Plantis_NormalMap)
+            .ConCaja(65f,200f,65f) // Ancho (x), Alto (y), Profundidad (z)
+            .ConCorrimientoCaja(0,-10,0)
+            .ConEscala(5f);
+        AddElemento(carpintero.BuildMueble());
 
-    }*/
+            carpintero.ConPosicion(LARGO-1, 1);
+        AddElemento(carpintero.BuildMueble());
+            carpintero.ConPosicion(LARGO-1, 3);
+        AddElemento(carpintero.BuildMueble());
+            carpintero.ConPosicion(LARGO-1, 5);
+        AddElemento(carpintero.BuildMueble());
+            carpintero.ConPosicion(1, 3);
+        AddElemento(carpintero.BuildMueble());
+            carpintero.ConPosicion(1, 5);
+        AddElemento(carpintero.BuildMueble());
+
+    }
 
 }

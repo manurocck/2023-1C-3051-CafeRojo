@@ -266,6 +266,5 @@ internal class Auto : ElementoDinamico {
             if(DisplayEstado.HasAmmo())
                 MachineGun.Draw();
         base.Draw();
-    }
-
+    }        
 }

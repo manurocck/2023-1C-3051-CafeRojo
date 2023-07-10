@@ -37,6 +37,12 @@
 /processorParam:DebugMode=Auto
 /build:Effects/BlinnPhongTiles.fx
 
+#begin Effects/Bloom.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/Bloom.fx
+
 #begin Effects/BulletShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -54,6 +60,12 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Effects/DeTextura/TextureMirror.fx
+
+#begin Effects/GaussianBlur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/GaussianBlur.fx
 
 #begin Effects/Gizmos.fx
 /importer:EffectImporter
@@ -307,25 +319,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Models/Muebles/Alfil/Alfil.obj
-
-#begin Models/Muebles/Aparador/Aparador.FBX
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Models/Muebles/Aparador/Aparador.FBX
 
 #begin Models/Muebles/Armario1/Armario1.fbx
 /importer:FbxImporter
@@ -1706,7 +1699,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Muebles/Plantis/RoughnessMetallicOpacityMap.tga
 
-#begin Textures/Muebles/SillaOficina.jpg
+#begin Textures/Muebles/SillaOficina/SillaOficina.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1716,7 +1709,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/Muebles/SillaOficina.jpg
+/build:Textures/Muebles/SillaOficina/SillaOficina.jpg
 
 #begin Textures/MysteryBox.jpg
 /importer:TextureImporter

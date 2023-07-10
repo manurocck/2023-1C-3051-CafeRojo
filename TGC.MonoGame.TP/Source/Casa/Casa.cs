@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PistonDerby.Autos.PowerUps;
 using PistonDerby.Mapa;
 using PistonDerby.Utils.Iluminacion;
 
@@ -24,11 +25,22 @@ public class Casa {
         DisponerHabitaciones();
         ConstruirParedes();
         InstalarLuces();
+        DesplegarPowerUps();
 
         for(int i=indexInicioExteriores ; i<Esqueleto.Count; i++) // paredes traslúcidas
             Esqueleto[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
         for(int i=indexInicioPuertasExteriores ; i<Puertas.Count; i++) // puertas traslúcidas
             Puertas[i].SetEffect(PistonDerby.GameContent.E_BlacksFilter);
+    }
+
+    private void DesplegarPowerUps()
+    {
+        foreach(var h in Habitaciones){
+            PistonDerby.ElementosDinamicos.Add(new PowerUpBox(h.PuntoCentro()/S_METRO+Vector3.UnitX, Vector3.Zero));
+            PistonDerby.ElementosDinamicos.Add(new PowerUpBox(h.PuntoCentro()/S_METRO-Vector3.UnitX, Vector3.Zero));
+            PistonDerby.ElementosDinamicos.Add(new PowerUpBox(h.PuntoCentro()/S_METRO+Vector3.UnitZ, Vector3.Zero));
+            PistonDerby.ElementosDinamicos.Add(new PowerUpBox(h.PuntoCentro()/S_METRO-Vector3.UnitZ, Vector3.Zero));
+        }
     }
 
     private void InstalarLuces()
@@ -125,15 +137,12 @@ public class Casa {
             >>> ¿Cómo identificar paredes cortadas? 
                 Su primer punto es el final de un segmento      */
         
-        Esqueleto.Add(new Pared(hDormiLego.SegmentoIzquierda().inicio, hDormiLego.SegmentoIzquierda().final ));
-        Esqueleto.Add(new Pared(hCocina   .SegmentoDerecha  ().inicio, hCocina   .SegmentoDerecha  ().final ));
         Esqueleto.Add(new Pared(hCocina   .SegmentoSuperior ().inicio, hCocina   .SegmentoSuperior ().final ));
         Esqueleto.Add(new Pared(hDormiLego.SegmentoDerecha  ().inicio, hDormiLego.SegmentoDerecha  ().final ));
         Esqueleto.Add(new Pared(hDormiLego.SegmentoSuperior ().inicio, hDormiLego.SegmentoSuperior ().final ));
         Esqueleto.Add(new Pared(hToilette .SegmentoSuperior ().inicio, hToilette .SegmentoSuperior ().final ));
         Esqueleto.Add(new Pared(hOficina .SegmentoDerecha  ().inicio, hOficina .SegmentoDerecha  ().final ));
         Esqueleto.Add(new Pared(hPasillo  .SegmentoDerecha ().inicio, hPasillo  .SegmentoDerecha ().final ));
-        Esqueleto.Add(new Pared(hPasillo  .SegmentoInferior ().inicio, hOficina  .SegmentoSuperior ().inicio ));
         indexInicioExteriores = Esqueleto.Count;
 
         indexInicioPuertasExteriores = Puertas.Count;
@@ -144,6 +153,9 @@ public class Casa {
         Puertas.Add(new Puerta(hPrincipal.SegmentoDerecha ().inicio, hPrincipal.SegmentoDerecha ().final,  0.3f));
 
         //      Paredes exteriores
+        Esqueleto.Add(new Pared(hPasillo  .SegmentoInferior ().inicio, hOficina  .SegmentoSuperior ().inicio ));
+        Esqueleto.Add(new Pared(hDormiLego.SegmentoIzquierda().inicio, hDormiLego.SegmentoIzquierda().final ));
+        Esqueleto.Add(new Pared(hCocina   .SegmentoDerecha  ().inicio, hCocina   .SegmentoDerecha  ().final ));
         Esqueleto.Add(new Pared(hPrincipal.SegmentoInferior ().inicio, hPrincipal.SegmentoInferior ().final));
         Esqueleto.Add(new Pared(hPrincipal.SegmentoIzquierda().inicio, hPrincipal.SegmentoIzquierda().final));
         Esqueleto.Add(new Pared(hPrincipal.SegmentoSuperior ().final,  hCocina   .SegmentoInferior ().final));
