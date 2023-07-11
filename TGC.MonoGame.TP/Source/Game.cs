@@ -13,6 +13,7 @@ using PistonDerby.Gizmo;
 using PistonDerby.HUD;
 using PistonDerby.Autos;
 using TGC.MonoGame.Samples.Geometries;
+using PistonDerby.Autos.PowerUps;
 
 namespace PistonDerby;
 
@@ -20,8 +21,8 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
-    internal static bool DEBUG_GIZMOS = true;
-    internal static bool FULL_SCREEN = false;
+    internal static bool DEBUG_GIZMOS = false;
+    internal static bool FULL_SCREEN = true;
     internal static bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
     private SpriteBatch SpriteBatch;
@@ -42,6 +43,8 @@ public class PistonDerby : Game
     private RenderTarget2D FirstPassBloomRenderTarget ;
     private RenderTarget2D SecondPassBloomRenderTarget ;
 
+    private int AutosVivos = 0;
+
     public PistonDerby() {
         Graphics = new GraphicsDeviceManager(this);
         IsMouseVisible = true;
@@ -61,8 +64,8 @@ public class PistonDerby : Game
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
 
         Graphics.IsFullScreen = FULL_SCREEN;
 
@@ -108,11 +111,13 @@ public class PistonDerby : Game
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.75f));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(3)*0.75f));
 
         Auto   = new Auto (Casa.PuntoCentro(3));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(0)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(1)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)*0.5f));
+        AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(3)*0.5f));
         
         
         CarHUD = new CarHUD(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -163,8 +168,11 @@ public class PistonDerby : Game
 
         Casa.Update(dTime, keyboardState);
         Auto.Update(dTime, Keyboard.GetState());
-        foreach(AutoDummy a in AutosDummy)
+        AutosVivos = 0;
+        foreach(AutoDummy a in AutosDummy){
+            AutosVivos += (a.Vida>0)? 1 : 0;
             a.Update(dTime);
+        }
         foreach(AutoAI a in AutosAI){
             a.Update(dTime);
             a.RecordTime((float)gameTime.TotalGameTime.TotalSeconds);
@@ -176,6 +184,7 @@ public class PistonDerby : Game
         Camera.Update(Auto.World);
 
         Simulation.Update();
+
         base.Update(gameTime);
     }
     protected override void Draw(GameTime gameTime)
@@ -185,7 +194,7 @@ public class PistonDerby : Game
             GameMenu.Draw(gameTime);
             return;
         }
-        
+                
         // Use the default blend and depth configuration
         GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         GraphicsDevice.BlendState = BlendState.AlphaBlend;
@@ -216,29 +225,21 @@ public class PistonDerby : Game
         // Set the render target as our bloomRenderTarget, we are drawing the bloom color into this texture
         GraphicsDevice.SetRenderTarget(FirstPassBloomRenderTarget);
         GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
-
         Effect BloomEffect = PistonDerby.GameContent.E_BloomEffect;
         BloomEffect.CurrentTechnique = BloomEffect.Techniques["BloomPass"];
-        BloomEffect.Parameters["baseTexture"].SetValue(PistonDerby.GameContent.TA_LightEmissionMap);
 
-        // We get the base transform for each mesh
-        // var modelMeshesBaseTransforms = new Matrix[Auto.Model.Bones.Count];
-        // Auto.Model.CopyAbsoluteBoneTransformsTo(modelMeshesBaseTransforms);
-        // Effect.Parameters["WorldViewProjection"].SetValue(Auto.World * Camera.View * Camera.Projection);
-        foreach (var modelMesh in Auto.Model.Meshes)
-        {
-            foreach (var part in modelMesh.MeshParts)
-                part.Effect = BloomEffect;
 
-            // We set the main matrices for each mesh to draw
-            // var worldMatrix = modelMeshesBaseTransforms[modelMesh.ParentBone.Index];
 
-            // WorldViewProjection is used to transform from model space to clip space
-            BloomEffect.Parameters["WorldViewProjection"].SetValue(Auto.World * Camera.View * Camera.Projection);
-
-            // Once we set these matrices we draw
-            modelMesh.Draw();
+        Auto.Bloom(Camera);
+        // Bloom powerupboxes
+        float sequence = 0;
+        foreach(ElementoDinamico e in ElementosDinamicos){
+            if(e is PowerUpBox p){
+                p.Bloom(Camera, ((float)gameTime.TotalGameTime.TotalSeconds+sequence)%3);
+                sequence+=0.2f;
+            }
         }
+
 
         //// BLUR BLOOM
 
@@ -293,6 +294,17 @@ public class PistonDerby : Game
         FullScreenQuad.Draw(BloomEffect);
 
         #endregion
+
+        SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+                               "Aun te quedan " + AutosVivos.ToString() + " enemigos vivos !",
+                               new Vector2(GraphicsDevice.Viewport.Width - 500, 0),
+                               Color.Red);
+        SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+                               "Tiempo actual : " + Convert.ToInt32(gameTime.TotalGameTime.TotalSeconds),
+                               new Vector2(GraphicsDevice.Viewport.Width * 0.5f, 25),
+                               Color.White);
+        SpriteBatch.End();
 
     }
     private void DebugGizmos()

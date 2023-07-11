@@ -66,8 +66,9 @@ internal class PerseguirState : AIState
         // Valores desde 0 : justo adelante a 3.14: justo atras
         float angulo = MathF.Acos(direccion.DotProduct(fowardVector)/(direccion.Length()*fowardVector.Length()));
         
-        if(angulo > 0.9)
+        if(angulo > 0.9){
             listOfKeys.Add(Keys.A);
+        }
         if(autoAI.LinearVelocity().Length() < VELOCIDAD_MAX){
             // Mover hacia adelante
             listOfKeys.Add(Keys.W);

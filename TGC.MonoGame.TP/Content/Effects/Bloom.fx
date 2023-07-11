@@ -8,6 +8,7 @@
 #endif
 
 float4x4 WorldViewProjection;
+float3 colorToBloom;
 
 texture baseTexture;
 sampler2D textureSampler = sampler_state
@@ -62,7 +63,7 @@ float4 BloomPS(VertexShaderOutput input) : COLOR
     float filter = step(0.15, distanceToTargetColor);
     // filter colors that are not redish
     
-    return float4(float3(1,0,0) * filter, 1);
+    return float4(colorToBloom * filter, 1);
 }
 
 VertexShaderOutput PostProcessVS(in VertexShaderInput input)
@@ -78,7 +79,7 @@ float4 BloomIntegratePS(in VertexShaderOutput input) : COLOR
     float4 bloomColor = tex2D(bloomTextureSampler, input.TextureCoordinates);
     float4 sceneColor = tex2D(textureSampler, input.TextureCoordinates);
     
-    return sceneColor * 0.5 + bloomColor*3;
+    return sceneColor * 0.7 + bloomColor*3;
 }
 
 technique BloomPass

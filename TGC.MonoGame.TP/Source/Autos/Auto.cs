@@ -142,7 +142,6 @@ internal class Auto : ElementoDinamico {
         //
         Vector3 angularImpulse = this.Rotation().Up() * (ANGULAR_SPEED * 2) * WheelTurning; /* (* Math.Min(porcentajeVelocidad * 4, 1)) */ // Si le ponemos eso, no se despega de la pared
         this.ApplyAngularImpulse(angularImpulse);
-        // MachineGun.ApplyAngularImpulse(angularImpulse);
                
         //      HorizontalImpulse : El impulso se aplica desde la "trompa" del auto (offsetAmount).
         //                          Si está en el piso, la dirección será la de la rotación actual.
@@ -153,7 +152,6 @@ internal class Auto : ElementoDinamico {
         horizontalImpulse *= keyboard.AccelerationSense() * linear_speed;
         float offsetAmount = 2f; //habría que generalizarlo para ubicar exáctamente en donde están las ruedas o un poquito más adelante
         this.ApplyLinearImpulse(horizontalImpulse, offsetAmount);
-        // MachineGun.ApplyLinearImpulse(horizontalImpulse, offsetAmount);
         //
         //      VerticalImpulse :   Salto. Se aplica sobre el Vector "Up" del auto.
         //                          Toma potencia según JUMP_POWER.
@@ -164,7 +162,6 @@ internal class Auto : ElementoDinamico {
             TimerVolcado = 0;
             Vector3 verticalImpulse = this.Rotation().Up() * JUMP_POWER ;
             this.ApplyLinearImpulse(verticalImpulse);
-            // MachineGun.ApplyLinearImpulse(verticalImpulse);
 
             PuedeSaltar = false;
         }
@@ -185,17 +182,16 @@ internal class Auto : ElementoDinamico {
                         offsetDirection = Body().Pose.Orientation.Left();
                     }
                     this.ApplyImpulse(correctiveImpulse, offsetDirection * this.Scale());
-                    // MachineGun.ApplyImpulse(correctiveImpulse, offsetDirection * this.Scale());
                 }else{ // Totalmente dado vuelta
                     Vector3 correctiveImpulse = -Body().Pose.Orientation.Up() * JUMP_POWER * 0.4f;
                     this.ApplyImpulse(correctiveImpulse, Body().Pose.Orientation.Left() * this.Scale());
-                    // MachineGun.ApplyImpulse(correctiveImpulse, Body().Pose.Orientation.Left() * this.Scale());
+                    
                 }
 
                 if(TimerVolcado>5){
                     Vector3 correctiveImpulse = Body().Pose.Orientation.Up() * JUMP_POWER * 1.5f;
                     this.ApplyImpulse(correctiveImpulse, (Body().Pose.Orientation.Left()+Body().Pose.Orientation.Forward()) * this.Scale());
-                    // MachineGun.ApplyImpulse(correctiveImpulse, (Body().Pose.Orientation.Left()+Body().Pose.Orientation.Forward()) * this.Scale());
+                    
                 }
             }
         }
@@ -258,5 +254,35 @@ internal class Auto : ElementoDinamico {
             if(DisplayEstado.HasAmmo())
                 MachineGun.Draw();
         base.Draw();
-    }        
+    }
+
+    internal void Bloom(Camera camera)
+    {
+        Effect BloomEffect = PistonDerby.GameContent.E_BloomEffect;
+        BloomEffect.Parameters["baseTexture"].SetValue(PistonDerby.GameContent.TA_LightEmissionMap);
+        BloomEffect.Parameters["colorToBloom"].SetValue(Vector3.UnitX); //bloom color rojo
+        
+
+        // We get the base transform for each mesh
+        // var modelMeshesBaseTransforms = new Matrix[Auto.Model.Bones.Count];
+        // Auto.Model.CopyAbsoluteBoneTransformsTo(modelMeshesBaseTransforms);
+        // Effect.Parameters["WorldViewProjection"].SetValue(Auto.World * Camera.View * Camera.Projection);
+        foreach (var modelMesh in Model.Meshes)
+        {
+            foreach (var part in modelMesh.MeshParts)
+                part.Effect = BloomEffect;
+
+            // We set the main matrices for each mesh to draw
+            // var worldMatrix = modelMeshesBaseTransforms[modelMesh.ParentBone.Index];
+
+            // WorldViewProjection is used to transform from model space to clip space
+            BloomEffect.Parameters["WorldViewProjection"].SetValue(World * camera.View * camera.Projection);
+
+            // Once we set these matrices we draw
+            modelMesh.Draw();
+        }
+
+        MachineGun.Bloom(camera);
+    }
+    internal bool HasAmmo() => this.DisplayEstado.HasAmmo();
 }

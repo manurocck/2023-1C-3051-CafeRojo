@@ -31,8 +31,10 @@ public class Content
             M_Botella, M_Maceta, M_Maceta2, M_Maceta3, M_Maceta4, M_Olla, M_ParedCocina, M_Plato, M_PlatoGrande, M_PlatosApilados,
             M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1, M_Gato, M_Hombrepiedra, M_Lena, 
             M_Lamparamesita, M_Lobo, M_Libro, M_Piano, M_Robot, M_BrMisil;
+
+    internal readonly SpriteFont CascadiaPLFont;
     #endregion
-    
+
     #region efectos
     internal readonly Effect E_BasicShader, E_TextureShader, E_SpiralShader, E_BlacksFilter, 
                         E_TwoTextureMix, E_TextureTiles, E_Traslucid, E_TextureItermitente, E_TextureMirror,
@@ -234,6 +236,8 @@ public class Content
 
         //Pasillo
         #endregion
+
+        CascadiaPLFont = Content.Load<SpriteFont>("SpriteFonts/CascadiaCode/CascadiaCodePL");
     }
 
 

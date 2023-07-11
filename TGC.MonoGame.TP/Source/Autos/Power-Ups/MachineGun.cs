@@ -28,7 +28,6 @@ internal class MachineGun : ElementoDinamico {
         StateDrawer = new MachineGunDrawer(owner);
 
         this.AddToSimulation(posicionInicial +Vector3.UnitY*25f+Owner.Rotation().Forward()*80f, forward.ToQuaternion());
-
     }
 
     internal override void Update(float dTime, KeyboardState _){ }
@@ -48,5 +47,25 @@ internal class MachineGun : ElementoDinamico {
         this.Body().Pose.Position = (Owner.Position()+rotation.Forward()*80f+Vector3.UnitY*25f).ToBepu();
 
         this.Body().Pose.Orientation = Owner.Rotation().ToBepu();
+    }
+
+    internal void Bloom(Camera camera)
+    {
+        Effect BloomEffect = PistonDerby.GameContent.E_BloomEffect;
+        BloomEffect.Parameters["baseTexture"].SetValue(PistonDerby.GameContent.T_Marmol);
+        Vector3 colorToBloom = (Owner.isShooting())? Vector3.Zero : Vector3.UnitX; 
+        BloomEffect.Parameters["colorToBloom"].SetValue(colorToBloom); //bloom color rojo
+        
+        Matrix world = 
+                         Matrix.CreateScale(1f, 200f, 1f)
+                        * Matrix.CreateRotationX(MathHelper.PiOver2 + MathHelper.PiOver4 * 0.20f)
+                        * Matrix.CreateFromQuaternion(Owner.Rotation())
+                        * Matrix.CreateTranslation(Owner.Rotation().Forward()*80f)
+                        * Matrix.CreateTranslation(Vector3.UnitY*25f)
+                        * Matrix.CreateTranslation(Owner.Position());
+
+        BloomEffect.Parameters["WorldViewProjection"].SetValue(world * camera.View * camera.Projection);
+        
+        PistonDerby.GameContent.G_Cilindro.Draw(BloomEffect);
     }
 }

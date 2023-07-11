@@ -30,6 +30,7 @@ internal class MachineGunDrawer : IDrawer
                         * Matrix.CreateTranslation(rotation.Forward()*80f)
                         * Matrix.CreateTranslation(Vector3.UnitY*25f)
                         * Matrix.CreateTranslation(position);
+        
 
         bulletEffect.Parameters["World"]?.SetValue(world);
         bulletEffect.Parameters["DiffuseColor"]?.SetValue(Color.DarkRed.ToVector3());

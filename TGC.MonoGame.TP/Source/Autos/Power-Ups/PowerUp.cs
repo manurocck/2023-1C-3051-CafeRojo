@@ -90,4 +90,15 @@ internal class PowerUpBox : ElementoDinamico {
 
         PistonDerby.GameContent.G_Cubo.Draw(shader);
     }
+
+    internal void Bloom(Camera camera, float sinTime)
+    {
+        Effect BloomEffect = PistonDerby.GameContent.E_BloomEffect;
+        BloomEffect.Parameters["baseTexture"].SetValue(PistonDerby.GameContent.T_MysteryBox);
+        BloomEffect.Parameters["colorToBloom"].SetValue(new Vector3(0.5f,0.5f,0)*(1-sinTime)); //bloom color rojo
+        BloomEffect.Parameters["WorldViewProjection"].SetValue(World * camera.View * camera.Projection);
+
+        PistonDerby.GameContent.G_Cubo.Draw(BloomEffect);
+
+    }
 }
