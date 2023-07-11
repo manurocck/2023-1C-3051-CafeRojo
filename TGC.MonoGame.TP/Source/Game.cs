@@ -64,10 +64,10 @@ public class PistonDerby : Game
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         
-        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
 
-        Graphics.IsFullScreen = FULL_SCREEN;
+        // Graphics.IsFullScreen = FULL_SCREEN;
 
         
         Graphics.ApplyChanges();
@@ -109,11 +109,14 @@ public class PistonDerby : Game
         ConfiguracionBlinnPhong(PistonDerby.GameContent.E_BlinnPhongTiles);
 
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 0.75f));
-        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
-        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(0) * 1.25f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)*0.5f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)*0.75f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)*0.5f));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(3)*0.75f));
+        AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(3)*1.25f));
 
-        Auto   = new Auto (Casa.PuntoCentro(3));
+        Auto   = new Auto (Casa.PuntoCentro(0));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(0)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(1)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)*0.5f));
@@ -295,15 +298,28 @@ public class PistonDerby : Game
 
         #endregion
 
-        SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
-        SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+        SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
+        if(AutosVivos>0){
+            SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
                                "Aun te quedan " + AutosVivos.ToString() + " enemigos vivos !",
-                               new Vector2(GraphicsDevice.Viewport.Width - 500, 0),
+                               new Vector2(25f, GraphicsDevice.Viewport.Height-30),
                                Color.Red);
-        SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
-                               "Tiempo actual : " + Convert.ToInt32(gameTime.TotalGameTime.TotalSeconds),
-                               new Vector2(GraphicsDevice.Viewport.Width * 0.5f, 25),
-                               Color.White);
+            SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+                                "Elimina todos los autos verdes para ganar.",
+                                new Vector2(25f, GraphicsDevice.Viewport.Height-60),
+                                Color.White);
+            SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+                                "Tiempo actual : " + Convert.ToInt32(gameTime.TotalGameTime.TotalSeconds),
+                                new Vector2(GraphicsDevice.Viewport.Width * 0.5f-25, 25),
+                                Color.White);
+        }
+        else{
+            SpriteBatch.DrawString(PistonDerby.GameContent.CascadiaPLFont,
+                               " GANASTE !!!!",
+                               new Vector2(30, GraphicsDevice.Viewport.Height*0.5f-30),
+                               Color.DarkGreen, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
+        }
+        
         SpriteBatch.End();
 
     }

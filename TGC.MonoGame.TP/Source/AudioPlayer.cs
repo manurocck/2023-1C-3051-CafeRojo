@@ -13,7 +13,7 @@ public class AudioPlayer
     private bool Playing = false;
     private Song Soundtrack;
     internal AudioPlayer( ){
-        MediaPlayer.IsMuted = true;
+        MediaPlayer.IsMuted = false;
         MediaPlayer.IsRepeating = true;
         MediaPlayer.Volume = 0.05f;
     }
