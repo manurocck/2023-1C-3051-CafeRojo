@@ -18,6 +18,7 @@ public class HabitacionDormitorioLegos : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_Organizador)
             .ConPosicion(1.5f,0.75f)
+            .ConMaterial(0.1f,0.8f,0.8f,30f)
             .ConTextura(PistonDerby.GameContent.T_MaderaNikari)
             .ConRotacion(-MathHelper.PiOver2,0f, 0f)
             .ConCaja(530f,190f,1000f)// Ancho (x), Profundidad (z), Alto (y)
@@ -29,31 +30,12 @@ public class HabitacionDormitorioLegos : IHabitacion{
         carpintero.Modelo(PistonDerby.GameContent.M_Cajonera)
             .ConPosicion(1,ANCHO-0.5f)
             .ConTextura(PistonDerby.GameContent.T_PisoMadera)
-            // .ConRotacion(0f,MathHelper.Pi, 0f)
             .ConRotacion(-MathHelper.PiOver2,0f, 0f)
             .ConCaja(350f,150f,400f) // Ancho (x), Profundidad (z), Alto (y)
             .ConCorrimientoCaja(0,-10,0) // Corrimiento de la caja
             .ConEscala(400f);
             AddElemento(carpintero.BuildMueble());
             
-        carpintero.Modelo(PistonDerby.GameContent.M_CamaMarinera)
-            .ConPosicion(LARGO-1.25f,0.5f)
-            // .ConTextura(PistonDerby.GameContent.T_PisoMadera) // se desarma
-            .ConColor(Color.DarkRed)
-            .ConRotacion(0f,MathHelper.Pi,0f)
-            .ConEscala(2f);
-            AddElemento(carpintero.BuildMueble());
-        
-        /*carpintero.Modelo(PistonDerby.GameContent.M_Lamparamesita)
-            .ConPosicion(1f,1.5f)
-            .ConColor(Color.Yellow) 
-            .ConRotacion(-MathHelper.PiOver2, 0f, 0f)
-            .ConEscala(100f);
-            AddElemento( carpintero.BuildMueble() ); 
-
-        carpintero.Modelo(PistonDerby.GameContent.M_Lego);*/
-
-
         #region LEGOS GRANDES
         carpintero.Modelo(PistonDerby.GameContent.M_Lego);
         carpintero
@@ -77,6 +59,14 @@ public class HabitacionDormitorioLegos : IHabitacion{
             .ConPosicion(2.25f,0.85f);
             AddElemento(carpintero.BuildMueble());
             
+
+        carpintero.Modelo(PistonDerby.GameContent.M_Dragon)
+            .ConTextura(PistonDerby.GameContent.T_PisoMaderaElegante)
+            .ConEscala(1)
+            .ConCaja(80,150,80)
+            .ConMaterial(0.05f,0.8f,0.8f,30f)
+            .ConPosicion(MetrosAncho*0.75f,1.5f);
+            AddElemento(carpintero.BuildMueble());
 
         #endregion LEGOS GRANDES
 

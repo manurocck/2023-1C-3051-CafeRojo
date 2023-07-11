@@ -1,15 +1,15 @@
-using System;
 using System.Collections.Generic;
 using BepuPhysics.Collidables;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PistonDerby.Drawers;
-using PistonDerby.Utils;
 
 namespace PistonDerby.Elementos;
 public class ElementoBuilder{
     private Model Model;
     private Box Caja;
+    private Texture2D Textura;
+    private Material Material;
     private List<Box> Patas;
     private List<Vector3> CorrimientoPatas;
     private Vector3 CorrimientoCaja;
@@ -31,6 +31,9 @@ public class ElementoBuilder{
         CorrimientoCaja = Vector3.Zero;
         Patas = new List<Box>();
         CorrimientoPatas = new List<Vector3>();
+        Textura = null;
+        // material default
+        Material = Material.Default();
     }
     public ElementoBuilder Modelo(Model modelo3d){
         Model = modelo3d;
@@ -77,7 +80,13 @@ public class ElementoBuilder{
     }
     public ElementoBuilder ConTextura(Texture2D textura){
         // Drawer = new TextureDrawer(textura);
-        Drawer = new BlinnPhongDrawer(textura);
+        // Drawer = new BlinnPhongDrawer(textura);
+        Textura = textura;
+        return this;
+    }
+    // con material
+    public ElementoBuilder ConMaterial(float ambient, float diffuse, float specular, float shininess){
+        Material = new Material(ambient, diffuse, specular, shininess);
         return this;
     }
     internal ElementoBuilder ConColor(Color color){
@@ -86,10 +95,14 @@ public class ElementoBuilder{
     }
     public ElementoEstatico BuildMueble(){
         Corrimiento += PosicionRelativa;
+        
+        if(Textura != null)
+            Drawer = new BlinnPhongDrawer(Textura, Material);
 
         ElementoEstatico elemento = (Patas.Count == 0)?
                  new ElementoEstatico(CorrimientoCaja, Caja, Model, Drawer, Corrimiento, Rotacion, Escala) :
                  new ElementoEstatico(CorrimientoPatas, Patas, Model, Drawer, Corrimiento, Rotacion, Escala);
+
 
         return elemento;
     }

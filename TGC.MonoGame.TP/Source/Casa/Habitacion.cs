@@ -31,7 +31,8 @@ public abstract class IHabitacion
         
         // Agrego una luz en el centro de la habitación casi a la altura máxima de la pared
         var luzCentral = new Light();
-        luzCentral.Position = this.PuntoCentro() + Vector3.UnitY * S_METRO;
+        luzCentral.Position = new Vector3(0,1,this.MetrosLargo)*S_METRO/2 + PosicionInicial;
+        Console.WriteLine("Luz Central: " + luzCentral.Position);
         luzCentral.Color = new Vector3(200,200,200);
 
         Luces.Add(luzCentral);
@@ -86,4 +87,8 @@ public abstract class IHabitacion
     public (Vector3 inicio, Vector3 final) SegmentoIzquierda() =>
                 (new Vector3(this.PuntoInicio().X, 0f , this.PuntoExtremo().Z),
                 this.PuntoExtremo());
+
+    internal void DrawBlack() {
+         foreach(var e in Muebles) e.DrawBlack();
+    }
 }

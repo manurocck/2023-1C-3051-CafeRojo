@@ -6,16 +6,22 @@ internal class BlinnPhongDrawer : IDrawer
 {
     protected Effect Effect;
     protected readonly Texture2D Texture;
+    protected readonly Material Material;
 
-    internal BlinnPhongDrawer(Texture2D Texture, bool isTiled = false)
+    internal BlinnPhongDrawer(Texture2D Texture, Material material, bool isTiled = false)
     {
         this.Texture = Texture;
+        this.Material = material;
         Effect = isTiled ? PistonDerby.GameContent.E_BlinnPhongTiles : PistonDerby.GameContent.E_BlinnPhong;
     }
 
     void IDrawer.Draw(Model Model, Matrix World)
     {
-        ModelMeshCollection meshes = Model.Meshes;;
+        ModelMeshCollection meshes = Model.Meshes;
+        Effect.Parameters["KAmbient"].SetValue(Material.KAmbient);
+        Effect.Parameters["KDiffuse"].SetValue(Material.KDiffuse);
+        Effect.Parameters["KSpecular"].SetValue(Material.KSpecular);
+        Effect.Parameters["shininess"].SetValue(Material.Shininess); 
 
         Effect.Parameters["Texture"].SetValue(Texture);
         foreach(var mesh in Model.Meshes) {

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 using System;
+using PistonDerby.Drawers;
+using Microsoft.Xna.Framework;
 
 namespace PistonDerby;
 
@@ -60,6 +62,7 @@ public class Content
     internal readonly QuadPrimitive G_Quad;
     internal readonly CuboPrimitive G_Cubo;
     internal readonly CylinderPrimitive G_Cilindro;
+    internal readonly IDrawer BlackDrawer = new ColorDrawer(Color.Black);
 
     internal Content(ContentManager Content, GraphicsDevice GraphicsDevice)
     {

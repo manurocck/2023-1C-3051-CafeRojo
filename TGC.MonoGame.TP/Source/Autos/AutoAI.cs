@@ -1,18 +1,19 @@
-using System;
-using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using PistonDerby.Autos.AI;
 using PistonDerby.Autos.PowerUps;
+using PistonDerby.Drawers;
 using PistonDerby.Elementos;
-using PistonDerby.Utils;
 
 namespace PistonDerby.Autos;
 internal class AutoAI : Auto
 {
     private AIState AIState = new PerseguirState();
+    internal override IDrawer StateDrawer => new CarDrawer(this, new Vector3(255f, 0.5f, 0));
     private float Contador = 0;
     private float DistanciaAlEnemigo = 0;
+    
     private Auto target;
     internal AutoAI(Auto auto, Vector3 posicionInicial) : base(posicionInicial){
         target = auto;
@@ -20,7 +21,6 @@ internal class AutoAI : Auto
     public void Update(float dTime){
         Contador+=dTime;
         KeyboardState keyboard = MoverHaciaObjetivo(target.Position());
-        AIState.ActualTime(dTime);
         
         base.Update(dTime, keyboard);
     }
@@ -39,4 +39,5 @@ internal class AutoAI : Auto
         return new KeyboardState(AIState.movimiento(objetivo, this).ToArray());
     }
 
+    internal void RecordTime(float totalSeconds) => AIState.ActualTime(totalSeconds);
 }

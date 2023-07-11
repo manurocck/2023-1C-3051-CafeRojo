@@ -61,7 +61,12 @@ public class Piso : ElementoEstatico
         Effect.Parameters["TilesWide"]?.SetValue(TextureTilesAncho);
         Effect.Parameters["TilesBroad"]?.SetValue(TextureTilesLargo);
         Effect.Parameters["World"].SetValue(TempWorld);
-        Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(World)));;
+        Effect.Parameters["matInverseTransposeWorld"]?.SetValue(Matrix.Transpose(Matrix.Invert(World)));
+        
+        Effect.Parameters["KAmbient"]?.SetValue(0.15f);
+        Effect.Parameters["KDiffuse"]?.SetValue(0.3f);
+        Effect.Parameters["KSpecular"]?.SetValue(0.3f);
+        Effect.Parameters["shininess"]?.SetValue(30);
 
         PistonDerby.GameContent.G_Quad.Draw(Effect);
     }

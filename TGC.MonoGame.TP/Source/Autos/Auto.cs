@@ -210,11 +210,10 @@ internal class Auto : ElementoDinamico {
     internal override bool OnCollision(Elemento other)
     {
         if(other is Piso _){
-            Console.WriteLine("Toqué el piso");
             PuedeSaltar = true;
         }
         if(other is ElementoEstatico _){
-            Console.WriteLine("Toqué un elemento estático");
+            // Console.WriteLine("Toqué un elemento estático");
         }
         if(other is MachineGun _){
         }
@@ -251,13 +250,6 @@ internal class Auto : ElementoDinamico {
 
             var hitDamage = 0.05f;
             Vida = (Vida>=hitDamage)? Vida-hitDamage : 0;
-            Console.WriteLine("> > > > > > > > > > > > >");
-            Console.WriteLine(">");
-            Console.WriteLine("> > Recibí daño de una bala");
-            Console.WriteLine("> > Profundidad de la bala : {0:F}", depth);
-            Console.WriteLine("> > Vida actual : {0:F}", Vida*100);
-            Console.WriteLine(">");
-            Console.WriteLine("> > > > > > > > > > > > >");
     }
 
     internal override void Draw()

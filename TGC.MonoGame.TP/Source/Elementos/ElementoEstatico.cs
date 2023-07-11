@@ -1,4 +1,5 @@
 
+using System.Globalization;
 using System.Collections.Generic;
 using BepuPhysics;
 using BepuPhysics.Collidables;
@@ -74,6 +75,7 @@ public class ElementoEstatico : Elemento {
 
     }
 
+    internal void DrawBlack() => PistonDerby.GameContent.BlackDrawer.Draw(Model, WorldMatrix);
     internal void AddToSimulation(Vector3 initialPosition, Quaternion initialRotation) { 
         StaticHandlers = new List<StaticHandle>();
         foreach(var shape in Shapes) {

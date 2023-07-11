@@ -9,5 +9,6 @@ public static class Vector3Extensions {
     internal static Quaternion ToQuaternion(this Vector3 vector3) => Quaternion.CreateFromYawPitchRoll(vector3.Y, vector3.X, vector3.Z);
     internal static float DotProduct(this Vector2 vector2, Vector2 other) => vector2.X * other.X + vector2.Y * other.Y;
     internal static float DotProduct(this Vector3 vector2, Vector3 other) => vector2.X * other.X + vector2.Y * other.Y + vector2.Z * other.Z;
-
+    internal static float CrossProduct(this Vector2 vector2, Vector2 other) => vector2.X * other.Y - vector2.Y * other.X;
+    internal static float CrossProduct(this Vector3 vector2, Vector3 other) => vector2.X * other.Y - vector2.Y * other.X;
 }

@@ -20,7 +20,7 @@ public class PistonDerby : Game
 {
     public const float S_METRO = 250f;
     internal static bool DEVELOPER_MODE = false;
-    internal static bool DEBUG_GIZMOS = false;
+    internal static bool DEBUG_GIZMOS = true;
     internal static bool FULL_SCREEN = false;
     internal static bool INITIAL_ANIMATION = true;
     private GraphicsDeviceManager Graphics;
@@ -109,7 +109,7 @@ public class PistonDerby : Game
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(1)));
         AutosDummy.Add(new AutoDummy (Casa.PuntoCentro(2)));
 
-        Auto   = new Auto (Casa.PuntoCentro(0));
+        Auto   = new Auto (Casa.PuntoCentro(3));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(0)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(1)*0.5f));
         AutosAI.Add(new AutoAI (Auto, Casa.PuntoCentro(2)*0.5f));
@@ -165,8 +165,10 @@ public class PistonDerby : Game
         Auto.Update(dTime, Keyboard.GetState());
         foreach(AutoDummy a in AutosDummy)
             a.Update(dTime);
-        foreach(AutoAI a in AutosAI)
+        foreach(AutoAI a in AutosAI){
             a.Update(dTime);
+            a.RecordTime((float)gameTime.TotalGameTime.TotalSeconds);
+        }
 
         foreach(ElementoDinamico e in ElementosDinamicos) e.Update(dTime, keyboardState);
 
@@ -253,13 +255,23 @@ public class PistonDerby : Game
         var bloomTexture = FirstPassBloomRenderTarget;
         var finalBloomRenderTarget = SecondPassBloomRenderTarget;
 
-        
-        // Set the render target as null, we are drawing into the screen now!
-        GraphicsDevice.SetRenderTarget(finalBloomRenderTarget);
-        GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
+        int PassCount = 2;
+        for (var index = 0; index < PassCount; index++)
+        {
+            // Set the render target as null, we are drawing into the screen now!
+            GraphicsDevice.SetRenderTarget(finalBloomRenderTarget);
+            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1f, 0);
 
-        BlurEffect.Parameters["baseTexture"].SetValue(bloomTexture);
-        FullScreenQuad.Draw(BlurEffect);
+            BlurEffect.Parameters["baseTexture"].SetValue(bloomTexture);
+            FullScreenQuad.Draw(BlurEffect);
+            if (index != PassCount - 1)
+            {
+                var auxiliar = bloomTexture;
+                bloomTexture = finalBloomRenderTarget;
+                finalBloomRenderTarget = auxiliar;
+            }
+        }
+
 
         #endregion
 
@@ -306,12 +318,5 @@ public class PistonDerby : Game
         e.Parameters["ambientColor"].SetValue(new Vector3(255, 255, 255) / 255f);
         e.Parameters["diffuseColor"].SetValue(new Vector3(255, 255, 255) / 255f); // Adjusted the blue component to reduce yellow tint
         e.Parameters["specularColor"].SetValue(new Vector3(0, 148, 148) / 255f);
-
-        e.Parameters["KAmbient"].SetValue(0.15f);
-        e.Parameters["KDiffuse"].SetValue(0.3f);
-        e.Parameters["KSpecular"].SetValue(0.3f);
-
-        e.Parameters["shininess"].SetValue(60); // No shininess, as there are no specular highlights
-
     }
 }

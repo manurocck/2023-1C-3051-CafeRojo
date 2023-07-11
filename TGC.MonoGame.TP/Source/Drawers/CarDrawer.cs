@@ -7,9 +7,10 @@ namespace PistonDerby.Drawers;
 internal class CarDrawer : IDrawer
 {
     private const float AUTO_SCALE = 0.056f * PistonDerby.S_METRO;
+    private Texture2D Texture;
     private Effect Effect = PistonDerby.GameContent.E_PBRShader;
     private CylinderPrimitive BulletCylinder = PistonDerby.GameContent.G_Cilindro;
-    private Vector3 DiffuseColor = new Vector3(255f, 0.5f, 255f);
+    private Vector3 DiffuseColor;
     
     //UPDATE
     internal float WheelRotation() => Auto.WheelRotation;
@@ -18,7 +19,14 @@ internal class CarDrawer : IDrawer
     internal Auto Auto;
 
     internal CarDrawer(Auto auto){
+        Texture = PistonDerby.GameContent.TA_BaseColor;
         Auto = auto;  
+        DiffuseColor = new Vector3(0f, 0.5f, 255f);
+    }
+    internal CarDrawer(Auto auto, Vector3 color){
+        Auto = auto;  
+        Texture = PistonDerby.GameContent.TA_BaseColor;
+        DiffuseColor = color;
     }
 
     internal IDrawer ConColor(Color color){
@@ -116,7 +124,8 @@ internal class CarDrawer : IDrawer
     
     private void SetearTexturas()
     {
-        Effect.Parameters["albedoTexture"]?.SetValue(PistonDerby.GameContent.TA_BaseColor);
+        // Effect.Parameters["albedoTexture"]?.SetValue(PistonDerby.GameContent.TA_BaseColor);
+        Effect.Parameters["albedoTexture"]?.SetValue(Texture);
         Effect.Parameters["normalTexture"]?.SetValue(PistonDerby.GameContent.TA_NormalMap);
         Effect.Parameters["metallicTexture"]?.SetValue(PistonDerby.GameContent.TA_MetalMap);
         Effect.Parameters["roughnessTexture"]?.SetValue(PistonDerby.GameContent.TA_RoughnessMap);

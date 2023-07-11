@@ -40,7 +40,7 @@ sampler2D textureSampler = sampler_state
 struct VertexShaderInput
 {
 	float4 Position : POSITION0;
-    float4 Normal : NORMAL;
+    float3 Normal : NORMAL;
     float2 TextureCoordinates : TEXCOORD0;
 };
 
@@ -65,7 +65,8 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
     output.Position = mul(ViewPosition, Projection);
     output.TextureCoordinates = input.TextureCoordinates;
 
-    output.Normal = mul(input.Normal, matInverseTransposeWorld);
+    // output.Normal = mul(input.Normal, matInverseTransposeWorld);
+    output.Normal = mul(float4(input.Normal.xyz, 1), matInverseTransposeWorld);
 	
 	return output;
 }
@@ -73,10 +74,14 @@ VertexShaderOutput MainVS(in VertexShaderInput input)
 float4 MainPS(VertexShaderOutput input) : SV_Target
 {
     // Base vectors
+    float4 texelColor = tex2D(textureSampler, input.TextureCoordinates);
     float3 viewDirection = normalize(eyePosition - input.WorldPosition.xyz);
     float3 halfVector;
 
     float4 finalColor = float4(0, 0, 0, 0); // Accumulate light contributions
+
+    float luzSaturadaAcumulada = 0.0f;
+    float luzEspecularAcumulada = 0.0f;
 
     for (int i = 0; i < MAX_LIGHTS; i++)
     {
@@ -89,7 +94,6 @@ float4 MainPS(VertexShaderOutput input) : SV_Target
         halfVector = normalize(lightDirection + viewDirection);
 
         // Get the texture texel
-        float4 texelColor = tex2D(textureSampler, input.TextureCoordinates);
 
         // Calculate the diffuse light
         float NdotL = saturate(dot(input.Normal.xyz, lightDirection));
@@ -101,6 +105,8 @@ float4 MainPS(VertexShaderOutput input) : SV_Target
 
         // Accumulate light contributions
         finalColor.rgb += saturate(ambientColor * KAmbient + diffuseLight) * texelColor.rgb + specularLight;
+        // luzSaturadaAcumulada += saturate(ambientColor * KAmbient + diffuseLight);
+        // luzEspecularAcumulada += specularLight;
     }
 
     finalColor.a = 1; // Set the alpha value

@@ -18,6 +18,7 @@ public class HabitacionOficina : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_SillaOficina)
             .ConPosicion(4f, 3f)
+            .ConMaterial(0.1f,0.8f,0.8f,60f)
             .ConTextura(PistonDerby.GameContent.T_SillaOficina)
             .ConRotacion(-MathHelper.PiOver2,-MathHelper.PiOver4,0f)
             .ConEscala(2f);
@@ -26,7 +27,7 @@ public class HabitacionOficina : IHabitacion{
         carpintero.Modelo(PistonDerby.GameContent.M_CafeRojo)
             .ConPosicion(3.2f, 3.5f)
             .ConRotacion(-MathHelper.PiOver2,0f,0f)
-            .ConColor(Color.Red)
+            .ConTextura(PistonDerby.GameContent.TA_NormalMap)
             .ConEscala(2f)
             .ConAltura(0.7f);
         AddElemento(carpintero.BuildMueble());
@@ -34,6 +35,7 @@ public class HabitacionOficina : IHabitacion{
                 
         carpintero.Modelo(PistonDerby.GameContent.M_Escritorio)
             .ConPosicion(3.5f, 3f)
+            .ConMaterial(0.05f,0.8f,0.8f,30f)
             .ConTextura(PistonDerby.GameContent.T_Marmol)
             .ConPatas(50f, 0, 170f, 20f, false)
             .ConRotacion(0f, MathHelper.Pi, 0f)

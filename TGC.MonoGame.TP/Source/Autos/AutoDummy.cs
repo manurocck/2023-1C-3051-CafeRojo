@@ -16,7 +16,7 @@ internal class AutoDummy : Auto
     internal override IDrawer StateDrawer => CarDrawerState();
     internal AutoDummy(Vector3 posicionInicial) : base(posicionInicial){
         DrawerStates = new IDrawer[]{
-                    new CarDrawer(this).ConColor(Color.Orange),
+                    new CarDrawer(this,new Vector3(0, 255f, 0)),
                     new DeadCarDrawer(this)}; 
     }
     private Random miRandom = new Random();

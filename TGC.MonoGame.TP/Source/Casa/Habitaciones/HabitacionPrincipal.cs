@@ -50,6 +50,7 @@ public class HabitacionPrincipal : IHabitacion{
             .ConAltura(0.3f)
             .ConPatas(50f, -80f, 50f, 10f)
             .ConEscala(2f)
+            .ConMaterial(0.2f,1f,1f,30f)
             .ConRotacion(-MathHelper.PiOver2, 0, 0)
             .ConPosicion(5+corrimiento.X, 3+corrimiento.Y); // cabecera
             AddElemento( carpintero.BuildMueble() );
@@ -82,6 +83,7 @@ public class HabitacionPrincipal : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_MuebleTV)
             .ConPosicion(LARGO-1f, 0.5f)
+            .ConMaterial(0.1f,1f,1f,30f)
             .ConRotacion(0, MathHelper.Pi, 0)
             .ConTextura(PistonDerby.GameContent.T_Reboque)
             .ConCaja(500f,100f,100f) // Ancho (x), Alto (y), Profundidad (z)
@@ -94,12 +96,14 @@ public class HabitacionPrincipal : IHabitacion{
             .ConPosicion(LARGO-2f, ANCHO-0.75f)
             .ConTextura(PistonDerby.GameContent.T_Alfombra)
             .ConRotacion(-MathHelper.PiOver2, MathHelper.Pi, 0)
+            .ConMaterial(0.25f,0.3f,0.05f,10f)
             .ConEscala(0.2f);
             AddElemento( carpintero.BuildMueble() );
         
 
         carpintero.Modelo(PistonDerby.GameContent.M_Mesita)
             .ConEscala(4f)
+            .ConMaterial(0.1f,0.8f,0.8f,30f)
             .ConTextura(PistonDerby.GameContent.T_MaderaNikari)
             .ConPosicion(LARGO-2.15f, ANCHO-1.75f)
             .ConRotacion(-MathHelper.PiOver2, 0, 0);
@@ -145,9 +149,11 @@ public class HabitacionPrincipal : IHabitacion{
 
         carpintero.Modelo(PistonDerby.GameContent.M_Piano)
             .ConEscala(150f)
+            .ConMaterial(0.2f,200f,0f,30f)
             .ConTextura(PistonDerby.GameContent.T_PisoMaderaElegante)
             .ConRotacion(-MathHelper.PiOver2,MathHelper.PiOver2,0f)
             .ConPosicion(1.5f, ANCHO-1f)
+            .ConPatas(100f, -80f, 100f, 10f)
             .ConAltura(0.4f);
             AddElemento( carpintero.BuildMueble() ); 
 

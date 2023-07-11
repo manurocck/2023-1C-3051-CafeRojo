@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PistonDerby.Autos.PowerUps;
 using PistonDerby.Mapa;
@@ -48,18 +49,19 @@ public class Casa {
         Luces = new List<Light>();
 
         foreach(var h in Habitaciones)
-            Luces.AddRange(h.Luces);
+            Luces.AddRange(h.Luces); 
 
         Luces = Luces.ConvertAll(l => l.GenerateShowColor());
         // Mostrar en consola la cantidad de luces
         Console.WriteLine("Cantidad de Luces: " + Luces.Count);
         InicializarShaderPBR();
-        InicializarBlinnPhong();
+        InicializarBlinnPhong(PistonDerby.GameContent.E_BlinnPhong);
+        InicializarBlinnPhong(PistonDerby.GameContent.E_BlinnPhongTiles);
     }
 
-    private void InicializarBlinnPhong()
+    private void InicializarBlinnPhong(Effect e)
     {
-        var Effect = PistonDerby.GameContent.E_BlinnPhong;
+        var Effect = e;
         var posiciones = Effect.Parameters["lightPositions"].Elements;
         
         for (var index = 0; index < Luces.Count; index++)
@@ -169,4 +171,10 @@ public class Casa {
         foreach(Pared p in Esqueleto) p.DebugGizmos();
         // foreach(Puerta p in Puertas) p.DebugGizmos();
     }
+
+    // Draw all furniture with BlackDrawer
+    public void DrawBlack(){
+        foreach(var h in Habitaciones) h.DrawBlack();
+    }
+
 }
