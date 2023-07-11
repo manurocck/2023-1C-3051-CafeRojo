@@ -20,15 +20,15 @@ Apellido, Nombre | Apodo | Pit Rol
 Nielsen Pellinacci, J. Manuel	| *Juanma* | Jackman
 Cabral, Sebastian Rolando |	*Sebas* | Wheel-gunner 
 
-<p align="center">
 <img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/8c0add83-facf-42fb-b155-9cf10755be7d" width=25% height=25%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/cbfd5787-9bcc-4147-8bbf-f6fe07aebd1a" width=25% height=25%>
-</p>
 
 ## Capturas
-<img src="https://user-images.githubusercontent.com/22857096/234354687-ebb92530-eb2f-48e0-a533-9f2be9a9c426.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354699-d0fe534b-6b23-4df4-9602-cfa3ed667776.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354706-96bb71d1-d945-4ecd-8014-4fe43a5ee2fe.png" width=50% height=50%><img src="https://user-images.githubusercontent.com/22857096/234354724-0fe0fc1c-c063-4d63-b5ac-f44a0c510924.png" width=50% height=50%>
+
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/b567f526-33ad-4bf3-9269-306a137cc8b0" width=50% height=50%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/f4c563f1-8d46-4f21-a3a0-2a0b59e68766" width=50% height=50%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/5bf8cee2-4f2b-4a91-886c-7e012b71e7ec" width=50% height=50%>
 
 ## Game Play
-<img src="https://user-images.githubusercontent.com/22857096/234470528-a7444ec0-4d66-4d27-90f3-6c80d9228719.mp4" width=50% height=50%>
+Youtube Link
+<img src="" width=50% height=50%>
 
 ## Diseño del Juego
 ![Diagrama de clases](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/c05bb0ba-d649-41f1-a53f-ee12a18b3462)
