@@ -10,6 +10,7 @@ internal class PerseguirState : AIState
 {
     private const float VELOCIDAD_MAX = 300;
     private bool Perseguir = true;
+    private bool ToggleSide = true;
     private float TiempoFinalReacomodo = 0;
 
     internal override List<Keys> movimiento(Vector3 objetivo, AutoAI autoAI){
@@ -19,26 +20,34 @@ internal class PerseguirState : AIState
         }
         else{
             Console.WriteLine("Reacomodando ... ");
-            if(ActualSeconds<TiempoFinalReacomodo) 
-                TiempoFinalReacomodo=ActualSeconds+2;
-            else 
+            if(ActualSeconds>TiempoFinalReacomodo){
+                TiempoFinalReacomodo = 0; 
                 Perseguir = true;
+            }
             
-            return reacomodar();
+            return reacomodar(autoAI);
         }
     }
-    private List<Keys> reacomodar(){
+    private List<Keys> reacomodar(AutoAI autoAI){
         List<Keys> listOfKeys = new List<Keys>();
         
-        listOfKeys.Add(Keys.D);
-        listOfKeys.Add(Keys.S);
+        if(autoAI.LinearVelocity().Length() < VELOCIDAD_MAX)
+            listOfKeys.Add(Keys.S);
+        if(ToggleSide)
+            listOfKeys.Add(Keys.D);
+        else 
+            listOfKeys.Add(Keys.A);
         
         return listOfKeys;
     }
     private List<Keys> perseguir(Vector3 objetivo, AutoAI autoAI)
     {
-        if(autoAI.LinearVelocity().Length()==0)
+        if(autoAI.LinearVelocity().Length()<0.2f && TiempoFinalReacomodo == 0){
+            TiempoFinalReacomodo=ActualSeconds+1;
             Perseguir = false;
+            ToggleSide = !ToggleSide;
+        }
+
         List<Keys> listOfKeys = new List<Keys>();
 
         Vector3 posicionActual = autoAI.Position();
