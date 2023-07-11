@@ -11,16 +11,17 @@
 _Un divertido Battle Royale offline desarrollado por alumnos de la UTN FRBA._
 
 # ¿ Cómo jugar ?
+![Controles](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/444ec985-13e2-46e7-9d6e-ef150820258f)
+
+# Equipo CAFErojo 
+
+Apellido, Nombre | Apodo | Pit Rol
+------------------| ------ | -----
+Nielsen Pellinacci, J. Manuel	| *Juanma* | Jackman
+Cabral, Sebastian Rolando |	*Sebas* | Wheel-gunner 
+
 <p align="center">
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/8b8bb8ee-70ef-4d82-8d70-3fc1b714c879" width=10% height=10%> <br> para <i>Acelerar</i><br><br>
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/e89a6a5b-1f8e-4ec6-9088-f882467c926f" width=10% height=10%> <br> para <i>Frenar</i> o ir <i>Marcha atrás</i> <br><br>
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/24e53e23-8e85-46c4-82d7-5ae69cce928b" width=10% height=10%> 
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/df387f70-7145-46ce-8d2f-936051156a6e" width=10% height=10%> <br> para <i>Mover el volante</i><br><br>
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/4234bb91-0b51-4dfd-93f3-cbf4dab36dee" width=14% height=10%> <br>
-para <i>Tirar tu Power-Up</i>
-<br><br>
-<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/e51b8423-3575-47bf-b217-d6d14f3fa5e9" width=40% height=10%><br>
-para <i>Saltar</i>
+<img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/8c0add83-facf-42fb-b155-9cf10755be7d" width=25% height=25%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/cbfd5787-9bcc-4147-8bbf-f6fe07aebd1a" width=25% height=25%>
 </p>
 
 ## Capturas
@@ -29,15 +30,5 @@ para <i>Saltar</i>
 ## Game Play
 <img src="https://user-images.githubusercontent.com/22857096/234470528-a7444ec0-4d66-4d27-90f3-6c80d9228719.mp4" width=50% height=50%>
 
-# Equipo CAFErojo 
-Apellido, Nombre | Apodo | Pit Rol
-------------------| ------ | -----
-Nielsen Pellinacci, J. Manuel	| *Juanma* | Jackman
-Cabral, Sebastian Rolando |	*Sebas* | Wheel-gunner 
-Montecchia, Eduardo	| ---- | Wheel-gunner
-Veloso, Rocio Belen	| *Ro* | Gas (wo)man
-Villegas Avalos,	Carlos Alejandro | *Charly* |  Tire carrier
-Greco,	Luca | Luquitas | Tire carrier
-
-## Diseño Actual
+## Diseño del Juego
 ![Diagrama de clases](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/c05bb0ba-d649-41f1-a53f-ee12a18b3462)
