@@ -13,22 +13,20 @@ _Un divertido Battle Royale offline desarrollado por alumnos de la UTN FRBA._
 # ¿ Cómo jugar ?
 ![Controles](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/444ec985-13e2-46e7-9d6e-ef150820258f)
 
+## Game Play
+Youtube Link : https://youtu.be/SZFBgki0Lu8
+
 # Equipo CAFErojo 
-
-Apellido, Nombre | Apodo | Pit Rol
-------------------| ------ | -----
-Nielsen Pellinacci, J. Manuel	| *Juanma* | Jackman
-Cabral, Sebastian Rolando |	*Sebas* | Wheel-gunner 
-
+<p align="center">
 <img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/8c0add83-facf-42fb-b155-9cf10755be7d" width=25% height=25%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/cbfd5787-9bcc-4147-8bbf-f6fe07aebd1a" width=25% height=25%>
+<h3 align="center">Manuel Nielsen y Sebastian Cabral</h3>
+</p>
+<br>
+<p align="center">
+y enormes agradecimientos a Eduardo y Rocío por acompañarnos gran parte del trayecto...
+</p>
 
 ## Capturas
 
 <img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/b567f526-33ad-4bf3-9269-306a137cc8b0" width=50% height=50%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/f4c563f1-8d46-4f21-a3a0-2a0b59e68766" width=50% height=50%><img src="https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/5bf8cee2-4f2b-4a91-886c-7e012b71e7ec" width=50% height=50%>
 
-## Game Play
-Youtube Link
-<img src="" width=50% height=50%>
-
-## Diseño del Juego
-![Diagrama de clases](https://github.com/manurocck/2023-1C-3051-CafeRojo/assets/22857096/c05bb0ba-d649-41f1-a53f-ee12a18b3462)
