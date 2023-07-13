@@ -64,8 +64,8 @@ public class PistonDerby : Game
                                              Graphics.PreferredBackBufferHeight*16/9 :
                                              GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         
-        Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
-        Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
+        // Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 3/4;
+        // Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 3/4;
 
         // Graphics.IsFullScreen = FULL_SCREEN;
 

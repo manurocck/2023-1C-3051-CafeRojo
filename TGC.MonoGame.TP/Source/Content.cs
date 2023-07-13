@@ -25,12 +25,12 @@ public class Content
     
     #region modelos
     internal Model 
-            M_Alfil, M_Torre, M_Auto, M_AutoEnemigo, M_Inodoro, M_Misil, M_SillaOficina, M_CafeRojo, M_Silla, M_Mesa, M_Sillon, 
+            M_Auto, M_AutoEnemigo, M_Inodoro, M_Misil, M_SillaOficina, M_CafeRojo, M_Silla, M_Mesa, M_Sillon, 
             M_Televisor , M_MuebleTV, M_Planta , M_Escritorio, M_Cocine, M_Plantis, M_Lego, M_Baniera,M_Sofa, M_Mesita, 
-            M_Bacha, M_Organizador, M_Cajonera, M_CamaMarinera , M_MesadaCentral, M_MesadaLateral, M_MesadaLateral2, M_Alacena, 
+            M_Bacha, M_Organizador, M_Cajonera , M_MesadaCentral, M_MesadaLateral, M_MesadaLateral2, M_Alacena, 
             M_Botella, M_Maceta, M_Maceta2, M_Maceta3, M_Maceta4, M_Olla, M_ParedCocina, M_Plato, M_PlatoGrande, M_PlatosApilados,
-            M_Mesada, M_AutoPegni, M_Heladera, M_Dragon, M_Dragona, M_Cama, M_Juego, M_Puff, M_Armario1, M_Gato, M_Hombrepiedra, M_Lena, 
-            M_Lamparamesita, M_Lobo, M_Libro, M_Piano, M_Robot, M_BrMisil;
+            M_Mesada, M_Heladera, M_Dragon, M_Dragona, M_Armario1, 
+            M_Piano;
 
     internal readonly SpriteFont CascadiaPLFont;
     #endregion
@@ -46,7 +46,7 @@ public class Content
     #region texturas
     internal readonly Texture2D T_Alfombra, T_PisoMadera, T_PisoCeramica, T_PisoAlfombrado, T_AlfombraHabitacion,
                         T_MeshFilter, T_MaderaNikari, T_SillaOficina, T_PisoMaderaClaro, T_Dragon,
-                        T_RacingCar, T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
+                        T_CombatVehicle, T_Ladrillos, T_Marmol, T_MarmolNegro, T_Reboque, T_Concreto,
                         T_CubosMadera, T_PisoMaderaElegante, T_PisoPasto, T_MysteryBox, T_MisilLanzado;
     internal readonly Texture2D TH_Bullet, TH_EmptyBullet;
     internal readonly Texture2D TM_Start, TM_Play, TM_Pointer, TM_PlayOption, TM_SettingsOption, TM_Controles;
@@ -172,8 +172,8 @@ public class Content
         
         #region Modelos ( Shader , CarpetaUbicacion, Etiqueta )
         M_Auto              = LoadModel("Autos/", "RacingCar"     );
-        M_AutoPegni         = LoadModel("Autos/", "PegniZonda"    );
-        M_AutoEnemigo       = LoadModel("Autos/", "CombatVehicle" );
+        // M_AutoPegni         = LoadModel("Autos/", "PegniZonda"    );
+        // M_AutoEnemigo       = LoadModel("Autos/", "CombatVehicle" );
         
         M_Misil             = LoadModel("Autos/", "Misil"         );
         //M_BrMisil           = LoadModel("Autos/", "BrMisil"       );
@@ -196,17 +196,17 @@ public class Content
         M_Plantis           = LoadModel("Muebles/", "Plantis"     );
 
         //Dormitorios
-        M_CamaMarinera      = LoadModel("Muebles/", "CamaMarinera");
+        // M_CamaMarinera      = LoadModel("Muebles/", "CamaMarinera");
         M_Cajonera          = LoadModel("Muebles/", "Cajonera"    );
         M_Organizador       = LoadModel("Muebles/", "Organizador" );
         M_Lego              = LoadModel("Muebles/", "Lego"        );
-        M_Alfil             = LoadModel("Muebles/", "Alfil"       );
-        M_Torre             = LoadModel("Muebles/", "Torre"       );
+        // M_Alfil             = LoadModel("Muebles/", "Alfil"       );
+        // M_Torre             = LoadModel("Muebles/", "Torre"       );
         M_Dragon            = LoadModel("Muebles/", "Dragon"      );
         M_Dragona           = LoadModel("Muebles/", "Dragona"     );
-        M_Cama              = LoadModel("Muebles/", "Cama"        );
-        M_Juego             = LoadModel("Muebles/", "Juego"       );
-        M_Puff              = LoadModel("Muebles/", "Puff"        );
+        // M_Cama              = LoadModel("Muebles/", "Cama"        );
+        // M_Juego             = LoadModel("Muebles/", "Juego"       );
+        // M_Puff              = LoadModel("Muebles/", "Puff"        );
         M_Armario1          = LoadModel("Muebles/", "Armario1"    );
 
         //Baño
